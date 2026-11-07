@@ -53,8 +53,8 @@
       "description": "A bed in a shared room, with a comfortable place to reset and easy connection with the group.",
       "price": 5200,
       "capacity": "16 beds · total planned allotment",
-      "image": "/rooms/room-shared-cabin-1.jpg",
-      "image_alt": "Warm-toned shared cabin with bunk beds at Open Gate Hostel",
+      "image": "/rooms/room-bunk-detail-1.jpg",
+      "image_alt": "Wooden bunk bed with blue bedding and a folded green towel in a bright shared room at Open Gate",
       "features": [
         "One guest per bed selection",
         "Shared bunk-style accommodation",
@@ -66,8 +66,8 @@
           "alt": "Bright shared room with wood floors and bunk beds at Open Gate Hostel"
         },
         {
-          "image": "/rooms/room-bunk-detail-1.jpg",
-          "alt": "Bunk bed detail in shared accommodation at Open Gate Hostel"
+          "image": "/rooms/room-shared-cabin-1.jpg",
+          "alt": "Warm-toned shared cabin with bunk beds at Open Gate Hostel"
         }
       ]
     }
