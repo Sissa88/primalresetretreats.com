@@ -1,0 +1,381 @@
+{
+  "backend": {
+    "name": "github",
+    "repo": "Sissa88/primalresetretreats.com",
+    "branch": "main",
+    "auth_endpoint": "api/auth",
+    "auth_scope": "public_repo"
+  },
+  "load_config_file": false,
+  "media_folder": "public/uploads",
+  "public_folder": "/uploads",
+  "slug": {
+    "encoding": "ascii",
+    "clean_accents": true,
+    "sanitize_replacement": "-"
+  },
+  "collections": [
+    {
+      "name": "settings",
+      "label": "Website settings",
+      "files": [
+        {
+          "name": "settings",
+          "label": "Contact, forms, and domain",
+          "file": "content/settings.json",
+          "fields": [
+            {
+              "name": "site_name",
+              "label": "Site Name",
+              "widget": "string"
+            },
+            {
+              "name": "site_url",
+              "label": "Public website URL (https://...)",
+              "widget": "string",
+              "required": false,
+              "hint": "Set this after connecting your domain."
+            },
+            {
+              "name": "contact_email",
+              "label": "Contact email",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "retreat_form_id",
+              "label": "Formspree ID for retreat inquiries",
+              "widget": "string",
+              "required": false,
+              "hint": "Just the ID after /f/, not the full URL."
+            },
+            {
+              "name": "coach_form_id",
+              "label": "Formspree ID for coach applications",
+              "widget": "string",
+              "required": false
+            },
+            {
+              "name": "allow_indexing",
+              "label": "Allow search engines to index this site",
+              "widget": "boolean",
+              "default": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "existing",
+      "label": "Existing pages",
+      "files": [
+        {
+          "name": "home",
+          "label": "Home",
+          "file": "content/pages/home.json",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Page title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Search description",
+              "widget": "text"
+            },
+            {
+              "name": "texts",
+              "label": "Page text",
+              "widget": "list",
+              "allow_add": false,
+              "collapsed": true,
+              "summary": "{{fields.label}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "label",
+                  "label": "Text location",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "value",
+                  "label": "Text",
+                  "widget": "text"
+                }
+              ]
+            },
+            {
+              "name": "images",
+              "label": "Page images",
+              "widget": "list",
+              "allow_add": false,
+              "collapsed": true,
+              "summary": "{{fields.alt}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "src",
+                  "label": "Image",
+                  "widget": "image"
+                },
+                {
+                  "name": "alt",
+                  "label": "Image description",
+                  "widget": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "coach-with-us",
+          "label": "Coach with us",
+          "file": "content/pages/coach-with-us.json",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Page title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Search description",
+              "widget": "text"
+            },
+            {
+              "name": "texts",
+              "label": "Page text",
+              "widget": "list",
+              "allow_add": false,
+              "collapsed": true,
+              "summary": "{{fields.label}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "label",
+                  "label": "Text location",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "value",
+                  "label": "Text",
+                  "widget": "text"
+                }
+              ]
+            },
+            {
+              "name": "images",
+              "label": "Page images",
+              "widget": "list",
+              "allow_add": false,
+              "collapsed": true,
+              "summary": "{{fields.alt}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "src",
+                  "label": "Image",
+                  "widget": "image"
+                },
+                {
+                  "name": "alt",
+                  "label": "Image description",
+                  "widget": "string"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "retreats",
+      "label": "Retreats",
+      "folder": "content/retreats",
+      "create": true,
+      "delete": false,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{slug}}",
+      "summary": "{{title}} \u2014 {{dates}}",
+      "fields": [
+        {
+          "name": "title",
+          "label": "Title",
+          "widget": "string"
+        },
+        {
+          "name": "summary",
+          "label": "Summary",
+          "widget": "text"
+        },
+        {
+          "name": "image",
+          "label": "Image",
+          "widget": "image"
+        },
+        {
+          "name": "dates",
+          "label": "Dates",
+          "widget": "string",
+          "default": "Dates announced soon"
+        },
+        {
+          "name": "duration",
+          "label": "Duration",
+          "widget": "string",
+          "default": "7 days"
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "widget": "string",
+          "default": "Big Island \u00b7 Hawai\u02bbi"
+        },
+        {
+          "name": "capacity",
+          "label": "Capacity",
+          "widget": "string",
+          "default": "Small group"
+        },
+        {
+          "name": "price",
+          "label": "Price",
+          "widget": "string",
+          "default": "Pricing to be confirmed"
+        },
+        {
+          "name": "published",
+          "label": "Show on website",
+          "widget": "boolean",
+          "default": true
+        },
+        {
+          "name": "description",
+          "label": "Search description",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "body",
+          "label": "Retreat description",
+          "widget": "markdown",
+          "required": false
+        },
+        {
+          "name": "texts",
+          "label": "Page text",
+          "widget": "list",
+          "allow_add": false,
+          "collapsed": true,
+          "summary": "{{fields.label}}",
+          "fields": [
+            {
+              "name": "id",
+              "label": "Id",
+              "widget": "hidden"
+            },
+            {
+              "name": "label",
+              "label": "Text location",
+              "widget": "hidden"
+            },
+            {
+              "name": "value",
+              "label": "Text",
+              "widget": "text"
+            }
+          ],
+          "required": false,
+          "hint": "Existing retreat only: edit its original sections here. New retreats use the description above."
+        },
+        {
+          "name": "images",
+          "label": "Page images",
+          "widget": "list",
+          "allow_add": false,
+          "collapsed": true,
+          "summary": "{{fields.alt}}",
+          "fields": [
+            {
+              "name": "id",
+              "label": "Id",
+              "widget": "hidden"
+            },
+            {
+              "name": "src",
+              "label": "Image",
+              "widget": "image"
+            },
+            {
+              "name": "alt",
+              "label": "Image description",
+              "widget": "string"
+            }
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "pages",
+      "label": "Additional pages",
+      "folder": "content/pages",
+      "create": true,
+      "extension": "json",
+      "format": "json",
+      "slug": "{{slug}}",
+      "filter": {
+        "field": "type",
+        "value": "custom"
+      },
+      "fields": [
+        {
+          "name": "type",
+          "label": "Type",
+          "widget": "hidden",
+          "default": "custom"
+        },
+        {
+          "name": "title",
+          "label": "Title",
+          "widget": "string"
+        },
+        {
+          "name": "description",
+          "label": "Search description",
+          "widget": "text",
+          "required": false
+        },
+        {
+          "name": "published",
+          "label": "Show on website",
+          "widget": "boolean",
+          "default": true
+        },
+        {
+          "name": "body",
+          "label": "Page content",
+          "widget": "markdown"
+        }
+      ]
+    }
+  ]
+}

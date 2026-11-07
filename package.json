@@ -1,1 +1,15 @@
-{"name":"primal-reset-retreats","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node server.mjs","start":"node server.mjs","check":"node --check server.mjs && node --check public/local.js && python3 scripts/check.py"}}
+{
+  "name": "primal-reset-retreats",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && node server.mjs",
+    "start": "npm run build && node server.mjs",
+    "check": "node --check server.mjs && node --check public/local.js && node --check functions/api/auth.js && node --check functions/api/callback.js && npm run build && python3 scripts/check.py && node --test tests/*.test.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "marked": "18.1.3"
+  }
+}

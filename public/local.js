@@ -1,61 +1,33 @@
 'use strict';
-const storageKey = 'primal-reset-inquiries-v1';
-for (const form of document.querySelectorAll('form')) {
-  const status = document.createElement('p');
-  status.setAttribute('role', 'status');
-  status.className = 'form-status';
-  const note = document.createElement('p');
-  note.className = 'form-note';
-  note.textContent = 'Local preview: this form saves only in this browser. It does not email the retreat team. You can download or delete your saved inquiry below. Avoid including sensitive health information.';
-  form.append(note, status);
-  const actions = document.createElement('div');
-  actions.className = 'form-actions';
-  const download = document.createElement('button');
-  download.type = 'button'; download.textContent = 'Download saved inquiries';
-  const clear = document.createElement('button');
-  clear.type = 'button'; clear.textContent = 'Delete saved inquiries';
-  actions.append(download, clear); form.append(actions);
-  const kind = form.dataset.kind || 'retreat';
-  const read = () => {
-    const data = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    if (!Array.isArray(data)) throw new Error('Invalid saved data');
-    return data;
-  };
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    try {
-      const entry = Object.fromEntries(new FormData(form));
-      if (!String(entry.name || '').trim()) {
-        status.textContent = 'Please enter your name.'; form.elements.name.focus(); return;
-      }
-      for (const key of Object.keys(entry)) entry[key] = String(entry[key]).trim();
-      const entries = read();
-      entries.push({ ...entry, kind, savedAt: new Date().toISOString() });
-      localStorage.setItem(storageKey, JSON.stringify(entries));
-      status.textContent = 'Saved on this device. Nothing has been sent. Download your inquiry below to keep a copy.';
-      form.reset();
-    } catch {
-      status.textContent = 'Your inquiry could not be saved. Check that browser storage is enabled and try again. Your form has been kept.';
-    }
-  });
-  download.addEventListener('click', () => {
-    try {
-      const entries = read().filter(entry => entry.kind === kind);
-      if (!entries.length) { status.textContent = 'There are no saved inquiries of this type.'; return; }
-      const url = URL.createObjectURL(new Blob([JSON.stringify(entries, null, 2)], {type:'application/json'}));
-      const link = document.createElement('a'); link.href = url; link.download = `primal-reset-${kind}-inquiries.json`; link.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      status.textContent = 'Your saved inquiries have been downloaded.';
-    } catch { status.textContent = 'Saved inquiries could not be read from this browser.'; }
-  });
-  clear.addEventListener('click', () => {
-    try {
-      const entries = read().filter(entry => entry.kind !== kind);
-      localStorage.setItem(storageKey, JSON.stringify(entries));
-      status.textContent = 'Saved inquiries of this type have been deleted from this browser.';
-    } catch { status.textContent = 'Browser storage could not be updated.'; }
-  });
+for (const form of document.querySelectorAll('.inquiry-form')) {
+ const status = form.querySelector('.form-status');
+ const button = form.querySelector('button[type=submit]');
+ form.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!form.reportValidity() || button.disabled) return;
+  if (!/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(form.action)) {
+   status.textContent = 'Online inquiries are not connected yet. Please check back soon.'; return;
+  }
+  if (!form.elements.name.value.trim() || !form.elements.message.value.trim()) {
+   status.textContent = 'Please enter your name and a short message.'; return;
+  }
+  const label = button.textContent;
+  button.disabled = true; button.textContent = 'Sending…';
+  status.textContent = 'Sending your message…';
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+   const response = await fetch(form.action, {method:'POST', body:new FormData(form), headers:{Accept:'application/json'}, signal:controller.signal});
+   const result = await response.json().catch(() => ({}));
+   if (!response.ok || result.ok === false) throw new Error('delivery');
+   status.textContent = 'Thank you. Your message has been sent to the retreat team.';
+   form.reset();
+  } catch {
+   status.textContent = 'We could not confirm delivery. Your message is still here. Please check your connection before trying again.';
+  } finally {
+   clearTimeout(timeout); button.disabled = false; button.textContent = label;
+  }
+ });
 }
 for (const header of document.querySelectorAll('header')) {
   const menu = document.createElement('details'); menu.className = 'local-menu';

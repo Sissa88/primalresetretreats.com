@@ -1,0 +1,452 @@
+{
+  "title": "The Men’s Rebirth",
+  "description": "A seven-day retreat on Hawaiʻi Island helping divorced men rebuild confidence and connection with honest feedback from women coaches.",
+  "texts": [
+    {
+      "id": "text_001",
+      "label": "Private concept preview · Dates, pricing, and program details are",
+      "value": "Private concept preview · Dates, pricing, and program details are not final"
+    },
+    {
+      "id": "text_002",
+      "label": "Primal Reset Retreats",
+      "value": " Primal Reset Retreats"
+    },
+    {
+      "id": "text_003",
+      "label": "Request a conversation",
+      "value": "Request a conversation"
+    },
+    {
+      "id": "text_004",
+      "label": "Inaugural experience · Hawaiʻi Island",
+      "value": "Inaugural experience · Hawaiʻi Island"
+    },
+    {
+      "id": "text_006",
+      "label": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and",
+      "value": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and direction—with guided practice and honest feedback to help you feel comfortable connecting with women again."
+    },
+    {
+      "id": "text_010",
+      "label": "Who this is for",
+      "value": "Who this is for"
+    },
+    {
+      "id": "text_011",
+      "label": "A deliberate pause for the man who knows the old way is no longer",
+      "value": "A deliberate pause for the man who knows the old way is no longer working."
+    },
+    {
+      "id": "text_012",
+      "label": "The life you had ended. Yours didn't.",
+      "value": "The life you had ended. Yours didn't."
+    },
+    {
+      "id": "text_013",
+      "label": "Maybe you're moving through divorce, rejection, burnout, isolatio",
+      "value": "Maybe you're moving through divorce, rejection, burnout, isolation, or the quiet realization that you no longer recognize yourself."
+    },
+    {
+      "id": "text_014",
+      "label": "This retreat is for men ready to participate—not perform. You do ",
+      "value": "This retreat is for men ready to participate—not perform. You do not need to arrive with answers. You do need honesty, respect for the group, and a willingness to engage."
+    },
+    {
+      "id": "text_015",
+      "label": "The connection lab",
+      "value": "The connection lab"
+    },
+    {
+      "id": "text_016",
+      "label": "Most men never get honest feedback from women. Here, you will.",
+      "value": "Most men never get honest feedback from women. Here, you will."
+    },
+    {
+      "id": "text_017",
+      "label": "You begin a real conversation with a woman coach. She reflects wh",
+      "value": "You begin a real conversation with a woman coach. She reflects what she actually experienced—your posture, voice, eye contact, pace, attention, and emotional presence. You adjust, then practice again."
+    },
+    {
+      "id": "text_018",
+      "label": "The goal is not a pickup technique. It is learning to create genu",
+      "value": "The goal is not a pickup technique. It is learning to create genuine connection without pretending, chasing, or shrinking."
+    },
+    {
+      "id": "text_019",
+      "label": "Practice a grounded first interaction",
+      "value": "Practice a grounded first interaction"
+    },
+    {
+      "id": "text_020",
+      "label": "Receive candid, respectful feedback",
+      "value": "Receive candid, respectful feedback"
+    },
+    {
+      "id": "text_021",
+      "label": "Adjust and try again",
+      "value": "Adjust and try again"
+    },
+    {
+      "id": "text_022",
+      "label": "Build presence you can take home",
+      "value": "Build presence you can take home"
+    },
+    {
+      "id": "text_023",
+      "label": "The seven-day journey",
+      "value": "The seven-day journey"
+    },
+    {
+      "id": "text_024",
+      "label": "A progression, not a checklist.",
+      "value": "A progression, not a checklist."
+    },
+    {
+      "id": "text_025",
+      "label": "Day 01",
+      "value": "Day 01"
+    },
+    {
+      "id": "text_026",
+      "label": "The Arrival",
+      "value": "The Arrival"
+    },
+    {
+      "id": "text_027",
+      "label": "Welcome, orientation, posture baseline, opening fire, breathwork,",
+      "value": "Welcome, orientation, posture baseline, opening fire, breathwork, and the first honest conversation."
+    },
+    {
+      "id": "text_028",
+      "label": "Day 02",
+      "value": "Day 02"
+    },
+    {
+      "id": "text_029",
+      "label": "The Primal Body",
+      "value": "The Primal Body"
+    },
+    {
+      "id": "text_030",
+      "label": "Beach movement, breathwork, cold immersion, lava terrain, focus p",
+      "value": "Beach movement, breathwork, cold immersion, lava terrain, focus practices, fire cooking, rhythm, and expression."
+    },
+    {
+      "id": "text_031",
+      "label": "Day 03",
+      "value": "Day 03"
+    },
+    {
+      "id": "text_032",
+      "label": "The Mirror",
+      "value": "The Mirror"
+    },
+    {
+      "id": "text_033",
+      "label": "Kīlauea’s volcanic landscape, reflection, and a coached connectio",
+      "value": "Kīlauea’s volcanic landscape, reflection, and a coached connection lab with direct, respectful feedback."
+    },
+    {
+      "id": "text_034",
+      "label": "Day 04",
+      "value": "Day 04"
+    },
+    {
+      "id": "text_035",
+      "label": "The Dream",
+      "value": "The Dream"
+    },
+    {
+      "id": "text_036",
+      "label": "Sunrise practice, a future-vision ritual, island exploration, phy",
+      "value": "Sunrise practice, a future-vision ritual, island exploration, physical challenge, and a new personal rhythm."
+    },
+    {
+      "id": "text_037",
+      "label": "Days 05–06",
+      "value": "Days 05–06"
+    },
+    {
+      "id": "text_038",
+      "label": "The Warrior Camp",
+      "value": "The Warrior Camp"
+    },
+    {
+      "id": "text_039",
+      "label": "A men-only wilderness chapter centered on practical challenge, st",
+      "value": "A men-only wilderness chapter centered on practical challenge, story, self-responsibility, rest, and a personal code."
+    },
+    {
+      "id": "text_040",
+      "label": "Day 07",
+      "value": "Day 07"
+    },
+    {
+      "id": "text_041",
+      "label": "The New Man",
+      "value": "The New Man"
+    },
+    {
+      "id": "text_042",
+      "label": "Final movement, closing ritual, commitments, documentation of pro",
+      "value": "Final movement, closing ritual, commitments, documentation of progress, and the beginning of ongoing brotherhood."
+    },
+    {
+      "id": "text_043",
+      "label": "All activities remain subject to final confirmation, participant ",
+      "value": "All activities remain subject to final confirmation, participant screening, weather and site conditions, and safety review."
+    },
+    {
+      "id": "text_044",
+      "label": "What is planned",
+      "value": "What is planned"
+    },
+    {
+      "id": "text_045",
+      "label": "Arrive. We’ll handle the essentials.",
+      "value": "Arrive. We’ll handle the essentials."
+    },
+    {
+      "id": "text_046",
+      "label": "Exact inclusions will be confirmed before reservations open. Thes",
+      "value": "Exact inclusions will be confirmed before reservations open. These are the planned essentials."
+    },
+    {
+      "id": "text_047",
+      "label": "Seven nights of planned retreat lodging",
+      "value": "Seven nights of planned retreat lodging"
+    },
+    {
+      "id": "text_048",
+      "label": "Three island-inspired meals per day, plus snacks",
+      "value": "Three island-inspired meals per day, plus snacks"
+    },
+    {
+      "id": "text_049",
+      "label": "Retreat transportation connected to the program",
+      "value": "Retreat transportation connected to the program"
+    },
+    {
+      "id": "text_050",
+      "label": "Guided group sessions and scheduled activities",
+      "value": "Guided group sessions and scheduled activities"
+    },
+    {
+      "id": "text_051",
+      "label": "Wilderness-camping equipment for the scheduled overnight stays",
+      "value": "Wilderness-camping equipment for the scheduled overnight stays"
+    },
+    {
+      "id": "text_052",
+      "label": "Ongoing access to a private alumni group",
+      "value": "Ongoing access to a private alumni group"
+    },
+    {
+      "id": "text_053",
+      "label": "Your base",
+      "value": "Your base"
+    },
+    {
+      "id": "text_054",
+      "label": "Open Gate. Cooled lava underfoot. Sky in every direction.",
+      "value": "Open Gate. Cooled lava underfoot. Sky in every direction."
+    },
+    {
+      "id": "text_055",
+      "label": "Open Gate is an off-grid basecamp on Hawaiʻi Island's southeaster",
+      "value": "Open Gate is an off-grid basecamp on Hawaiʻi Island's southeastern lava fields. Accommodations are simple and communal rather than resort-style, with access to the coast, jungle, and volcanic landscapes."
+    },
+    {
+      "id": "text_056",
+      "label": "Simple, clean lodging",
+      "value": "Simple, clean lodging"
+    },
+    {
+      "id": "text_057",
+      "label": "Shared spaces and meals",
+      "value": "Shared spaces and meals"
+    },
+    {
+      "id": "text_058",
+      "label": "Low-light night skies",
+      "value": "Low-light night skies"
+    },
+    {
+      "id": "text_059",
+      "label": "The women coaches",
+      "value": "The women coaches"
+    },
+    {
+      "id": "text_060",
+      "label": "Four perspectives, united by a commitment to grounded support and",
+      "value": "Four perspectives, united by a commitment to grounded support and genuine human connection."
+    },
+    {
+      "id": "text_061",
+      "label": "Meet the women who help create a safer place to practice real con",
+      "value": "Meet the women who help create a safer place to practice real connection."
+    },
+    {
+      "id": "text_062",
+      "label": "Together, Renee, Carley, Priscilla, and Zoë bring experience acro",
+      "value": "Together, Renee, Carley, Priscilla, and Zoë bring experience across breathwork, movement, nutrition, counselling, nervous-system regulation, and whole-person wellbeing."
+    },
+    {
+      "id": "text_063",
+      "label": "Holistic Wellness Practitioner",
+      "value": "Holistic Wellness Practitioner"
+    },
+    {
+      "id": "text_064",
+      "label": "Renee",
+      "value": "Renee"
+    },
+    {
+      "id": "text_065",
+      "label": "Sound healing · Reiki · Breathwork · Meditation · Yin yoga · NLP",
+      "value": "Sound healing · Reiki · Breathwork · Meditation · Yin yoga · NLP"
+    },
+    {
+      "id": "text_066",
+      "label": "Renee creates safe, nurturing spaces where people can slow down, ",
+      "value": "Renee creates safe, nurturing spaces where people can slow down, reconnect with themselves, and restore balance. Her approach combines compassionate presence with breathwork, meditation, Reiki, sound healing, and other whole-person practices."
+    },
+    {
+      "id": "text_067",
+      "label": "Whole-Person Health Coach",
+      "value": "Whole-Person Health Coach"
+    },
+    {
+      "id": "text_068",
+      "label": "Carley",
+      "value": "Carley"
+    },
+    {
+      "id": "text_069",
+      "label": "Personal training · Hatha yoga · Functional nutrition",
+      "value": "Personal training · Hatha yoga · Functional nutrition"
+    },
+    {
+      "id": "text_070",
+      "label": "Carley is the founder of Deeply Rooted Coaching and has a backgro",
+      "value": "Carley is the founder of Deeply Rooted Coaching and has a background in exercise science. She combines movement, nutrition, mindset, nervous-system regulation, and body awareness to help people feel strong, grounded, and at home in themselves."
+    },
+    {
+      "id": "text_071",
+      "label": "Trauma-Informed Healer & Counsellor",
+      "value": "Trauma-Informed Healer & Counsellor"
+    },
+    {
+      "id": "text_072",
+      "label": "Priscilla",
+      "value": "Priscilla"
+    },
+    {
+      "id": "text_073",
+      "label": "Trauma-informed counselling · Breathwork · Reiki · Energy healing",
+      "value": "Trauma-informed counselling · Breathwork · Reiki · Energy healing"
+    },
+    {
+      "id": "text_074",
+      "label": "Priscilla creates compassionate, grounded spaces for people to ex",
+      "value": "Priscilla creates compassionate, grounded spaces for people to explore difficult emotions, build self-awareness, and reconnect with their own strength. Her work integrates breathwork, counselling, Reiki, energy healing, and spiritual guidance."
+    },
+    {
+      "id": "text_075",
+      "label": "Breathwork & Consciousness Coach",
+      "value": "Breathwork & Consciousness Coach"
+    },
+    {
+      "id": "text_076",
+      "label": "Zoë",
+      "value": "Zoë"
+    },
+    {
+      "id": "text_077",
+      "label": "Former registered nurse · Breathwork · Consciousness coaching · Y",
+      "value": "Former registered nurse · Breathwork · Consciousness coaching · Yoga"
+    },
+    {
+      "id": "text_078",
+      "label": "After more than twelve years as a registered nurse, Zoë trained i",
+      "value": "After more than twelve years as a registered nurse, Zoë trained in yoga, coaching, personal training, energy healing, and transformational breathwork. Through Flowstate with Zoë, she offers practical tools for nervous-system regulation, clarity, balance, and everyday wellbeing."
+    },
+    {
+      "id": "text_079",
+      "label": "A thoughtful first step",
+      "value": "A thoughtful first step"
+    },
+    {
+      "id": "text_080",
+      "label": "Application before transaction.",
+      "value": "Application before transaction."
+    },
+    {
+      "id": "text_081",
+      "label": "Tell us where you are",
+      "value": "Tell us where you are"
+    },
+    {
+      "id": "text_082",
+      "label": "Have a private fit call",
+      "value": "Have a private fit call"
+    },
+    {
+      "id": "text_083",
+      "label": "Reserve after acceptance",
+      "value": "Reserve after acceptance"
+    },
+    {
+      "id": "text_084",
+      "label": "Request a conversation",
+      "value": "Request a conversation "
+    },
+    {
+      "id": "text_085",
+      "label": "Primal Reset Retreats",
+      "value": "Primal Reset Retreats"
+    },
+    {
+      "id": "text_086",
+      "label": "Private concept · Not accepting payments",
+      "value": "Private concept · Not accepting payments"
+    }
+  ],
+  "images": [
+    {
+      "id": "image_2",
+      "src": "/primal-reset-connection-lab.png",
+      "alt": "A man practicing a conversation with a woman coach while other retreat participants observe"
+    },
+    {
+      "id": "image_3",
+      "src": "/coaches/renee.jpg",
+      "alt": "Renee, Primal Reset women’s coach"
+    },
+    {
+      "id": "image_4",
+      "src": "/coaches/carley.jpg",
+      "alt": "Carley, Primal Reset women’s coach"
+    },
+    {
+      "id": "image_5",
+      "src": "/coaches/priscilla.jpg",
+      "alt": "Priscilla, Primal Reset women’s coach"
+    },
+    {
+      "id": "image_6",
+      "src": "/coaches/zoe.jpg",
+      "alt": "Zoë, Primal Reset women’s coach"
+    }
+  ],
+  "summary": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and direction.",
+  "image": "/primal-reset-hero.png",
+  "dates": "Dates announced soon",
+  "duration": "7 days",
+  "location": "Big Island · Hawaiʻi",
+  "capacity": "15 men",
+  "price": "Pricing to be confirmed",
+  "published": true,
+  "body": ""
+}

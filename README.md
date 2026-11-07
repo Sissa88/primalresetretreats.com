@@ -1,37 +1,43 @@
-# Primal Reset Retreats — local edition
+# Primal Reset Retreats
 
-A standalone reconstruction of all three linked pages from https://primal-reset-retreats.vercel.app/, with the original images, fonts, responsive styles, and content. Original framework source was unavailable: the supplied GitHub repository was empty. These are editable HTML pages, not the original React source.
+An editable static retreat website prepared for Cloudflare Pages, with Decap CMS, GitHub sign-in through two Pages Functions, and two independently configurable Formspree forms.
 
-## Run locally
+Start with **CLOUDFLARE-SETUP.md** for account setup and everyday editing instructions. No paid hosting plan is required for this small site within provider free limits. Domain renewals remain separate.
 
-Install Node.js 20 or newer. In this directory run:
+## Local development
+
+Use Node 22 or newer:
 
 ```
+npm ci
 npm start
 ```
 
-Open http://localhost:3000. No dependency installation, paid hosting, account, or external server is needed. The included server listens on your own computer only. Stop it with Ctrl+C. You can also serve `public/` using a static web server.
+Open http://localhost:3000. `npm start` builds the site before starting the loopback-only static server. Stop with Ctrl+C. Run `npm run build` after content changes. The deployed editor needs the Cloudflare/GitHub setup in the guide; the local static server does not emulate Pages Functions.
 
-## Edit
+```
+npm run check
+```
 
-- `public/index.html`: Home
-- `public/retreats/mens-rebirth/index.html`: retreat details
-- `public/coach-with-us/index.html`: coach information and application
-- `public/local.css`: added styles and accessibility improvements
-- `public/local.js`: forms and navigation
-- `public/_next/static/css/`: preserved original compiled styles
-- Images and fonts are stored locally under `public/`.
+Checks include JavaScript syntax, static links/assets/anchors, generated CMS configuration, adding/hiding retreats and pages, form configuration, Markdown escaping, and the OAuth handshake/state logic. OAuth unit tests mock GitHub; actual account authorization, delivery, and a real Cloudflare deployment must be verified after configuring accounts.
 
-## Forms
+## Source layout
 
-Retreat and coach forms validate required fields and save entries in the current browser's localStorage. Download and delete controls operate separately for each inquiry type. Nothing is emailed or submitted to a remote service. Storage is specific to the browser and local address, and is not encrypted. Use sample data on shared devices. Real inquiries require connecting an email/form service later.
+- `content/settings.json`: public website/contact/form settings; never put secrets here.
+- `content/pages/`: text/image fields for the existing pages and added custom pages.
+- `content/retreats/`: retreat details, descriptions, and visibility.
+- `templates/`: preserved original page design with content placeholders.
+- `public/`: local image/font assets, styles, visitor form script, and Decap admin.
+- `scripts/build.mjs`: renders the content and templates into `dist/`.
+- `functions/api/`: Cloudflare Pages OAuth handlers, with secrets read only at runtime.
+- `dist/`: generated deployment output (ignored by Git).
 
-## Still needs owner decisions before public launch
+The original repository was empty; the initial HTML/design/assets were recovered from the live Vercel site. This is a reconstruction, not recovered original React source. New retreats and custom pages use the included reusable layouts.
 
-Confirm dates, price, lodging duration (the current copy describes seven days and seven nights), booking/cancellation terms, coach participation and credentials, final activities, screening requirements, and the contact destination. Concept-preview labels remain because these facts are unconfirmed. No payments are collected. No privacy or refund policies have been invented.
+## Deployment configuration
 
-`robots.txt` discourages indexing of this unfinished preview. Add a production sitemap and update robots when the final public domain and content are ready.
+Cloudflare Pages: production branch `main`, framework `None`, build `npm run build`, output `dist`, `NODE_VERSION=22`. Use Git integration for automatic updates after CMS commits. The top-level `functions/` directory provides editor login. `_routes.json` limits Functions execution to the two login routes.
 
-## Verify
+Runtime settings: `SITE_URL`, `GITHUB_CLIENT_ID`, encrypted `GITHUB_CLIENT_SECRET`. The CMS and authenticator currently use `public_repo` scope for the public GitHub repository. Read the setup guide before changing repository visibility.
 
-Run `npm run check`. This checks JavaScript syntax and local page, asset, and anchor links. Browser layout QA was not available in the build environment.
+Forms are disabled until Formspree IDs are published in the editor. Submissions are sent directly to Formspree and are not saved in GitHub or browser-local storage. Dates, pricing, program details, and policies still require owner confirmation. Indexing is disabled until explicitly enabled with a valid site URL.
