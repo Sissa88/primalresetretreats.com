@@ -1,0 +1,1 @@
+{"name":"primal-reset-retreats","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node server.mjs","start":"node server.mjs","check":"node --check server.mjs && node --check public/local.js && python3 scripts/check.py"}}
