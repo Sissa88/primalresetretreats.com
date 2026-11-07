@@ -2,6 +2,7 @@ import {cp,mkdir,readFile,writeFile,readdir,rm} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {marked} from 'marked';
+import {renderPricing} from './pricing.mjs';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function imageURL(v){if(!/^\/(?!\/)[^\s"<>]*$/.test(v||''))throw Error('Images must use a local path: '+v);return esc(v);}
@@ -34,18 +35,21 @@ async function renderTemplate(name,data,extra,settings){
 }
 export async function build(){
  const settings=await json('content/settings.json');
+ const pricing=await json('content/pricing.json');
  if(settings.site_url&&!/^https:\/\/[^/]+\/?$/.test(settings.site_url))throw Error('Site URL must be an HTTPS origin with no path.');
  if(settings.contact_email&&!/^[^\s@<>"&]+@[^\s@<>"&]+\.[^\s@<>"&]+$/.test(settings.contact_email))throw Error('Invalid contact email.');
  const retreats=(await list('content/retreats')).filter(x=>x.published!==false);
  const pages=await list('content/pages');
  for(const item of [...retreats,...pages])if(!slugOK(item.slug))throw Error('Invalid page filename: '+item.slug);
  const custom=pages.filter(x=>!['home','coach-with-us'].includes(x.slug)&&x.published!==false);
- for(const p of custom)if(['admin','api','retreats'].includes(p.slug))throw Error('Reserved page name: '+p.slug);
- const links=custom.length?`<nav class="extra-links" aria-label="More pages">${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`:'';
+ for(const p of custom)if(['admin','api','retreats','pricing','book'].includes(p.slug))throw Error('Reserved page name: '+p.slug);
+ const links=`<nav class="extra-links" aria-label="More pages"><a href="/pricing/">Pricing &amp; rooms</a>${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`;
  const out=path.join(root,'dist');await rm(out,{recursive:true,force:true});await cp(path.join(root,'public'),out,{recursive:true});
  // Page HTML is generated from templates and JSON; remove the earlier snapshot pages.
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});
- const put=async (url,html)=>{html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);};
+ const put=async (url,html)=>{if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);};
+ await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
+ await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
  await put('',await renderTemplate('home',home,{RETREAT_CARDS:cards(retreats),EXTRA_LINKS:links},settings));
  await put('coach-with-us',await renderTemplate('coach-with-us',coach,{EXTRA_LINKS:links},settings));
@@ -61,10 +65,10 @@ export async function build(){
  await writeFile(path.join(out,'form-status.json'),JSON.stringify({retreat:!!settings.retreat_form_id,coach:!!settings.coach_form_id}));
  const origin=settings.site_url.replace(/\/$/,'');
  if(origin&&settings.allow_indexing){
-  const urls=['/','/coach-with-us/',...retreats.map(r=>'/retreats/'+r.slug+'/'),...custom.map(p=>'/'+p.slug+'/')];
+  const urls=['/','/pricing/','/coach-with-us/',...retreats.map(r=>'/retreats/'+r.slug+'/'),...custom.map(p=>'/'+p.slug+'/')];
   await writeFile(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(url=>`<url><loc>${esc(origin+url)}</loc></url>`).join('')+'</urlset>');
   await writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${origin}/sitemap.xml\n`);
  }
- console.log(`Built ${2+retreats.length+custom.length} pages into dist/`);
+ console.log(`Built ${3+retreats.length+custom.length} pages into dist/`);
 }
 if(process.argv[1]===fileURLToPath(import.meta.url))await build();

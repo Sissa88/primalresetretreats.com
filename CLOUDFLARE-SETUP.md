@@ -92,10 +92,11 @@ Messages go directly to Formspree, not into GitHub or browser storage. If a send
 
 Open your website address followed by `/admin/` and sign in with GitHub.
 
+- **Edit room prices or photos:** **Pricing & rooms → Room prices, photos, and promotion**. Expand either room, update its fields, and publish. The header Book now button leads to this pricing page. See `PRICING-AND-PAYMENTS.md` for details.
 - **Change existing words/photos:** **Existing pages → Home** or **Coach with us**. Expand **Page text** to find the text by its current wording. Expand **Page images** to upload/replace an image and describe it for accessibility. Keep the existing entries; edit their values.
 - **Update the first retreat:** **Retreats → The Men's Rebirth**. Edit title, summary, hero image, dates, duration, location, capacity, and price. Its original detailed sections are under **Page text**; extra content can go into **Retreat description**. The first retreat's “show on website” switch also controls whether its page is generated.
 - **Add another retreat:** **Retreats → New Retreat**. Fill in the fields, upload a photo, and write the description in the visual editor. Leave **Show on website** enabled. Publishing creates its page and adds a card to Home automatically. New retreats share the inquiry form on Home.
-- **Add another page:** **Additional pages → New Additional page**. Give it a title and write its content. Published pages appear in the footer. Avoid page names `Admin`, `API`, and `Retreats`, which are reserved.
+- **Add another page:** **Additional pages → New Additional page**. Give it a title and write its content. Published pages appear in the footer. Avoid page names `Admin`, `API`, `Retreats`, `Pricing`, and `Book`, which are reserved.
 - **Publish an edit:** choose **Publish** / **Publish now**. This saves a GitHub commit. Cloudflare then deploys the update automatically, usually within a few minutes. Refresh your public page after Cloudflare reports success. Changes on your screen aren't live until publishing and deployment finish.
 - **View messages:** use your email inbox or the Formspree dashboard, not Decap.
 

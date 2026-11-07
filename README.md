@@ -2,6 +2,8 @@
 
 An editable static retreat website prepared for Cloudflare Pages, with Decap CMS, GitHub sign-in through two Pages Functions, and two independently configurable Formspree forms.
 
+See **PRICING-AND-PAYMENTS.md** for the new pricing page, editing room prices/photos, the Book now button, and the proposed Stripe integration. Payments are not connected.
+
 Start with **CLOUDFLARE-SETUP.md** for account setup and everyday editing instructions. No paid hosting plan is required for this small site within provider free limits. Domain renewals remain separate.
 
 ## Local development
@@ -26,6 +28,7 @@ Checks include JavaScript syntax, static links/assets/anchors, generated CMS con
 - `content/settings.json`: public website/contact/form settings; never put secrets here.
 - `content/pages/`: text/image fields for the existing pages and added custom pages.
 - `content/retreats/`: retreat details, descriptions, and visibility.
+- `content/pricing.json`: the two accommodation options, room photographs, promotion, and planned deposit.
 - `templates/`: preserved original page design with content placeholders.
 - `public/`: local image/font assets, styles, visitor form script, and Decap admin.
 - `scripts/build.mjs`: renders the content and templates into `dist/`.

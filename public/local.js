@@ -33,7 +33,7 @@ for (const header of document.querySelectorAll('header')) {
   const menu = document.createElement('details'); menu.className = 'local-menu';
   const summary = document.createElement('summary'); summary.textContent = 'Menu'; menu.append(summary);
   const nav = document.createElement('nav'); nav.setAttribute('aria-label','All pages');
-  for (const [label, href] of [['Home','/'],["The Men’s Rebirth",'/retreats/mens-rebirth/'],['Coach with us','/coach-with-us/'],['Inquire','/#inquire']]) {
+  for (const [label, href] of [['Home','/'],['Pricing & rooms','/pricing/'],["The Men’s Rebirth",'/retreats/mens-rebirth/'],['Coach with us','/coach-with-us/'],['Inquire','/#inquire']]) {
     const a = document.createElement('a'); a.textContent = label; a.href = href; nav.append(a);
   }
   menu.append(nav); header.append(menu);

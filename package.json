@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run build && node server.mjs",
     "start": "npm run build && node server.mjs",
-    "check": "node --check server.mjs && node --check public/local.js && node --check functions/api/auth.js && node --check functions/api/callback.js && npm run build && python3 scripts/check.py && node --test tests/*.test.mjs",
+    "check": "node --check server.mjs && node --check public/local.js && node --check public/pricing.js && node --check public/pricing-model.js && node --check functions/api/auth.js && node --check functions/api/callback.js && npm run build && python3 scripts/check.py && node --test --test-concurrency=1 tests/*.test.mjs",
     "build": "node scripts/build.mjs"
   },
   "dependencies": {

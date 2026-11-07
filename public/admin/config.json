@@ -60,6 +60,230 @@
               "label": "Allow search engines to index this site",
               "widget": "boolean",
               "default": false
+            },
+            {
+              "name": "show_booking_button",
+              "label": "Show the booking button",
+              "widget": "boolean",
+              "default": true
+            },
+            {
+              "name": "booking_button_label",
+              "label": "Booking button text",
+              "widget": "string",
+              "default": "Book now",
+              "hint": "Opens the pricing and room-selection page. Payment is not connected yet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "label": "Pricing & rooms",
+      "files": [
+        {
+          "name": "pricing",
+          "label": "Room prices, photos, and promotion",
+          "file": "content/pricing.json",
+          "fields": [
+            {
+              "name": "title",
+              "label": "Page title",
+              "widget": "string"
+            },
+            {
+              "name": "description",
+              "label": "Search description",
+              "widget": "text"
+            },
+            {
+              "name": "eyebrow",
+              "label": "Retreat dates and location",
+              "widget": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Headline, first line",
+              "widget": "string"
+            },
+            {
+              "name": "heading_emphasis",
+              "label": "Headline, second line",
+              "widget": "string"
+            },
+            {
+              "name": "intro",
+              "label": "Introductory text",
+              "widget": "text"
+            },
+            {
+              "name": "hero_image",
+              "label": "Hero image",
+              "widget": "image"
+            },
+            {
+              "name": "hero_alt",
+              "label": "Hero image description",
+              "widget": "string"
+            },
+            {
+              "name": "location",
+              "label": "Location",
+              "widget": "string"
+            },
+            {
+              "name": "room_intro",
+              "label": "Room introduction",
+              "widget": "text"
+            },
+            {
+              "name": "currency",
+              "label": "Currency",
+              "widget": "hidden",
+              "default": "USD"
+            },
+            {
+              "name": "deposit_percent",
+              "label": "Planned deposit percentage",
+              "widget": "number",
+              "value_type": "float",
+              "min": 1,
+              "max": 100,
+              "step": 0.01
+            },
+            {
+              "name": "promo_enabled",
+              "label": "Offer a promotion",
+              "widget": "boolean"
+            },
+            {
+              "name": "promo_code",
+              "label": "Promotion code",
+              "widget": "string",
+              "hint": "Public preview code, not a password. No payment is collected."
+            },
+            {
+              "name": "promo_percent",
+              "label": "Promotion discount percentage",
+              "widget": "number",
+              "value_type": "float",
+              "min": 0,
+              "max": 100,
+              "step": 0.01
+            },
+            {
+              "name": "promo_description",
+              "label": "Promotion instructions",
+              "widget": "text"
+            },
+            {
+              "name": "balance_note",
+              "label": "Balance Note",
+              "widget": "string"
+            },
+            {
+              "name": "availability_note",
+              "label": "Availability explanation",
+              "widget": "text"
+            },
+            {
+              "name": "booking_note",
+              "label": "Preview and booking status",
+              "widget": "text"
+            },
+            {
+              "name": "closing_heading",
+              "label": "Closing Heading",
+              "widget": "string"
+            },
+            {
+              "name": "closing_text",
+              "label": "Closing Text",
+              "widget": "text"
+            },
+            {
+              "name": "rooms",
+              "label": "The two room options",
+              "widget": "list",
+              "allow_add": false,
+              "min": 2,
+              "max": 2,
+              "collapsed": true,
+              "summary": "{{fields.name}} \u2014 ${{fields.price}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "name",
+                  "label": "Room name",
+                  "widget": "string"
+                },
+                {
+                  "name": "badge",
+                  "label": "Short tagline",
+                  "widget": "string"
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "widget": "text"
+                },
+                {
+                  "name": "price",
+                  "label": "Package price per person (USD)",
+                  "widget": "number",
+                  "value_type": "float",
+                  "min": 0.01,
+                  "max": 1000000,
+                  "step": 0.01
+                },
+                {
+                  "name": "capacity",
+                  "label": "Planned total allotment",
+                  "widget": "string"
+                },
+                {
+                  "name": "image",
+                  "label": "Main room photo",
+                  "widget": "image"
+                },
+                {
+                  "name": "image_alt",
+                  "label": "Describe the main photo",
+                  "widget": "string"
+                },
+                {
+                  "name": "features",
+                  "label": "Room features",
+                  "widget": "list",
+                  "field": {
+                    "name": "feature",
+                    "label": "Feature",
+                    "widget": "string"
+                  }
+                },
+                {
+                  "name": "photos",
+                  "label": "Additional room photos",
+                  "widget": "list",
+                  "fields": [
+                    {
+                      "name": "image",
+                      "label": "Image",
+                      "widget": "image"
+                    },
+                    {
+                      "name": "alt",
+                      "label": "Photo description",
+                      "widget": "string"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

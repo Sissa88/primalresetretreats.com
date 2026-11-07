@@ -23,6 +23,6 @@ for path,page in pages.items():
   if not target.exists():errors.append(f'{path.relative_to(root)}: missing {ref}')
   elif u.fragment and target in pages and unquote(u.fragment) not in pages[target].ids:errors.append(f'{path.relative_to(root)}: missing anchor {ref}')
  for src in page.scripts:
-  if src not in ['/local.js', '/admin/editor.js', None] and not str(src).startswith('https://cdn.jsdelivr.net/'):errors.append(f'Unexpected runtime script {src}')
+  if src not in ['/local.js', '/admin/editor.js', '/pricing.js', None] and not str(src).startswith('https://cdn.jsdelivr.net/'):errors.append(f'Unexpected runtime script {src}')
 if errors:raise SystemExit('\n'.join(errors))
 print(f'Checked {len(pages)} pages: all local assets, page links, anchors, and scripts resolve.')
