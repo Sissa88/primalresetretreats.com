@@ -78,7 +78,7 @@ If you change from `pages.dev` to your custom domain later, change **both** `SIT
 
 ## 4. Turn on email delivery for the forms
 
-1. Create a free account at https://formspree.io/ and verify the email address that should receive inquiries.
+1. Create a free account at https://formspree.io/ and verify `info@primalresetretreats.com`, the address selected to receive both retreat inquiries and coach applications.
 2. Create two forms: **Retreat inquiries** and **Coach applications**.
 3. Each form has an endpoint such as `https://formspree.io/f/abcdefgh`. Copy only its final ID, `abcdefgh`.
 4. Open your site's `/admin/` dashboard. Go to **Website settings → Contact, forms, and domain**.
