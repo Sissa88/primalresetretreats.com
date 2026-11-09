@@ -1,0 +1,36 @@
+/* Shared, lighter typography for every public page. */
+@font-face {
+  font-family: 'Primal Sans';
+  src: url('/_next/static/_vinext_fonts/geist-8ac0455e797f/geist-98bbbccb.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+body {
+  --font-heading: 'Primal Sans', Arial, sans-serif;
+  font-family: 'Primal Sans', Arial, sans-serif;
+  font-weight: 400;
+}
+body h1, body h2, body h3, body h4, body h5, body h6,
+body .font-heading,
+body.price-page h1, body.price-page h2, body.price-page h3,
+body.price-page .price-room-name,
+body.price-page .inquiry-form h3 {
+  font-family: 'Primal Sans', Arial, sans-serif;
+  font-weight: 400;
+}
+body h1, body.price-page h1 { font-weight: 350; }
+body h1 em, body h2 em { font-family: inherit; font-weight: inherit; }
+body .font-bold, body .font-semibold,
+body strong, body b,
+body .inquiry-form label, body .inquiry-form button,
+body .site-book-button, body .action-link,
+body .eyebrow, body .form-status,
+body.price-page .price-brand, body.price-page .price-kicker,
+body.price-page .price-steps, body.price-page .price-summary dd,
+body.price-page .price-cta, body.price-page .price-deposit > span {
+  font-weight: 500;
+}
+body.price-page .price-room-amount,
+body.price-page .price-deposit > strong { font-weight: 450; }
+body button, body input, body textarea, body select { font-family: inherit; }

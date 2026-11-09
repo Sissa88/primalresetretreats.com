@@ -47,7 +47,7 @@ export async function build(){
  const out=path.join(root,'dist');await rm(out,{recursive:true,force:true});await cp(path.join(root,'public'),out,{recursive:true});
  // Page HTML is generated from templates and JSON; remove the earlier snapshot pages.
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});
- const put=async (url,html)=>{if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);};
+ const put=async (url,html)=>{html=html.replace('</head>','<link rel="stylesheet" href="/typography.css"></head>');if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);};
  await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
  await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
