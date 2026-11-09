@@ -213,46 +213,6 @@
       "value": "A multidisciplinary team bringing experience in breathwork, wellness, movement, nutrition, counselling, and nervous-system regulation."
     },
     {
-      "id": "text_043",
-      "label": "Renee",
-      "value": "Renee"
-    },
-    {
-      "id": "text_044",
-      "label": "Holistic Wellness Practitioner",
-      "value": "Holistic Wellness Practitioner"
-    },
-    {
-      "id": "text_045",
-      "label": "Carley",
-      "value": "Carley"
-    },
-    {
-      "id": "text_046",
-      "label": "Whole-Person Health Coach",
-      "value": "Whole-Person Health Coach"
-    },
-    {
-      "id": "text_047",
-      "label": "Priscilla",
-      "value": "Priscilla"
-    },
-    {
-      "id": "text_048",
-      "label": "Trauma-Informed Healer & Counsellor",
-      "value": "Trauma-Informed Healer & Counsellor"
-    },
-    {
-      "id": "text_049",
-      "label": "Zoë",
-      "value": "Zoë"
-    },
-    {
-      "id": "text_050",
-      "label": "Breathwork & Consciousness Coach",
-      "value": "Breathwork & Consciousness Coach"
-    },
-    {
       "id": "text_051",
       "label": "The method",
       "value": "The method"
@@ -558,26 +518,6 @@
       "id": "image_3",
       "src": "/primal-reset-connection-lab.png",
       "alt": "A man practicing a conversation with a woman coach while the retreat group observes"
-    },
-    {
-      "id": "image_4",
-      "src": "/coaches/renee.jpg",
-      "alt": "Renee, Primal Reset women’s coach"
-    },
-    {
-      "id": "image_5",
-      "src": "/coaches/carley.jpg",
-      "alt": "Carley, Primal Reset women’s coach"
-    },
-    {
-      "id": "image_6",
-      "src": "/coaches/priscilla.jpg",
-      "alt": "Priscilla, Primal Reset women’s coach"
-    },
-    {
-      "id": "image_7",
-      "src": "/coaches/zoe.jpg",
-      "alt": "Zoë, Primal Reset women’s coach"
     },
     {
       "id": "image_8",

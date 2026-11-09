@@ -1,0 +1,40 @@
+{
+  "coaches": [
+    {
+      "id": "renee",
+      "name": "Renee",
+      "role": "Holistic Wellness Practitioner",
+      "specialties": "Sound healing · Reiki · Breathwork · Meditation · Yin yoga · NLP",
+      "bio": "Renee creates safe, nurturing spaces where people can slow down, reconnect with themselves, and restore balance. Her approach combines compassionate presence with breathwork, meditation, Reiki, sound healing, and other whole-person practices.",
+      "image": "/coaches/renee.jpg",
+      "image_alt": "Renee, Primal Reset women’s coach"
+    },
+    {
+      "id": "carley",
+      "name": "Carley",
+      "role": "Whole-Person Health Coach",
+      "specialties": "Personal training · Hatha yoga · Functional nutrition",
+      "bio": "Carley is the founder of Deeply Rooted Coaching and has a background in exercise science. She combines movement, nutrition, mindset, nervous-system regulation, and body awareness to help people feel strong, grounded, and at home in themselves.",
+      "image": "/coaches/carley.jpg",
+      "image_alt": "Carley, Primal Reset women’s coach"
+    },
+    {
+      "id": "priscilla",
+      "name": "Priscilla",
+      "role": "Trauma-Informed Healer & Counsellor",
+      "specialties": "Trauma-informed counselling · Breathwork · Reiki · Energy healing",
+      "bio": "Priscilla creates compassionate, grounded spaces for people to explore difficult emotions, build self-awareness, and reconnect with their own strength. Her work integrates breathwork, counselling, Reiki, energy healing, and spiritual guidance.",
+      "image": "/coaches/priscilla.jpg",
+      "image_alt": "Priscilla, Primal Reset women’s coach"
+    },
+    {
+      "id": "zoe",
+      "name": "Zoë",
+      "role": "Breathwork & Consciousness Coach",
+      "specialties": "Former registered nurse · Breathwork · Consciousness coaching · Yoga",
+      "bio": "After more than twelve years as a registered nurse, Zoë trained in yoga, coaching, personal training, energy healing, and transformational breathwork. Through Flowstate with Zoë, she offers practical tools for nervous-system regulation, clarity, balance, and everyday wellbeing.",
+      "image": "/coaches/zoe.jpg",
+      "image_alt": "Zoë, Primal Reset women’s coach"
+    }
+  ]
+}

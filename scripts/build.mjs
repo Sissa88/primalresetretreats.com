@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {marked} from 'marked';
 import {renderPricing} from './pricing.mjs';
+import {renderCoachGrid} from './coaches.mjs';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function imageURL(v){if(!/^\/(?!\/)[^\s"<>]*$/.test(v||''))throw Error('Images must use a local path: '+v);return esc(v);}
@@ -36,6 +37,8 @@ async function renderTemplate(name,data,extra,settings){
 export async function build(){
  const settings=await json('content/settings.json');
  const pricing=await json('content/pricing.json');
+ const {coaches}=await json('content/coaches.json');
+ const coachGrid=renderCoachGrid(coaches,{esc,imageURL});
  if(settings.site_url&&!/^https:\/\/[^/]+\/?$/.test(settings.site_url))throw Error('Site URL must be an HTTPS origin with no path.');
  if(settings.contact_email&&!/^[^\s@<>"&]+@[^\s@<>"&]+\.[^\s@<>"&]+$/.test(settings.contact_email))throw Error('Invalid contact email.');
  const retreats=(await list('content/retreats')).filter(x=>x.published!==false);
@@ -51,12 +54,12 @@ export async function build(){
  await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
  await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
- await put('',await renderTemplate('home',home,{RETREAT_CARDS:cards(retreats),EXTRA_LINKS:links},settings));
+ await put('',await renderTemplate('home',home,{RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,EXTRA_LINKS:links},settings));
  await put('coach-with-us',await renderTemplate('coach-with-us',coach,{EXTRA_LINKS:links},settings));
  for(const r of retreats){
   let body;
   if(r.slug==='mens-rebirth'){
-   body=await renderTemplate('mens-rebirth',r,{EXTRA_LINKS:links,EXTRA_BODY:r.body?`<section class="cms-section"><article class="prose cms-container">${markdown(r.body)}</article></section>`:''},settings);
+   body=await renderTemplate('mens-rebirth',r,{EXTRA_LINKS:links,COACH_GRID:coachGrid,EXTRA_BODY:r.body?`<section class="cms-section"><article class="prose cms-container">${markdown(r.body)}</article></section>`:''},settings);
    body=body.replace('</main>',`<section class="cms-section"><div class="cms-container"><p class="eyebrow">Retreat details</p><h2>${esc(r.dates)}</h2><p>${esc(r.duration)} · ${esc(r.capacity)} · ${esc(r.price)}</p><p>${esc(r.summary)}</p></div></section></main>`);
   }else body=shell(r,`<section class="cms-section retreat-hero"><div class="cms-container"><p class="eyebrow">${esc(r.location)}</p><h1>${esc(r.title)}</h1><p class="lead">${esc(r.summary)}</p><img src="${imageURL(r.image)}" alt="${esc(r.title)}"><p>${esc(r.dates)} · ${esc(r.duration)} · ${esc(r.capacity)}</p><p>${esc(r.price)}</p><a class="action-link" href="/#inquire">Request details →</a></div></section><section class="cms-section"><article class="prose cms-container">${markdown(r.body)}</article></section>`).replace('{{EXTRA_LINKS}}',links);
   await put('retreats/'+r.slug,body);

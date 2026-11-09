@@ -290,6 +290,63 @@
       ]
     },
     {
+      "name": "coaches",
+      "label": "Coach profiles",
+      "files": [
+        {
+          "name": "coaches",
+          "label": "Photos and biographies",
+          "file": "content/coaches.json",
+          "fields": [
+            {
+              "name": "coaches",
+              "label": "Coaches",
+              "widget": "list",
+              "collapsed": true,
+              "summary": "{{fields.name}}",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "Id",
+                  "widget": "hidden"
+                },
+                {
+                  "name": "name",
+                  "label": "Name",
+                  "widget": "string"
+                },
+                {
+                  "name": "role",
+                  "label": "Role or title",
+                  "widget": "string"
+                },
+                {
+                  "name": "specialties",
+                  "label": "Areas of experience",
+                  "widget": "text"
+                },
+                {
+                  "name": "bio",
+                  "label": "Biography",
+                  "widget": "text"
+                },
+                {
+                  "name": "image",
+                  "label": "Portrait",
+                  "widget": "image"
+                },
+                {
+                  "name": "image_alt",
+                  "label": "Portrait description",
+                  "widget": "string"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "existing",
       "label": "Existing pages",
       "files": [
