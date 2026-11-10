@@ -61,3 +61,18 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 @media(max-width:480px){.contact-two-columns{grid-template-columns:1fr}.contact-form{padding:24px}.contact-help{margin-top:-8px}}
 .contact-service-note{font-size:11px;line-height:1.7;color:#5f695c;margin-top:8px}
 .site-contact-button{display:inline-block;padding:10px 14px;font-size:11px;color:inherit;border:1px solid currentColor;border-radius:24px;white-space:nowrap}
+
+.founder-profile{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.4fr);gap:clamp(28px,5vw,64px);margin-top:64px;padding-top:48px;border-top:1px solid #27352b33;color:#1b261e;align-items:start}
+.founder-photo{aspect-ratio:4/5;overflow:hidden;background:#dcd6c7;border:1px solid #27352b26}
+.founder-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.founder-photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:100%;height:100%;padding:28px;text-align:center;color:#53604f;background:linear-gradient(145deg,#e8e1d2,#d6cebd)}
+.founder-initials{display:grid;place-items:center;width:110px;height:110px;border:1px solid #53604f45;border-radius:50%;font-size:38px;font-weight:350;letter-spacing:-.04em;margin-bottom:10px}
+.founder-photo-placeholder>span:not(.founder-initials){font-size:18px}
+.founder-photo-placeholder>small{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.founder-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#9b512f}
+.founder-copy h2{font-size:clamp(32px,4vw,50px);line-height:1.12;letter-spacing:-.04em;font-weight:400;margin:14px 0 10px;text-transform:none}
+.founder-role{font-size:13px;line-height:1.7;color:#53604f;margin-bottom:26px}
+.founder-biography{font-size:15px;line-height:1.85;color:#414c40;max-width:760px}
+.founder-biography>p{margin:0 0 18px}
+.founder-quote{font-size:clamp(20px,2.3vw,29px);line-height:1.5;letter-spacing:-.02em;margin:30px 0 0;padding:24px 0 0;border-top:1px solid #27352b26;color:#954c2d;font-weight:400}
+@media(max-width:767px){.founder-profile{grid-template-columns:1fr;gap:30px;margin-top:44px;padding-top:34px}.founder-photo{width:100%;max-width:380px}.founder-biography{font-size:14px}.founder-photo-placeholder{min-height:300px}}

@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {marked} from 'marked';
 import {renderPricing} from './pricing.mjs';
 import {renderCoachGrid} from './coaches.mjs';
+import {renderFounder} from './founder.mjs';
 import {renderFAQ} from './faq.mjs';
 import {renderForm} from './forms.mjs';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -34,7 +35,7 @@ export async function build(){
  const settings=await json('content/settings.json');
  const pricing=await json('content/pricing.json');
  const {coaches}=await json('content/coaches.json');
- const coachGrid=renderCoachGrid(coaches,{esc,imageURL});
+ const coachGrid=renderCoachGrid(coaches,{esc,imageURL})+renderFounder(await json('content/founder.json'),{esc,imageURL});
  const faq=renderFAQ(await json('content/faq.json'),{esc});
  if(settings.site_url&&!/^https:\/\/[^/]+\/?$/.test(settings.site_url))throw Error('Site URL must be an HTTPS origin with no path.');
  if(settings.contact_email&&!/^[^\s@<>"&]+@[^\s@<>"&]+\.[^\s@<>"&]+$/.test(settings.contact_email))throw Error('Invalid contact email.');

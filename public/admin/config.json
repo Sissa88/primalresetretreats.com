@@ -406,6 +406,57 @@
       ]
     },
     {
+      "name": "founder",
+      "label": "Founder profile",
+      "files": [
+        {
+          "name": "founder",
+          "label": "Dan\u2019s biography and portrait",
+          "file": "content/founder.json",
+          "fields": [
+            {
+              "name": "eyebrow",
+              "label": "Section label",
+              "widget": "string"
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "widget": "string"
+            },
+            {
+              "name": "role",
+              "label": "Role",
+              "widget": "string"
+            },
+            {
+              "name": "bio",
+              "label": "Biography",
+              "widget": "text",
+              "hint": "Separate paragraphs with a blank line."
+            },
+            {
+              "name": "quote",
+              "label": "Closing quote",
+              "widget": "text"
+            },
+            {
+              "name": "image",
+              "label": "Portrait",
+              "widget": "image",
+              "required": false,
+              "hint": "Leave empty to show the portrait placeholder. Upload Dan\u2019s photo here when ready."
+            },
+            {
+              "name": "image_alt",
+              "label": "Photo description",
+              "widget": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "existing",
       "label": "Existing pages",
       "files": [
