@@ -76,17 +76,21 @@ The current setup uses GitHub's `public_repo` OAuth scope because this is a publ
 
 If you change from `pages.dev` to your custom domain later, change **both** `SITE_URL` in Cloudflare and the OAuth app's Homepage/callback URLs in GitHub, redeploy, and sign in at the new `/admin/` address. A different hostname intentionally cannot complete login.
 
-## 4. Turn on email delivery for the forms
+## 4. Activate contact email delivery
 
-1. Create a free account at https://formspree.io/ and verify `info@primalresetretreats.com`, the address selected to receive both retreat inquiries and coach applications.
-2. Create two forms: **Retreat inquiries** and **Coach applications**.
-3. Each form has an endpoint such as `https://formspree.io/f/abcdefgh`. Copy only its final ID, `abcdefgh`.
-4. Open your site's `/admin/` dashboard. Go to **Website settings → Contact, forms, and domain**.
-5. Enter the retreat form ID and coach form ID in their matching fields. Add your contact email and public website URL.
-6. Click **Publish**. Wait for the Cloudflare deployment to finish.
-7. Send one test inquiry through each form and check that the message reaches your inbox and the Formspree dashboard. Test submissions count toward the free allowance.
+The contact forms now use **FormSubmit** and send to `info@primalresetretreats.com`. No Formspree account is required for the default setup.
 
-Messages go directly to Formspree, not into GitHub or browser storage. If a send fails, the form keeps its text and displays an error. No payment is collected. If you reach the free submission limit, check Formspree's dashboard and plan limits; do not assume an inquiry was delivered without checking.
+1. After the deployment finishes, open your website and click **Contact us**.
+2. Submit one test inquiry using your own details. Complete the spam check if shown.
+3. Open the `info@primalresetretreats.com` inbox and look for the FormSubmit activation email. Check Spam/Junk too.
+4. Click the email verification/activation link.
+5. Submit a second test inquiry. Confirm that it arrives in your inbox and that replying addresses the person who submitted it.
+
+Until you activate the recipient email, delivery is not verified. I cannot read this inbox or click its activation link for you. FormSubmit may show a verification-pending screen on the first submission. The existing mailbox must already work independently of Cloudflare Pages.
+
+The forms collect name, email, country of residence, an optional phone/WhatsApp number, and a message. Retreat inquiries additionally require an age from 29 to 60. They request contact permission and use FormSubmit's default spam check plus a honeypot. No date of birth or card details are collected. The pricing page also includes the selected room and informational quote in its inquiry.
+
+Under **Website settings → Contact, forms, and domain**, the **Contact form service** selects FormSubmit or disables the online form. Changing the contact email requires verifying that new recipient. Existing Formspree IDs still take priority if you enter them; the destination of those forms is managed in your Formspree account.
 
 ## Everyday editing — no code
 
@@ -100,7 +104,7 @@ Open your website address followed by `/admin/` and sign in with GitHub.
 - **Add another retreat:** **Retreats → New Retreat**. Fill in the fields, upload a photo, and write the description in the visual editor. Leave **Show on website** enabled. Publishing creates its page and adds a card to Home automatically. New retreats share the inquiry form on Home.
 - **Add another page:** **Additional pages → New Additional page**. Give it a title and write its content. Published pages appear in the footer. Avoid page names `Admin`, `API`, `Retreats`, `Pricing`, and `Book`, which are reserved.
 - **Publish an edit:** choose **Publish** / **Publish now**. This saves a GitHub commit. Cloudflare then deploys the update automatically, usually within a few minutes. Refresh your public page after Cloudflare reports success. Changes on your screen aren't live until publishing and deployment finish.
-- **View messages:** use your email inbox or the Formspree dashboard, not Decap.
+- **View messages:** use your email inbox. The CMS stores website content, not contact submissions.
 
 Use a regular sized JPEG/WebP photo rather than a very large original camera file. Uploaded media is stored in the GitHub repository and published with the site; it is public. Do not upload private participant documents.
 
@@ -119,7 +123,7 @@ When ready for search engines, set your final **Public website URL** and turn on
 - **Login succeeds but access is denied:** your GitHub account needs write access to this repository. Check which GitHub account is signed in.
 - **Editor can't load:** it loads a version-pinned Decap bundle from jsDelivr; check your connection or content blocker.
 - **Saved content doesn't appear:** check Cloudflare's latest deployment. A CMS edit is not a live deployment until that build succeeds.
-- **Inquiries still say “opening soon”:** publish both form IDs, then wait for the next deployment.
+- **No inquiry emails arrive:** check the recipient inbox and Spam/Junk for FormSubmit activation. Activate the address and send another test. Also check which provider/IDs are selected in Website settings.
 
 Official references:
 

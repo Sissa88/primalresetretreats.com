@@ -33,3 +33,31 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 .faq-list details>p{padding-top:18px;max-width:740px;font-size:16px;line-height:1.8;color:#4a5348;white-space:pre-line}
 @media(min-width:768px){.faq-section{padding:96px 48px}}
 @media(max-width:767px){.faq-layout{grid-template-columns:1fr;gap:32px}.faq-list details{padding:22px 0}.faq-list details>p{font-size:15px}}
+
+/* A compact, clearly labelled inquiry form on every contact surface. */
+.contact-form{border:1px solid #17231d1f;box-shadow:0 16px 50px #07150b0a;padding:clamp(24px,4vw,44px)}
+.contact-form .contact-form-header{margin:0 0 28px;padding-bottom:24px;border-bottom:1px solid #17231d26}
+.contact-form .contact-form-header h3{font-size:clamp(26px,3vw,34px);line-height:1.2;margin:16px 0 12px}
+.contact-form .contact-form-header .form-note{margin:0;font-size:13px;line-height:1.7}
+.contact-required{font-size:11px;color:#5f695c;margin-top:12px}
+.contact-form .contact-fields{margin:0;display:grid;gap:22px}
+.contact-form .contact-field{margin:0;min-width:0}
+.contact-form .contact-field>label{font-size:12px;margin:0 0 9px;font-weight:500}
+.contact-form .contact-field>label>span{color:#a24a25}
+.contact-form .contact-field>input,.contact-form .contact-field>textarea{background:#fffdf64d;border:1px solid #89917e70;border-radius:4px;padding:12px 14px;font-size:15px;line-height:1.5;min-height:48px}
+.contact-form .contact-field>input::placeholder,.contact-form .contact-field>textarea::placeholder{color:#70796b;opacity:1}
+.contact-form .contact-field>textarea{min-height:128px;resize:vertical}
+.contact-two-columns{display:grid;grid-template-columns:minmax(100px,.6fr) minmax(0,1.4fr);gap:18px}
+.contact-help{font-size:11px;line-height:1.6;color:#5f695c;margin-top:-12px}
+.contact-form .consent{margin:26px 0 0;line-height:1.7;align-items:flex-start}
+.contact-form .consent>input{flex-shrink:0;margin-top:3px}
+.contact-form>button{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;padding:15px 22px;margin-top:24px;border-radius:4px;background:#c76438;color:#fff;font-size:14px;font-weight:500}
+.contact-form>button:hover:not(:disabled){background:#a74d27}
+.contact-form>button>span{font-size:20px}
+.contact-form .contact-direct{margin:24px 0 0;padding-top:20px;border-top:1px solid #17231d26;font-size:12px;line-height:1.8}
+.contact-direct>span{display:block;color:#5f695c}
+.contact-direct>a{display:inline-block;color:#844121;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.contact-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+@media(max-width:480px){.contact-two-columns{grid-template-columns:1fr}.contact-form{padding:24px}.contact-help{margin-top:-8px}}
+.contact-service-note{font-size:11px;line-height:1.7;color:#5f695c;margin-top:8px}
+.site-contact-button{display:inline-block;padding:10px 14px;font-size:11px;color:inherit;border:1px solid currentColor;border-radius:24px;white-space:nowrap}

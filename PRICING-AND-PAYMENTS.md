@@ -8,7 +8,7 @@
 - A **Pricing & rooms** link in the footer and mobile menu.
 - Private and shared accommodation with room photographs from the reference site's linked accommodation page.
 - A promotion calculator and planned deposit/balance breakdown.
-- A retreat inquiry form that includes the selected room, estimated package/deposit/balance, and applied promotion code. It uses the existing retreat Formspree ID. When the form service is not configured, the submit button stays disabled and the email address is shown instead.
+- A retreat inquiry form that includes the selected room, estimated package/deposit/balance, and applied promotion code. It uses the configured contact form service (currently FormSubmit to the contact email, requiring activation). When no service is configured, the submit button stays disabled and the email address is shown instead.
 
 This is a **pricing preview and inquiry flow**. It does not reserve inventory, create a Stripe checkout, collect card details, or charge any payment. There is no payment account connected. The public calculator is informational; its amounts must never be treated as an authority for charging a card.
 

@@ -1,10 +1,11 @@
 {
   "site_name": "Primal Reset Retreats",
-  "site_url": "",
+  "site_url": "https://primalresetretreats-com.pages.dev",
   "contact_email": "info@primalresetretreats.com",
   "retreat_form_id": "",
   "coach_form_id": "",
   "allow_indexing": false,
   "show_booking_button": true,
-  "booking_button_label": "Book now"
+  "booking_button_label": "Book now",
+  "contact_form_provider": "formsubmit"
 }

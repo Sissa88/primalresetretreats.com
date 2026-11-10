@@ -4,10 +4,10 @@ import {readFile,writeFile,rm,access} from 'node:fs/promises';
 import path from 'node:path';
 import {build,root,esc,markdown,imageURL} from '../scripts/build.mjs';
 const get=rel=>readFile(path.join(root,rel),'utf8');
-test('rendered site has two separately configured forms, no browser-local submission storage',async()=>{
+test('rendered site has two email-connected forms and no browser-local submission storage',async()=>{
  const home=await get('dist/index.html'),coach=await get('dist/coach-with-us/index.html');
  assert.match(home,/data-kind="retreat"/);assert.match(coach,/data-kind="coach"/);
- assert.match(home,/Inquiries opening soon/);assert.match(coach,/Inquiries opening soon/);
+ assert.match(home,/action="https:\/\/formsubmit.co\/info@primalresetretreats.com"/);assert.match(coach,/action="https:\/\/formsubmit.co\/info@primalresetretreats.com"/);
  assert.doesNotMatch(await get('dist/local.js'),/localStorage|Saved on this device/);
  assert.doesNotMatch(home,/\{\{[A-Z_a-z0-9]+\}\}/);
 });

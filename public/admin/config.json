@@ -73,6 +73,23 @@
               "widget": "string",
               "default": "Book now",
               "hint": "Opens the pricing and room-selection page. Payment is not connected yet."
+            },
+            {
+              "name": "contact_form_provider",
+              "label": "Contact form service when no Formspree ID is set",
+              "widget": "select",
+              "options": [
+                {
+                  "label": "FormSubmit \u2014 verify the contact email first",
+                  "value": "formsubmit"
+                },
+                {
+                  "label": "Disabled \u2014 email link only",
+                  "value": "disabled"
+                }
+              ],
+              "default": "formsubmit",
+              "hint": "Formspree IDs, when present, take priority. FormSubmit sends to the Contact email above."
             }
           ]
         }

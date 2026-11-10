@@ -1,6 +1,6 @@
 # Primal Reset Retreats
 
-An editable static retreat website prepared for Cloudflare Pages, with Decap CMS, GitHub sign-in through two Pages Functions, and two independently configurable Formspree forms.
+An editable static retreat website prepared for Cloudflare Pages, with Decap CMS, GitHub sign-in through two Pages Functions, and email contact forms using FormSubmit, with optional Formspree support.
 
 See **PRICING-AND-PAYMENTS.md** for the new pricing page, editing room prices/photos, the Book now button, and the proposed Stripe integration. Payments are not connected.
 
@@ -43,4 +43,4 @@ Cloudflare Pages: production branch `main`, framework `None`, build `npm run bui
 
 Runtime settings: `SITE_URL`, `GITHUB_CLIENT_ID`, encrypted `GITHUB_CLIENT_SECRET`. The CMS and authenticator currently use `public_repo` scope for the public GitHub repository. Read the setup guide before changing repository visibility.
 
-Forms are disabled until Formspree IDs are published in the editor. Submissions are sent directly to Formspree and are not saved in GitHub or browser-local storage. Dates, pricing, program details, and policies still require owner confirmation. Indexing is disabled until explicitly enabled with a valid site URL.
+Forms use FormSubmit and require recipient email activation. Submissions are sent directly to the selected form service and are not saved in GitHub or browser-local storage. Retreat inquiries collect age (29–60) and country; coach applications collect country without that age restriction. Dates, pricing, program details, and policies still require owner confirmation. Indexing is disabled until explicitly enabled with a valid site URL.
