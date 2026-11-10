@@ -34,3 +34,117 @@ body.price-page .price-cta, body.price-page .price-deposit > span {
 body.price-page .price-room-amount,
 body.price-page .price-deposit > strong { font-weight: 450; }
 body button, body input, body textarea, body select { font-family: inherit; }
+
+/* One type scale and clearly sized actions across all public layouts. */
+body, body.price-page, body.cms-page {
+  --site-font: 'Primal Sans', Arial, sans-serif;
+  font-family: var(--site-font);
+  font-size: 16px;
+}
+body :is(h1,h2,h3,h4,h5,h6,.font-heading,.price-room-name) {
+  font-family: var(--site-font) !important;
+  font-weight: 400 !important;
+  font-style: normal;
+  text-transform: none !important;
+  letter-spacing: -.025em !important;
+  line-height: 1.15 !important;
+}
+body h1 {
+  font-size: clamp(44px,5.5vw,84px) !important;
+  font-weight: 350 !important;
+}
+body h2 { font-size: clamp(32px,3.8vw,54px) !important; }
+body h3 { font-size: clamp(24px,2.4vw,30px) !important; }
+body .home-feature-copy h2 { font-size: 26px !important; }
+body .price-room-name { font-size: 30px !important; }
+body .coach-copy h3 { font-size: 28px !important; }
+body .founder-quote { font-size: clamp(24px,2.5vw,32px); }
+body :is(.eyebrow,.home-eyebrow,.price-kicker,.founder-eyebrow,.coach-role) {
+  font-family: var(--site-font);
+  font-size: 12px !important;
+  line-height: 1.7;
+  letter-spacing: .12em;
+}
+body :is(.home-primary-action,.home-contact,.site-book-button,.site-contact-button,.action-link,.price-cta),
+body a[class~="group/button"],
+body .inquiry-form > button,
+body .price-promo-input > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 52px !important;
+  padding: 14px 24px !important;
+  border-radius: 10px !important;
+  font-family: var(--site-font) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .015em !important;
+  text-transform: none !important;
+  white-space: normal !important;
+  text-align: center;
+}
+body :is(.home-secondary-action,.home-feature-link,.price-text-link) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 52px;
+  padding: 13px 22px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  font-family: var(--site-font);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+}
+body .price-cta, body .inquiry-form > button { width: 100%; }
+body :is(.home-nav,.price-header > nav,.local-menu nav,.home-mobile-menu nav) > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+body header nav a { font-family: var(--site-font); }
+body :is(.local-menu,.home-mobile-menu) > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  font-size: 15px;
+  line-height: 1.4;
+  border-radius: 10px;
+}
+body .home-brand > span { font-size: 16px; }
+body :is(.home-brand small,.site-brand-subtitle) { font-size: 11px; }
+body .inquiry-form label { font-size: 14px; }
+body .inquiry-form input:not([type=checkbox]), body .inquiry-form textarea {
+  font-size: 16px;
+  min-height: 48px;
+}
+body .faq-list summary {
+  min-height: 48px;
+  font-family: var(--site-font);
+  font-size: clamp(19px,2vw,24px);
+  font-weight: 400;
+  text-transform: none;
+}
+body .price-summary dl > div { font-size: 14px; }
+body :is(.home-hero-note,.home-feature-copy > p:last-child,.price-steps) { font-size: 13px; }
+@media(max-width:680px) {
+  body .home-hero-actions { gap: 14px; }
+  body .home-hero-actions > a { width: 100%; }
+  body .home-feature-link { margin-left: 0; width: 100%; }
+  body .home-nav, body .home-contact { display: none; }
+  body .home-brand > span { font-size: 14px; }
+  body .home-brand small { font-size: 10px; }
+  body .price-promo-input { flex-wrap: wrap; }
+  body .price-promo-input > input { width: 100%; flex-basis: 100%; font-size: 16px; }
+  body .price-promo-input > button { width: 100%; }
+}
