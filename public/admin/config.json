@@ -623,6 +623,19 @@
           "widget": "image"
         },
         {
+          "name": "logo",
+          "label": "This retreat\u2019s own logo",
+          "widget": "image",
+          "required": false,
+          "hint": "Used only for this retreat and its own listing. This does not change the website logo or favicon."
+        },
+        {
+          "name": "logo_alt",
+          "label": "Retreat logo description",
+          "widget": "string",
+          "required": false
+        },
+        {
           "name": "dates",
           "label": "Dates",
           "widget": "string",

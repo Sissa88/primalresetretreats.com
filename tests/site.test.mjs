@@ -40,6 +40,8 @@ test('CMS edits, new retreats, pages, form IDs and sitemap reach generated websi
   assert.match(home,/https:\/\/formspree.io\/f\/test123/);
   assert.match(await get('dist/coach-with-us/index.html'),/https:\/\/formspree.io\/f\/coach123/);
   assert.match(await get('dist/retreats/test-retreat/index.html'),/<h2>A fresh start<\/h2>/);
+  assert.doesNotMatch(await get('dist/retreats/test-retreat/index.html'),/mens-rebirth\/emblem/);
+  assert.match(home,/brand\/primal-reset-retreats-logo-320.png/);
   assert.match(await get('dist/test-page/index.html'),/An honest conversation/);
   assert.match(await get('dist/sitemap.xml'),/https:\/\/example.com\/retreats\/test-retreat\//);
   assert.match(home,/href="\/test-page\//);

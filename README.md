@@ -49,6 +49,6 @@ Forms use FormSubmit and require recipient email activation. Submissions are sen
 
 The approved detailed tree-and-roots seal has the corrected plural wording **RETREATS**. Download the full PNG from `/brand/primal-reset-retreats-logo.png`; the header uses an optimized 320px export. The favicon uses the same detailed seal (not the rejected simplified icon), with 96px, 192px, 512px, Apple touch, and ICO exports.
 
-Home has a dedicated responsive header, a native mobile menu, concise hero copy, and a compact featured-retreat link using a retreat photograph. The website seal is the parent brand; a separate logo for The Men's Rebirth has not yet been supplied.
+Home has a dedicated responsive header, a native mobile menu, concise hero copy, and a compact featured-retreat link using a retreat photograph. The website seal is the parent brand; The Men's Rebirth has its own transparent emblem under `public/retreats/mens-rebirth/`, configured only in that retreat's `logo` field. It appears on that retreat's page and its own listing. It does not replace the parent website logo or favicon.
 
 Search indexing is enabled at the owner's request, with a sitemap, canonical links, favicon declarations, and Organization/WebSite metadata. Search engines choose when to crawl and whether to display the icon.
