@@ -154,6 +154,8 @@ body :is(h1,h2,h3,h4,h5,h6,.font-heading,.price-room-name) {
   text-transform: uppercase !important;
 }
 body button,
+body .inquiry-form > button,
+body .price-promo-input > button,
 body a[class~="group/button"],
 body :is(.home-primary-action,.home-secondary-action,.home-contact,.home-feature-link,.site-book-button,.site-contact-button,.action-link,.price-cta,.price-text-link),
 body :is(.local-menu,.home-mobile-menu) > summary {
