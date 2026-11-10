@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {marked} from 'marked';
 import {renderPricing} from './pricing.mjs';
 import {renderCoachGrid} from './coaches.mjs';
+import {renderFAQ} from './faq.mjs';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function imageURL(v){if(!/^\/(?!\/)[^\s"<>]*$/.test(v||''))throw Error('Images must use a local path: '+v);return esc(v);}
@@ -39,6 +40,7 @@ export async function build(){
  const pricing=await json('content/pricing.json');
  const {coaches}=await json('content/coaches.json');
  const coachGrid=renderCoachGrid(coaches,{esc,imageURL});
+ const faq=renderFAQ(await json('content/faq.json'),{esc});
  if(settings.site_url&&!/^https:\/\/[^/]+\/?$/.test(settings.site_url))throw Error('Site URL must be an HTTPS origin with no path.');
  if(settings.contact_email&&!/^[^\s@<>"&]+@[^\s@<>"&]+\.[^\s@<>"&]+$/.test(settings.contact_email))throw Error('Invalid contact email.');
  const retreats=(await list('content/retreats')).filter(x=>x.published!==false);
@@ -54,7 +56,7 @@ export async function build(){
  await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
  await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
- await put('',await renderTemplate('home',home,{RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,EXTRA_LINKS:links},settings));
+ await put('',await renderTemplate('home',home,{RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,FAQ_SECTION:faq,EXTRA_LINKS:links},settings));
  await put('coach-with-us',await renderTemplate('coach-with-us',coach,{EXTRA_LINKS:links},settings));
  for(const r of retreats){
   let body;

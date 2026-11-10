@@ -79,6 +79,48 @@
       ]
     },
     {
+      "name": "faq",
+      "label": "Frequently asked questions",
+      "files": [
+        {
+          "name": "faq",
+          "label": "Questions and answers",
+          "file": "content/faq.json",
+          "fields": [
+            {
+              "name": "eyebrow",
+              "label": "Section label",
+              "widget": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Section heading",
+              "widget": "string"
+            },
+            {
+              "name": "items",
+              "label": "Questions",
+              "widget": "list",
+              "collapsed": true,
+              "summary": "{{fields.question}}",
+              "fields": [
+                {
+                  "name": "question",
+                  "label": "Question",
+                  "widget": "string"
+                },
+                {
+                  "name": "answer",
+                  "label": "Answer",
+                  "widget": "text"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "pricing",
       "label": "Pricing & rooms",
       "files": [

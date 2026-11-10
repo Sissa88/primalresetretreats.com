@@ -215,7 +215,7 @@
     {
       "id": "text_047",
       "label": "Seven nights of planned retreat lodging",
-      "value": "Seven nights of planned retreat lodging"
+      "value": "Seven nights of retreat accommodation"
     },
     {
       "id": "text_048",
@@ -225,7 +225,7 @@
     {
       "id": "text_049",
       "label": "Retreat transportation connected to the program",
-      "value": "Retreat transportation connected to the program"
+      "value": "Airport pickup from Hilo or Kona and transportation during the retreat"
     },
     {
       "id": "text_050",
@@ -342,7 +342,7 @@
   ],
   "summary": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and direction.",
   "image": "/primal-reset-hero.png",
-  "dates": "Dates announced soon",
+  "dates": "Dates to be confirmed",
   "duration": "7 days",
   "location": "Big Island · Hawaiʻi",
   "capacity": "15 men",
