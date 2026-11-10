@@ -123,3 +123,19 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 .home-feature-image.is-retreat-logo{background:#111710;padding:3px;width:76px;height:104px}
 .home-feature-image.is-retreat-logo img{object-fit:contain}
 @media(max-width:767px){.retreat-detail-hero{grid-template-columns:1fr;gap:32px;padding:24px 24px 50px}.retreat-detail-copy h1{font-size:clamp(60px,12vw,88px)}.retreat-emblem{max-width:250px}.retreat-emblem>img{max-height:390px}.retreat-card-artwork{height:360px}.home-feature-image.is-retreat-logo{width:62px;height:91px}}
+
+/* Native disclosure keeps long biographies accessible and initially compact. */
+.coach-grid{align-items:start}
+.coach-bio{white-space:normal}
+.coach-details{margin-top:20px}
+.coach-details>summary{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-width:170px;min-height:52px;padding:14px 22px;border:1px solid #17231d;border-radius:10px;background:#17231d;color:#fff;font-size:16px;font-weight:500;line-height:1.4;letter-spacing:.04em;text-transform:uppercase;list-style:none;cursor:pointer;user-select:none}
+.coach-details>summary::-webkit-details-marker{display:none}
+.coach-details>summary:hover{background:#304333;border-color:#304333}
+.coach-read-less{display:none}
+.coach-details[open] .coach-read-more{display:none}
+.coach-details[open] .coach-read-less{display:inline}
+.coach-toggle-icon{font-size:21px;line-height:1;transition:transform .2s}
+.coach-details[open] .coach-toggle-icon{transform:rotate(45deg)}
+.coach-full-bio{margin-top:22px}
+.coach-full-bio>p{margin:0 0 18px;line-height:1.85}
+.coach-full-bio>p:last-child{margin-bottom:0}
