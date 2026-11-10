@@ -215,3 +215,5 @@ body .home-nav>a,body .home-mobile-menu nav>a{font-size:14px;letter-spacing:.055
 @media(max-width:480px){.experience-pillars,.journey-grid{grid-template-columns:1fr}.stay-facts{grid-template-columns:1fr}.home-mobile-menu nav{min-width:250px;max-height:75vh;overflow-y:auto}}
 
 .founder-identity h2{font-size:clamp(30px,3vw,42px)!important;line-height:1.15;margin:16px 0 12px;text-align:left}.founder-identity .founder-role{margin-bottom:25px}.founder-copy{padding-top:0}
+.founder-details{margin-top:4px;padding-top:0}
+.founder-details .coach-full-bio{font-size:15px;line-height:1.85;color:#414c40}
