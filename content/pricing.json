@@ -48,7 +48,7 @@
     },
     {
       "id": "shared",
-      "name": "Shared bed",
+      "name": "Shared room",
       "badge": "Connection comes naturally.",
       "description": "A bed in a shared room, with a comfortable place to reset and easy connection with the group.",
       "price": 5200,
