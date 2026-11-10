@@ -5,6 +5,7 @@ import {marked} from 'marked';
 import {renderPricing} from './pricing.mjs';
 import {renderCoachGrid} from './coaches.mjs';
 import {renderFounder} from './founder.mjs';
+import {renderHomeSections} from './home-sections.mjs';
 import {renderFAQ} from './faq.mjs';
 import {renderForm} from './forms.mjs';
 export const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -22,7 +23,7 @@ renderer.link=({href,title,tokens})=>{
 renderer.image=({href,text})=>`<img src="${imageURL(href)}" alt="${esc(text)}" loading="lazy">`;
 export const markdown=body=>marked.parse(body||'',{renderer});
 const form=(kind,settings)=>renderForm(kind,settings,{esc});
-function cards(retreats){return `<section id="retreats" class="cms-section"><div class="cms-container"><p class="eyebrow">Find your reset</p><h2>The retreats.</h2><div class="retreat-grid">${retreats.map(r=>`<a class="retreat-card" href="/retreats/${r.slug}/">${r.logo?`<div class="retreat-card-artwork"><img src="${imageURL(r.logo)}" alt="${esc(r.logo_alt||r.title+' retreat logo')}" loading="lazy"></div>`:`<img src="${imageURL(r.image)}" alt="${esc(r.title)}" loading="lazy">`}<div><p class="eyebrow">${esc(r.location)} · ${esc(r.duration)}</p><h3>${esc(r.title)}</h3><p>${esc(r.summary)}</p><p>${esc(r.dates)}</p><p>${esc(r.price)}</p><span>Explore this retreat →</span></div></a>`).join('')}</div></div></section>`;}
+function cards(retreats){return `<section id="retreats" class="cms-section"><div class="cms-container"><div class="page-section-heading"><div><p class="eyebrow">02 / Our retreats</p><h2>The retreats.</h2></div><p class="page-section-lead">Explore our current retreat and find the experience that fits your next chapter.</p></div><div class="retreat-grid">${retreats.map(r=>`<a class="retreat-card" href="/retreats/${r.slug}/">${r.logo?`<div class="retreat-card-artwork"><img src="${imageURL(r.logo)}" alt="${esc(r.logo_alt||r.title+' retreat logo')}" loading="lazy"></div>`:`<img src="${imageURL(r.image)}" alt="${esc(r.title)}" loading="lazy">`}<div><p class="eyebrow">${esc(r.location)} · ${esc(r.duration)}</p><h3>${esc(r.title)}</h3><p>${esc(r.summary)}</p><p>${esc(r.dates)}</p><p>${esc(r.price)}</p><span>Explore this retreat →</span></div></a>`).join('')}</div></div></section>`;}
 const shell=(data,body)=>`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(data.title)} | Primal Reset Retreats</title><meta name="description" content="${esc(data.summary||data.description)}"><link rel="stylesheet" href="/local.css"><link rel="icon" href="/favicon.svg"><script src="/local.js" defer></script></head><body class="cms-page"><header><a href="/">Primal Reset Retreats</a><a href="/#inquire">Request details</a></header><main id="main-content">${body}</main><footer><a href="/">Home</a> · <a href="/coach-with-us/">Coach with us</a>{{EXTRA_LINKS}}</footer></body></html>`;
 async function renderTemplate(name,data,extra,settings){
  let s=await readFile(path.join(root,'templates',name+'.html'),'utf8');
@@ -44,7 +45,7 @@ export async function build(){
  for(const item of [...retreats,...pages])if(!slugOK(item.slug))throw Error('Invalid page filename: '+item.slug);
  const custom=pages.filter(x=>!['home','coach-with-us'].includes(x.slug)&&x.published!==false);
  for(const p of custom)if(['admin','api','retreats','pricing','book'].includes(p.slug))throw Error('Reserved page name: '+p.slug);
- const links=`<nav class="extra-links" aria-label="More pages"><a href="/pricing/">Pricing &amp; rooms</a>${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`;
+ const links=`<nav class="extra-links" aria-label="More pages"><a href="/pricing/">Pricing &amp; payment</a>${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`;
  const out=path.join(root,'dist');await rm(out,{recursive:true,force:true});await cp(path.join(root,'public'),out,{recursive:true});
  // Page HTML is generated from templates and JSON; remove the earlier snapshot pages.
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});
@@ -74,16 +75,19 @@ export async function build(){
    const schema=JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':siteOrigin+'/#organization',name:settings.site_name,url:siteOrigin+'/',logo:siteOrigin+'/brand/primal-reset-retreats-logo.png'},{'@type':'WebSite',name:settings.site_name,url:siteOrigin+'/',publisher:{'@id':siteOrigin+'/#organization'}}]}).replace(/</g,'\\u003c');
    html=html.replace('</head>',`<script type="application/ld+json">${schema}</script></head>`);
   }
+  html=html.replace(/href="\/retreats\/mens-rebirth\/?(?:#([^" ]+))?"/g,(_,anchor)=>`href="/${anchor==="connection-lab"?'#connection-lab':'#retreats'}"`);
+  html=html.replace(/href="\/coach-with-us\/?"/g,'href="/#coach-interest"');
   html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');
   const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);
  };
  await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
- await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
+ await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n/retreats/mens-rebirth /#retreats 301\n/retreats/mens-rebirth/ /#retreats 301\n/coach-with-us /#coach-interest 301\n/coach-with-us/ /#coach-interest 301\n');
  await put('thank-you',shell({title:'Thank you',description:'Your inquiry has been submitted.'},'<section class="cms-section"><div class="cms-container"><p class="eyebrow">Message submitted</p><h1>Thank you for reaching out.</h1><p>Your inquiry has been submitted through our contact service. We’ll reply using the email address you provided.</p><a class="action-link" href="/">Return to the retreat website →</a></div></section>').replace('{{EXTRA_LINKS}}',links).replace('</head>','<meta name="robots" content="noindex"></head>'));
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
  const featured=retreats.find(r=>r.slug==='mens-rebirth');
+ const homeSections=renderHomeSections({home,retreat:featured,pricing,coachGrid,faq,contactForm:form('retreat',settings),coachForm:form('coach',settings),cards:cards(retreats),esc,imageURL,contactEmail:settings.contact_email});
  const featuredArtwork=featured?`<a class="home-feature-image${featured.logo?' is-retreat-logo':''}" href="/retreats/${featured.slug}/" aria-label="Explore ${esc(featured.title)}"><img src="${imageURL(featured.logo||featured.image)}" alt="${esc(featured.logo_alt||featured.title)}" width="88" height="88"></a>`:'';
- await put('',await renderTemplate('home',home,{FEATURED_RETREAT_ARTWORK:featuredArtwork,RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,FAQ_SECTION:faq,EXTRA_LINKS:links},settings));
+ await put('',await renderTemplate('home',home,{HOME_SECTIONS:homeSections,FEATURED_RETREAT_ARTWORK:featuredArtwork,RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,FAQ_SECTION:faq,EXTRA_LINKS:links},settings));
  await put('coach-with-us',await renderTemplate('coach-with-us',coach,{EXTRA_LINKS:links},settings));
  for(const r of retreats){
   let body;
@@ -97,7 +101,7 @@ export async function build(){
  await writeFile(path.join(out,'form-status.json'),JSON.stringify({retreat:!!settings.retreat_form_id||settings.contact_form_provider==='formsubmit',coach:!!settings.coach_form_id||settings.contact_form_provider==='formsubmit',requires_email_verification:settings.contact_form_provider==='formsubmit'}));
  const origin=settings.site_url.replace(/\/$/,'');
  if(origin&&settings.allow_indexing){
-  const urls=['/','/pricing/','/coach-with-us/',...retreats.map(r=>'/retreats/'+r.slug+'/'),...custom.map(p=>'/'+p.slug+'/')];
+  const urls=['/','/pricing/',...retreats.filter(r=>r.slug!=='mens-rebirth').map(r=>'/retreats/'+r.slug+'/'),...custom.map(p=>'/'+p.slug+'/')];
   await writeFile(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(url=>`<url><loc>${esc(origin+url)}</loc></url>`).join('')+'</urlset>');
   await writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${origin}/sitemap.xml\n`);
  }

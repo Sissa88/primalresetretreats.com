@@ -52,3 +52,7 @@ The approved detailed tree-and-roots seal has the corrected plural wording **RET
 Home has a dedicated responsive header, a native mobile menu, concise hero copy, and a compact featured-retreat link using a retreat photograph. The website seal is the parent brand; The Men's Rebirth has its own transparent emblem under `public/retreats/mens-rebirth/`, configured only in that retreat's `logo` field. It appears on that retreat's page and its own listing. It does not replace the parent website logo or favicon.
 
 Search indexing is enabled at the owner's request, with a sitemap, canonical links, favicon declarations, and Organization/WebSite metadata. Search engines choose when to crawl and whether to display the icon.
+
+## Single-page navigation
+
+The main page is ordered About → Retreats → Experience (including the connection lab and detailed journey) → Stay → Team (including Dan and the coach application) → FAQs → Contact. The top navigation scrolls to these anchors. Pricing & Payment is the separate visitor page. Legacy Men's Rebirth and Coach with Us URLs redirect to the relevant main-page sections; they are omitted from the sitemap. The underlying legacy templates remain available in source.

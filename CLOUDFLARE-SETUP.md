@@ -133,3 +133,7 @@ Official references:
 - Cloudflare custom domains: https://developers.cloudflare.com/pages/configuration/custom-domains/
 - Decap GitHub login: https://decapcms.org/docs/github-backend/
 - Formspree free allowance: https://formspree.io/plans
+
+## Main-page layout update
+
+Navigation now scrolls through the main page: About, Retreats, Experience, Stay, Team, FAQs, Contact. Pricing & Payment opens `/pricing/`. The former retreat and coach application URLs redirect to sections on Home. Edit coach and founder content in their existing collections; edit the detailed itinerary under the first retreat's Page text. Both contact and coach applications are on Home.

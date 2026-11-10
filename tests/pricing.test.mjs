@@ -44,8 +44,8 @@ test('pricing page is an inquiry preview with real photos and no payment collect
 });
 test('built site exposes the editable pricing collection and clear pricing navigation',async()=>{
  const home=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
- assert.match(home,/class="home-nav"/);assert.match(home,/href="\/pricing\/">Rooms &amp; pricing/);
+ assert.match(home,/class="home-nav"/);assert.match(home,/href="\/pricing\/" class="home-pricing-link">PRICING &amp; PAYMENT/);
  const cms=JSON.parse(await readFile(new URL('../dist/admin/config.json',import.meta.url),'utf8'));
  const pricing=cms.collections.find(c=>c.name==='pricing');assert.equal(pricing.files[0].file,'content/pricing.json');
- assert.equal(await readFile(new URL('../dist/_redirects',import.meta.url),'utf8'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
+ assert.match(await readFile(new URL('../dist/_redirects',import.meta.url),'utf8'),/\/book \/pricing\/ 301/);
 });

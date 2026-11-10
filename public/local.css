@@ -154,3 +154,64 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 .coach-grid:has(.coach-details[open]){grid-auto-rows:auto}
 .coach-bio:has(>.coach-details[open])>p{display:block;-webkit-line-clamp:unset;line-clamp:unset;max-height:none;overflow:visible}
 .coach-details[open]{margin-top:0}
+
+/* Single-page navigation and a consistent left-hand section title column. */
+.home-opening .home-header{max-width:1420px;gap:24px}
+.home-nav{margin-left:auto;justify-content:flex-end;gap:18px;flex-wrap:wrap}
+body .home-nav>a,body .home-mobile-menu nav>a{font-size:14px;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap}
+.home-nav .home-pricing-link{padding:10px 14px;border:1px solid #d3bc8d80;border-radius:8px;color:#ead1a4}
+.page-section{padding:88px 40px;scroll-margin-top:24px}
+.page-container{width:100%;max-width:1250px;margin:0 auto}
+.page-paper{background:#f0ece2;color:#18241c}
+.page-sand{background:#d9cdb8;color:#18241c}
+.page-forest{background:#173126;color:#f0ece2}
+.page-section-heading{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:64px;align-items:start;margin-bottom:42px;text-align:left}
+.page-section-heading h2{margin:18px 0 0;max-width:470px;text-align:left}
+.page-section-lead{font-size:16px;line-height:1.85;color:inherit;opacity:.83}
+.page-section-lead>p+p{margin-top:18px}
+.page-section-heading .eyebrow{margin:0}
+.experience-pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;margin-bottom:40px}
+.experience-pillars article{border-top:1px solid #18351e40;padding-top:20px}
+.experience-pillars h3{margin-bottom:15px}
+.experience-pillars p,.journey-step>p:not(.eyebrow){font-size:15px;line-height:1.85;color:#465340}
+.page-wide-photo{display:block;width:100%;max-height:470px;object-fit:cover;object-position:center;margin:20px 0 65px}
+.connection-layout{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:64px;border-top:1px solid #18351e33;padding-top:55px}
+.connection-layout .page-section-heading{display:block}
+.connection-layout>div>p{font-size:16px;line-height:1.85;margin-bottom:18px}
+.connection-layout ul,.stay-inclusions ul{list-style:disc;padding-left:22px;font-size:15px;line-height:1.9;margin:22px 0}
+.connection-photo{display:block;width:100%;margin-top:28px;aspect-ratio:4/3;object-fit:cover}
+.journey-block{border-top:1px solid #18351e33;margin-top:65px;padding-top:55px}
+.journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.journey-step{padding:24px;border:1px solid #18351e33;background:#fffaf02e}
+.journey-step h3{margin:14px 0}
+.page-small-note{font-size:12px;line-height:1.8;color:#58634f;margin-top:22px}
+.stay-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-top:1px solid #ffffff40;padding-top:25px;margin-bottom:38px}
+.stay-facts p{font-size:14px;color:#d1dacb;margin-top:10px}
+.stay-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+.stay-options article{border:1px solid #ffffff30;background:#10281d}
+.stay-options img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.stay-options article>div{padding:25px}
+.stay-options article p{font-size:15px;line-height:1.8;color:#d1dacb;margin-top:12px}
+.stay-inclusions{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding-top:40px;margin-top:35px;border-top:1px solid #ffffff30}
+.stay-inclusions p{font-size:15px;line-height:1.8;color:#d1dacb;margin-top:18px}
+.contact-section-layout{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:64px;align-items:start}
+.contact-section-heading h2{margin:20px 0 26px;text-align:left}
+.contact-section-heading>p:not(.eyebrow){font-size:16px;line-height:1.85;color:#d1dacb}
+.contact-email-link{display:inline-block;margin-top:24px;font-size:15px;text-decoration:underline;overflow-wrap:anywhere}
+.join-team{margin-top:50px;padding-top:30px;border-top:1px solid #18351e33}
+.join-team>details>summary{cursor:pointer;font-size:20px;text-transform:uppercase;font-weight:400;display:flex;justify-content:space-between;gap:30px;list-style:none;padding:16px 0}
+.join-team>details>summary::-webkit-details-marker{display:none}
+.join-team>details>p{font-size:15px;line-height:1.8;margin:18px 0 25px;max-width:700px}
+.join-team .contact-form{max-width:800px}
+#retreats.cms-section{padding:88px 40px}
+#retreats .cms-container{max-width:1250px}
+#retreats .page-section-heading h2{margin:18px 0 0}
+.faq-layout{max-width:1250px;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:64px}
+.faq-section{padding:88px 40px}
+.founder-profile{text-align:left}
+@media(max-width:1150px){.home-nav{display:none}.home-mobile-menu{display:block;position:relative;margin-left:auto}.home-mobile-menu summary{text-transform:uppercase;cursor:pointer;list-style:none;border:1px solid #ffffff65;color:#f0ece2}.home-mobile-menu nav{position:absolute;right:0;top:56px;z-index:30;display:flex;flex-direction:column;min-width:260px;padding:14px;background:#15221a;border:1px solid #ffffff40;box-shadow:0 18px 45px #0006}.home-mobile-menu nav>a{display:flex;align-items:center;min-height:46px;padding:10px 14px;color:#f0ece2}}
+@media(max-width:900px){.experience-pillars,.journey-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page-section-heading,.connection-layout,.contact-section-layout,.faq-layout{gap:35px;grid-template-columns:minmax(200px,.8fr) minmax(0,1.2fr)}}
+@media(max-width:767px){.page-section,#retreats.cms-section,.faq-section{padding:60px 24px}.page-section-heading,.connection-layout,.contact-section-layout,.faq-layout,.stay-inclusions{grid-template-columns:1fr;gap:26px}.page-section-heading{margin-bottom:32px}.page-section-heading h2,.contact-section-heading h2{max-width:none}.connection-layout .page-section-heading{margin-bottom:0}.stay-options{grid-template-columns:1fr}.stay-facts{gap:15px}.stay-facts h3{font-size:20px!important}.journey-step{padding:20px}}
+@media(max-width:480px){.experience-pillars,.journey-grid{grid-template-columns:1fr}.stay-facts{grid-template-columns:1fr}.home-mobile-menu nav{min-width:250px;max-height:75vh;overflow-y:auto}}
+
+.founder-identity h2{font-size:clamp(30px,3vw,42px)!important;line-height:1.15;margin:16px 0 12px;text-align:left}.founder-identity .founder-role{margin-bottom:25px}.founder-copy{padding-top:0}
