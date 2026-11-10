@@ -139,3 +139,18 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 .coach-full-bio{margin-top:22px}
 .coach-full-bio>p{margin:0 0 18px;line-height:1.85}
 .coach-full-bio>p:last-child{margin-bottom:0}
+
+/* Matching collapsed cards with text-only biography controls. */
+.coach-grid{align-items:stretch;grid-auto-rows:1fr}
+.coach-card{height:100%}
+.coach-copy{display:flex;flex-direction:column;height:100%}
+.coach-role{min-height:3.2em}
+.coach-specialties{min-height:3.5em}
+.coach-bio{display:flex;flex-direction:column;flex:1}
+.coach-bio>p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;min-height:7.4em;max-height:7.4em}
+.coach-details{margin-top:auto;padding-top:16px}
+.coach-details>summary{display:inline-flex;justify-content:flex-start;gap:0;min-width:0;min-height:44px;padding:8px 0;border:0;border-radius:0;background:transparent;color:#934722;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.coach-details>summary:hover{background:transparent;border-color:transparent;color:#5c321e}
+.coach-grid:has(.coach-details[open]){grid-auto-rows:auto}
+.coach-bio:has(>.coach-details[open])>p{display:block;-webkit-line-clamp:unset;line-clamp:unset;max-height:none;overflow:visible}
+.coach-details[open]{margin-top:0}
