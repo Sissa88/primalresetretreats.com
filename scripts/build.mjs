@@ -86,7 +86,7 @@ export async function build(){
  const home=pages.find(x=>x.slug==='home'),coach=pages.find(x=>x.slug==='coach-with-us');
  const featured=retreats.find(r=>r.slug==='mens-rebirth');
  const homeSections=renderHomeSections({home,retreat:featured,pricing,coachGrid,faq,contactForm:form('retreat',settings),coachForm:form('coach',settings),cards:cards(retreats),esc,imageURL,contactEmail:settings.contact_email});
- const featuredArtwork=featured?`<a class="home-feature-image${featured.logo?' is-retreat-logo':''}" href="/retreats/${featured.slug}/" aria-label="Explore ${esc(featured.title)}"><img src="${imageURL(featured.logo||featured.image)}" alt="${esc(featured.logo_alt||featured.title)}" width="88" height="88"></a>`:'';
+ const featuredArtwork=featured?`<a class="home-feature-image${featured.logo?' is-retreat-logo':''}" href="#experience" aria-label="Explore ${esc(featured.title)}"><img src="${imageURL(featured.logo||featured.image)}" alt="${esc(featured.logo_alt||featured.title)}" width="88" height="88"></a>`:'';
  await put('',await renderTemplate('home',home,{HOME_SECTIONS:homeSections,FEATURED_RETREAT_ARTWORK:featuredArtwork,RETREAT_CARDS:cards(retreats),COACH_GRID:coachGrid,FAQ_SECTION:faq,EXTRA_LINKS:links},settings));
  await put('coach-with-us',await renderTemplate('coach-with-us',coach,{EXTRA_LINKS:links},settings));
  for(const r of retreats){
