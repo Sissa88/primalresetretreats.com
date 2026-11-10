@@ -148,3 +148,15 @@ body :is(.home-hero-note,.home-feature-copy > p:last-child,.price-steps) { font-
   body .price-promo-input > input { width: 100%; flex-basis: 100%; font-size: 16px; }
   body .price-promo-input > button { width: 100%; }
 }
+
+/* Uppercase titles and actions, retaining the shared font and clear sizing. */
+body :is(h1,h2,h3,h4,h5,h6,.font-heading,.price-room-name) {
+  text-transform: uppercase !important;
+}
+body button,
+body a[class~="group/button"],
+body :is(.home-primary-action,.home-secondary-action,.home-contact,.home-feature-link,.site-book-button,.site-contact-button,.action-link,.price-cta,.price-text-link),
+body :is(.local-menu,.home-mobile-menu) > summary {
+  text-transform: uppercase !important;
+  letter-spacing: .04em !important;
+}
