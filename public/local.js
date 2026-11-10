@@ -35,7 +35,7 @@ for (const form of document.querySelectorAll('.inquiry-form')) {
   }
  });
 }
-for (const header of document.querySelectorAll('header')) {
+for (const header of document.querySelectorAll('header:not([data-custom-header])')) {
   const menu = document.createElement('details'); menu.className = 'local-menu';
   const summary = document.createElement('summary'); summary.textContent = 'Menu'; menu.append(summary);
   const nav = document.createElement('nav'); nav.setAttribute('aria-label','All pages');
@@ -48,3 +48,8 @@ for (const header of document.querySelectorAll('header')) {
 const skip = document.createElement('a'); skip.href = '#main-content'; skip.className = 'skip-link'; skip.textContent = 'Skip to content';
 const main = document.querySelector('main');
 if (main) { main.id = 'main-content'; main.tabIndex = -1; document.body.prepend(skip); }
+
+for (const menu of document.querySelectorAll('.home-mobile-menu')) {
+ menu.addEventListener('click',event=>{if(event.target.closest('a'))menu.open=false;});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.open){menu.open=false;menu.querySelector('summary').focus();}});
+}

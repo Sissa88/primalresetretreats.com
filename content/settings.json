@@ -4,7 +4,7 @@
   "contact_email": "info@primalresetretreats.com",
   "retreat_form_id": "",
   "coach_form_id": "",
-  "allow_indexing": false,
+  "allow_indexing": true,
   "show_booking_button": true,
   "booking_button_label": "Book now",
   "contact_form_provider": "formsubmit"

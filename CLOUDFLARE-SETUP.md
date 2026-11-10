@@ -96,7 +96,7 @@ Under **Website settings → Contact, forms, and domain**, the **Contact form se
 
 Open your website address followed by `/admin/` and sign in with GitHub.
 
-- **Edit room prices or photos:** **Pricing & rooms → Room prices, photos, and promotion**. Expand either room, update its fields, and publish. The header Book now button leads to this pricing page. See `PRICING-AND-PAYMENTS.md` for details.
+- **Edit room prices or photos:** **Pricing & rooms → Room prices, photos, and promotion**. Expand either room, update its fields, and publish. The Home navigation’s Rooms & pricing link leads to this page; other pages also have a Book now button. See `PRICING-AND-PAYMENTS.md` for details.
 - **Edit the FAQ:** **Frequently asked questions → Questions and answers**. Expand an answer, edit it, and publish. You can add, remove, or reorder questions.
 - **Edit Dan’s founder profile:** **Founder profile → Dan’s biography and portrait**. Upload the photo when ready; until then, a portrait placeholder is shown beneath the coaches. The same profile updates Home and the retreat page.
 - **Edit coach bios and portraits:** **Coach profiles → Photos and biographies**. Expand a coach, edit their biography/title/photo, and publish. The same profiles update Home and the retreat page together.
@@ -113,7 +113,7 @@ Use a regular sized JPEG/WebP photo rather than a very large original camera fil
 
 Keep the concept labels until dates, prices, activities, coach participation, and policies are confirmed. Reconcile the current “seven days / seven nights” lodging copy. No refund, booking, or privacy terms have been invented. Publish your actual policies using **Additional pages** when available.
 
-When ready for search engines, set your final **Public website URL** and turn on **Allow search engines to index this site** under Website settings. Publishing then generates `sitemap.xml` and updates `robots.txt`. This setting is a crawler instruction, not access protection; a Pages preview URL is publicly accessible.
+Search indexing has been enabled at the owner’s request. The public site URL currently uses the Pages address. Publishing generates `sitemap.xml` and updates `robots.txt`. If you connect a custom domain, update the Public website URL in Website settings to that domain. This setting is a crawler instruction, not access protection; a Pages preview URL is publicly accessible.
 
 ## Troubleshooting
 

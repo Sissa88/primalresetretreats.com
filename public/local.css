@@ -76,3 +76,39 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:24px}a:focus-visible,b
 .founder-biography>p{margin:0 0 18px}
 .founder-quote{font-size:clamp(20px,2.3vw,29px);line-height:1.5;letter-spacing:-.02em;margin:30px 0 0;padding:24px 0 0;border-top:1px solid #27352b26;color:#954c2d;font-weight:400}
 @media(max-width:767px){.founder-profile{grid-template-columns:1fr;gap:30px;margin-top:44px;padding-top:34px}.founder-photo{width:100%;max-width:380px}.founder-biography{font-size:14px}.founder-photo-placeholder{min-height:300px}}
+
+/* The main brand opening: one navigation, one main action, a quieter retreat link. */
+.home-opening{position:relative;isolation:isolate;overflow:hidden;background:#101a15 url('/primal-reset-hero.png') center 52%/cover;color:#f4f0e8}
+.home-opening:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#09100df5 0%,#09100de3 38%,#09100d8c 78%,#09100d70),linear-gradient(0deg,#09100dba,transparent 65%)}
+.home-opening .home-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:32px;max-width:1376px;margin:0 auto;padding:24px 40px;border-bottom:1px solid #f4f0e823}
+.home-brand{display:flex;align-items:center;gap:15px;flex-shrink:0;text-decoration:none;color:#f4f0e8}
+.home-brand img{display:block;width:72px;height:72px;object-fit:contain}
+.home-brand>span{font-size:14px;text-transform:uppercase;letter-spacing:.16em;font-weight:500;line-height:1.6}
+.home-brand small{display:block;color:#d3bc8d;font-size:9px;letter-spacing:.38em;font-weight:400}
+.home-nav{display:flex;gap:32px;align-items:center;font-size:12px;letter-spacing:.04em}
+.home-nav a{color:#e4e5da;text-decoration:none;padding:10px 0}
+.home-nav a:hover,.home-secondary-action:hover{color:#e6bf82}
+.home-contact{display:inline-flex;align-items:center;justify-content:center;gap:24px;color:#f4f0e8;border:1px solid #f4f0e854;border-radius:30px;padding:12px 22px;text-decoration:none;font-size:12px;white-space:nowrap}
+.home-contact:hover{border-color:#d7b77d;color:#e6bf82}
+.home-mobile-menu{display:none}
+.home-hero-content{max-width:1376px;margin:0 auto;padding:82px 40px 58px}
+.home-eyebrow{font-size:10px;line-height:1.6;letter-spacing:.18em;text-transform:uppercase;color:#dfb67a}
+.home-hero-content h1{font-size:clamp(46px,5.4vw,82px);font-weight:350;line-height:1.08;letter-spacing:-.045em;text-transform:none;white-space:pre-line;max-width:1050px;margin:24px 0 26px}
+.home-hero-description{font-size:17px;line-height:1.8;color:#d0d6ca;max-width:620px}
+.home-hero-actions{display:flex;flex-wrap:wrap;gap:20px 30px;align-items:center;margin-top:32px}
+.home-primary-action{display:inline-flex;gap:30px;align-items:center;border-radius:30px;background:#d46530;color:white;padding:15px 25px;text-decoration:none;font-size:12px;font-weight:500}
+.home-primary-action:hover{background:#ba5226}
+.home-secondary-action{font-size:12px;color:#e0e4d8;text-decoration:none;border-bottom:1px solid #e0e4d85c;padding:8px 0}
+.home-hero-note{font-size:11px;line-height:1.8;color:#adb8a5;margin-top:24px}
+.home-feature{display:flex;align-items:center;gap:22px;max-width:1296px;margin:0 auto 34px;padding:20px 0;border-top:1px solid #f4f0e830;border-bottom:1px solid #f4f0e830}
+.home-feature-image{display:block;flex-shrink:0;width:88px;height:88px;overflow:hidden;border-radius:4px}
+.home-feature-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:70% center}
+.home-feature-copy h2{font-size:24px;font-weight:400;line-height:1.2;letter-spacing:-.03em;margin:7px 0}
+.home-feature-copy>p:last-child{font-size:11px;color:#bdc8b5;line-height:1.7}
+.home-feature-copy .home-eyebrow{font-size:8px}
+.home-feature-link{margin-left:auto;display:flex;gap:28px;align-items:center;padding:10px 0;font-size:11px;color:#e5e8dc;text-decoration:none;white-space:nowrap}
+@media(max-width:1376px){.home-feature{margin-left:40px;margin-right:40px}}
+@media(max-width:900px){.home-opening .home-header{padding:18px 24px;gap:20px}.home-brand img{width:60px;height:60px}.home-brand>span{font-size:12px}.home-brand small{font-size:8px}.home-nav{gap:18px;font-size:11px}.home-contact{padding:10px 16px;gap:15px;font-size:11px}.home-hero-content{padding:65px 24px 46px}.home-feature{margin-left:24px;margin-right:24px}.home-hero-description{font-size:16px}}
+@media(max-width:680px){.home-opening .home-header{padding:17px 20px;gap:16px}.home-nav,.home-contact{display:none}.home-brand{flex:0 1 auto!important;gap:12px}.home-brand img{width:58px;height:58px}.home-mobile-menu{display:block;position:relative;margin-left:auto;font-size:12px}.home-mobile-menu summary{cursor:pointer;list-style:none;border:1px solid #f4f0e84d;border-radius:24px;padding:10px 17px}.home-mobile-menu summary::-webkit-details-marker{display:none}.home-mobile-menu nav{position:absolute;top:51px;right:0;z-index:30;display:flex;flex-direction:column;min-width:220px;padding:14px;background:#15221a;border:1px solid #ffffff36;box-shadow:0 18px 45px #0006}.home-mobile-menu nav>a{padding:12px 14px;color:#f4f0e8}.home-hero-content{padding:56px 20px 38px}.home-hero-content h1{font-size:clamp(39px,8.8vw,60px);margin-top:20px;line-height:1.1}.home-eyebrow{font-size:9px;letter-spacing:.13em}.home-hero-description{font-size:15px}.home-hero-actions{gap:15px 22px;margin-top:27px}.home-primary-action{padding:14px 21px;gap:20px}.home-hero-note{font-size:10px;max-width:310px}.home-feature{margin:0 20px 24px;gap:15px;flex-wrap:wrap;padding:18px 0}.home-feature-image{width:68px;height:76px}.home-feature-copy{flex:1;min-width:180px}.home-feature-copy h2{font-size:23px}.home-feature-copy>p:last-child{font-size:10px}.home-feature-link{margin-left:83px;font-size:11px;padding:0}.home-opening{background-position:65% center}}
+
+.site-brand-logo{display:inline-block;vertical-align:middle;width:52px;height:52px;object-fit:contain;flex-shrink:0}.site-brand-subtitle{display:block;font-size:8px;letter-spacing:.22em;font-weight:400;color:#d3bc8d}.cms-page header>a:first-child{display:flex;align-items:center;gap:13px}.price-page .price-brand>img{width:52px;height:52px}

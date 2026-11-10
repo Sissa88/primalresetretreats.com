@@ -44,3 +44,11 @@ Cloudflare Pages: production branch `main`, framework `None`, build `npm run bui
 Runtime settings: `SITE_URL`, `GITHUB_CLIENT_ID`, encrypted `GITHUB_CLIENT_SECRET`. The CMS and authenticator currently use `public_repo` scope for the public GitHub repository. Read the setup guide before changing repository visibility.
 
 Forms use FormSubmit and require recipient email activation. Submissions are sent directly to the selected form service and are not saved in GitHub or browser-local storage. Retreat inquiries collect age (29–60) and country; coach applications collect country without that age restriction. Dates, pricing, program details, and policies still require owner confirmation. Indexing is disabled until explicitly enabled with a valid site URL.
+
+## Brand assets
+
+The approved detailed tree-and-roots seal has the corrected plural wording **RETREATS**. Download the full PNG from `/brand/primal-reset-retreats-logo.png`; the header uses an optimized 320px export. The favicon uses the same detailed seal (not the rejected simplified icon), with 96px, 192px, 512px, Apple touch, and ICO exports.
+
+Home has a dedicated responsive header, a native mobile menu, concise hero copy, and a compact featured-retreat link using a retreat photograph. The website seal is the parent brand; a separate logo for The Men's Rebirth has not yet been supplied.
+
+Search indexing is enabled at the owner's request, with a sitemap, canonical links, favicon declarations, and Organization/WebSite metadata. Search engines choose when to crawl and whether to display the icon.

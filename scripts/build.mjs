@@ -48,7 +48,35 @@ export async function build(){
  const out=path.join(root,'dist');await rm(out,{recursive:true,force:true});await cp(path.join(root,'public'),out,{recursive:true});
  // Page HTML is generated from templates and JSON; remove the earlier snapshot pages.
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});
- const put=async (url,html)=>{html=html.replace(/<header\b[\s\S]*?<\/header>/,header=>{const contact=/(<a\b[^>]*href="(?:#inquire|\/#inquire)"[^>]*>)[\s\S]*?<\/a>/;return contact.test(header)?header.replace(contact,'$1Contact us ↗</a>'):header.replace('</header>','<a class="site-contact-button" href="/#inquire">Contact us ↗</a></header>');});html=html.replace('</head>','<link rel="stylesheet" href="/typography.css"></head>');if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);};
+ const homeDescription=pages.find(p=>p.slug==='home').description;
+ const put=async (url,html)=>{
+  const customHeader=html.includes('data-custom-header');
+  if(!customHeader){
+   html=html.replace(/<header\b[\s\S]*?<\/header>/,header=>header.replace(/(<a\b[^>]*href="\/"[^>]*>)[\s\S]*?<\/a>/,`$1<img class="site-brand-logo" src="/brand/primal-reset-retreats-logo-320.png" alt="Primal Reset Retreats" width="52" height="52"><span>Primal Reset<small class="site-brand-subtitle">Retreats</small></span></a>`));
+   html=html.replace(/<header\b[\s\S]*?<\/header>/,header=>{
+    const contact=/(<a\b[^>]*href="(?:#inquire|\/#inquire)"[^>]*>)[\s\S]*?<\/a>/;
+    return contact.test(header)?header.replace(contact,'$1Contact us ↗</a>'):header.replace('</header>','<a class="site-contact-button" href="/#inquire">Contact us ↗</a></header>');
+   });
+   if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);
+  }
+  html=html.replace(/<link\b[^>]*rel="(?:icon|shortcut icon|apple-touch-icon|canonical)"[^>]*>/g,'');
+  const siteOrigin=settings.site_url.replace(/\/$/,'');
+  const canonical=siteOrigin+(url?'/'+url+'/':'/');
+  const title=html.match(/<title>(.*?)<\/title>/)?.[1]||esc(settings.site_name);
+  html=html.replace(/<meta\b[^>]*property="og:title"[^>]*>/g,`<meta property="og:title" content="${title}">`);
+  if(url===''){
+   html=html.replace(/<meta\b[^>]*property="og:description"[^>]*>/g,`<meta property="og:description" content="${esc(homeDescription)}">`);
+   html=html.replace(/<meta\b[^>]*property="og:image(?:\:[a-z]+)?"[^>]*>/g,'');
+  }
+  const metadata=`<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png"><link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" href="/typography.css">${siteOrigin?`<link rel="canonical" href="${esc(canonical)}">`:''}`;
+  html=html.replace('</head>',metadata+(url===''?`<meta property="og:image" content="${esc(siteOrigin)}/brand/primal-reset-retreats-logo.png"><meta property="og:image:alt" content="Primal Reset Retreats gold tree and roots logo">`:'')+'</head>');
+  if(url===''&&siteOrigin){
+   const schema=JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':siteOrigin+'/#organization',name:settings.site_name,url:siteOrigin+'/',logo:siteOrigin+'/brand/primal-reset-retreats-logo.png'},{'@type':'WebSite',name:settings.site_name,url:siteOrigin+'/',publisher:{'@id':siteOrigin+'/#organization'}}]}).replace(/</g,'\\u003c');
+   html=html.replace('</head>',`<script type="application/ld+json">${schema}</script></head>`);
+  }
+  html=html.replace(/href="\/retreats\/([^/"#?]+)(?:[^"]*)"/g,(match,slug)=>retreats.some(r=>r.slug===slug)?match:'href="/#retreats"');
+  const file=path.join(out,url,'index.html');await mkdir(path.dirname(file),{recursive:true});await writeFile(file,html);
+ };
  await put('pricing',renderPricing(pricing,{esc,imageURL,formHtml:form('retreat',settings),footerLinks:links,contactEmail:settings.contact_email}));
  await writeFile(path.join(out,'_redirects'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
  await put('thank-you',shell({title:'Thank you',description:'Your inquiry has been submitted.'},'<section class="cms-section"><div class="cms-container"><p class="eyebrow">Message submitted</p><h1>Thank you for reaching out.</h1><p>Your inquiry has been submitted through our contact service. We’ll reply using the email address you provided.</p><a class="action-link" href="/">Return to the retreat website →</a></div></section>').replace('{{EXTRA_LINKS}}',links).replace('</head>','<meta name="robots" content="noindex"></head>'));

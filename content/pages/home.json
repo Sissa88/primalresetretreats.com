@@ -1,12 +1,7 @@
 {
-  "title": "Primal Reset Retreats | Return to What Is Real",
-  "description": "A seven-day retreat on Hawaiʻi Island helping men rebuild confidence after divorce and feel comfortable forming genuine connections with women again.",
+  "title": "Primal Reset Retreats | Men’s Retreats in Hawaiʻi",
+  "description": "Men’s retreats on Hawaiʻi Island combining supportive coaching, movement, and meaningful connection. Explore Primal Reset and find your next step.",
   "texts": [
-    {
-      "id": "text_001",
-      "label": "Private concept preview · Program details subject to confirmation",
-      "value": "Private concept preview · Program details subject to confirmation"
-    },
     {
       "id": "text_002",
       "label": "Primal Reset",
@@ -23,69 +18,44 @@
       "value": "Retreats"
     },
     {
-      "id": "text_005",
-      "label": "Experience",
-      "value": "Experience"
-    },
-    {
-      "id": "text_006",
-      "label": "Our story",
-      "value": "Our story"
-    },
-    {
-      "id": "text_007",
-      "label": "Coach with us",
-      "value": "Coach with us"
-    },
-    {
-      "id": "text_008",
-      "label": "Request details",
-      "value": "Request details "
-    },
-    {
       "id": "text_009",
-      "label": "Seven-day men's retreat · Big Island, Hawaiʻi",
-      "value": " Seven-day men's retreat · Big Island, Hawaiʻi"
+      "label": "Men’s retreats · Hawaiʻi Island",
+      "value": "Men’s retreats · Hawaiʻi Island"
     },
     {
       "id": "text_010",
-      "label": "Divorce changed your life. It doesn't have to define the man you ",
-      "value": "Divorce changed your life. It doesn't have to define the man you become next."
+      "label": "Find your footing. Reclaim your confidence.",
+      "value": "Find your footing.\nReclaim your confidence."
     },
     {
       "id": "text_011",
-      "label": "Spend seven days on Hawaiʻi Island rebuilding your confidence, pr",
-      "value": "Spend seven days on Hawaiʻi Island rebuilding your confidence, presence, and direction—with honest feedback and guided practice to help you feel comfortable connecting with women again."
+      "label": "Step away from the everyday. Find perspective through honest coac",
+      "value": "Step away from the everyday. Find perspective through honest coaching, shared challenges, and a brotherhood of support on Hawaiʻi Island."
     },
     {
       "id": "text_012",
-      "label": "Request dates & details",
-      "value": "Request dates & details "
+      "label": "Start a conversation",
+      "value": "Start a conversation"
     },
     {
       "id": "text_013",
-      "label": "See the seven-day retreat",
-      "value": "See the seven-day retreat"
+      "label": "Explore our retreats",
+      "value": "Explore our retreats"
     },
     {
       "id": "text_014",
-      "label": "Start with a short, private fit conversation before any deposit.",
-      "value": "Start with a short, private fit conversation before any deposit."
-    },
-    {
-      "id": "text_015",
-      "label": "The Men's Rebirth",
-      "value": "The Men's Rebirth"
+      "label": "Men aged 29–60 · Seven nights included · Participation at your ow",
+      "value": "Men aged 29–60 · Seven nights included · Participation at your own pace"
     },
     {
       "id": "text_016",
-      "label": "7 days · 15 men · Big Island",
-      "value": "7 days · 15 men · Big Island"
+      "label": "7 nights · Up to 15 men · Hawaiʻi Island",
+      "value": "7 nights · Up to 15 men · Hawaiʻi Island"
     },
     {
       "id": "text_017",
-      "label": "Featured experience",
-      "value": "Featured experience"
+      "label": "Our current retreat",
+      "value": "Our current retreat"
     },
     {
       "id": "text_018",
@@ -93,49 +63,9 @@
       "value": "The Men's Rebirth"
     },
     {
-      "id": "text_019",
-      "label": "A small-group reset for men moving through divorce—combining embo",
-      "value": "A small-group reset for men moving through divorce—combining embodied challenge with honest confidence and connection coaching."
-    },
-    {
-      "id": "text_020",
-      "label": "Guided confidence and connection labs with women coaches.",
-      "value": "Guided confidence and connection labs with women coaches."
-    },
-    {
-      "id": "text_021",
-      "label": "Dates",
-      "value": "Dates"
-    },
-    {
       "id": "text_022",
-      "label": "Dates announced soon",
-      "value": "Dates announced soon"
-    },
-    {
-      "id": "text_023",
-      "label": "Group size",
-      "value": "Group size"
-    },
-    {
-      "id": "text_024",
-      "label": "Limited to 15 men",
-      "value": "Limited to 15 men"
-    },
-    {
-      "id": "text_025",
-      "label": "Location",
-      "value": "Location"
-    },
-    {
-      "id": "text_026",
-      "label": "Open Gate · Big Island",
-      "value": "Open Gate · Big Island"
-    },
-    {
-      "id": "text_027",
-      "label": "View the experience",
-      "value": "View the experience "
+      "label": "Dates to be confirmed",
+      "value": "Dates to be confirmed"
     },
     {
       "id": "text_028",
@@ -434,16 +364,6 @@
     }
   ],
   "images": [
-    {
-      "id": "image_1",
-      "src": "/dan-primal-reset-emblem.jpg",
-      "alt": "Primal Reset Retreat tree-and-roots emblem"
-    },
-    {
-      "id": "image_2",
-      "src": "/dan-primal-reset-emblem.jpg",
-      "alt": "Primal Reset Retreat tree-and-roots emblem"
-    },
     {
       "id": "image_3",
       "src": "/primal-reset-connection-lab.png",

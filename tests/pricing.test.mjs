@@ -42,9 +42,9 @@ test('pricing page is an inquiry preview with real photos and no payment collect
  assert.match(html,/mailto:info@example.com/);
  assert.doesNotMatch(html,/checkout\.stripe\.com|name="card/);
 });
-test('built site exposes the editable pricing collection and Book now link',async()=>{
+test('built site exposes the editable pricing collection and clear pricing navigation',async()=>{
  const home=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
- assert.match(home,/class="site-book-button" href="\/pricing\/">Book now/);
+ assert.match(home,/class="home-nav"/);assert.match(home,/href="\/pricing\/">Rooms &amp; pricing/);
  const cms=JSON.parse(await readFile(new URL('../dist/admin/config.json',import.meta.url),'utf8'));
  const pricing=cms.collections.find(c=>c.name==='pricing');assert.equal(pricing.files[0].file,'content/pricing.json');
  assert.equal(await readFile(new URL('../dist/_redirects',import.meta.url),'utf8'),'/book /pricing/ 301\n/book/ /pricing/ 301\n');
