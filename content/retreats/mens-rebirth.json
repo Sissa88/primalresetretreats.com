@@ -1,6 +1,6 @@
 {
   "title": "The Men’s Rebirth",
-  "description": "A seven-day retreat on Hawaiʻi Island helping divorced men rebuild confidence and connection with honest feedback from women coaches.",
+  "description": "A seven-night retreat on Hawaiʻi Island helping divorced men rebuild confidence and connection with honest feedback from women coaches.",
   "texts": [
     {
       "id": "text_001",
@@ -24,8 +24,8 @@
     },
     {
       "id": "text_006",
-      "label": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and",
-      "value": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and direction—with guided practice and honest feedback to help you feel comfortable connecting with women again."
+      "label": "Seven nights on Hawaiʻi Island to rebuild confidence, presence, and",
+      "value": "Seven nights on Hawaiʻi Island to rebuild confidence, presence, and direction—with guided practice and honest feedback to help you feel comfortable connecting with women again."
     },
     {
       "id": "text_010",
@@ -94,8 +94,8 @@
     },
     {
       "id": "text_023",
-      "label": "The seven-day journey",
-      "value": "The seven-day journey"
+      "label": "The retreat journey",
+      "value": "The retreat journey"
     },
     {
       "id": "text_024",
@@ -214,8 +214,8 @@
     },
     {
       "id": "text_047",
-      "label": "Seven days of planned retreat lodging",
-      "value": "Seven days of retreat accommodation"
+      "label": "Seven nights of planned retreat lodging",
+      "value": "Seven nights of retreat accommodation"
     },
     {
       "id": "text_048",
@@ -340,10 +340,10 @@
       "alt": "A man practicing a conversation with a woman coach while other retreat participants observe"
     }
   ],
-  "summary": "Seven days on Hawaiʻi Island to rebuild confidence, presence, and direction.",
+  "summary": "Seven nights on Hawaiʻi Island to rebuild confidence, presence, and direction.",
   "image": "/primal-reset-hero.png",
-  "dates": "Dates to be confirmed",
-  "duration": "7 days",
+  "dates": "April 1–7, 2027",
+  "duration": "7 nights · 6 days",
   "location": "Big Island · Hawaiʻi",
   "capacity": "15 men",
   "price": "Pricing to be confirmed",
