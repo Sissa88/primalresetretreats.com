@@ -218,10 +218,16 @@ body .home-nav>a,body .home-mobile-menu nav>a{font-size:14px;letter-spacing:.055
 .founder-details{margin-top:4px;padding-top:0}
 .founder-details .coach-full-bio{font-size:15px;line-height:1.85;color:#414c40}
 
-/* Keep section 02's retreat presentation compact, including a single listing. */
-#retreats.cms-section{padding:64px 32px}
+/* Compact retreat listing: artwork beside the details on wider screens. */
+#retreats.cms-section{padding:56px 32px}
 #retreats .cms-container{max-width:1000px}
-#retreats .retreat-grid{max-width:760px;margin-inline:auto;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
-#retreats .retreat-card-artwork{height:300px;padding:20px}
-#retreats .retreat-card>div:not(.retreat-card-artwork){padding:24px}
-@media(max-width:767px){#retreats.cms-section{padding:48px 24px}#retreats .retreat-card-artwork{height:260px;padding:16px}#retreats .retreat-card>div:not(.retreat-card-artwork){padding:22px}}
+#retreats .page-section-heading{margin-bottom:30px}
+#retreats .retreat-grid{max-width:900px;margin-inline:auto;grid-template-columns:minmax(0,1fr)}
+#retreats .retreat-card{display:grid;grid-template-columns:minmax(200px,.7fr) minmax(0,1.3fr);align-items:stretch}
+#retreats .retreat-card-artwork{height:auto;min-height:300px;padding:24px;align-self:stretch}
+#retreats .retreat-card-artwork>img{display:block;width:100%;height:auto;max-width:190px;max-height:270px;object-fit:contain}
+#retreats .retreat-card>div:not(.retreat-card-artwork){padding:28px;align-self:center;min-width:0}
+#retreats .retreat-card>img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover}
+#retreats .retreat-card h3{margin:12px 0}
+#retreats .retreat-card p{margin:12px 0}
+@media(max-width:600px){#retreats.cms-section{padding:44px 24px}#retreats .retreat-card{grid-template-columns:minmax(0,1fr)}#retreats .retreat-card-artwork{height:230px;min-height:0;padding:16px}#retreats .retreat-card-artwork>img{height:100%;width:auto;max-width:100%;max-height:100%}#retreats .retreat-card>div:not(.retreat-card-artwork){padding:22px}}
