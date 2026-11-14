@@ -37,7 +37,7 @@ test('invalid room and price settings fail rather than producing a misleading qu
 test('pricing page is an inquiry preview with real photos and no payment collection',()=>{
  const html=renderPricing(config,{esc,imageURL,formHtml:'<form></form>',contactEmail:'info@example.com'});
  assert.match(html,/No payments collected/);assert.match(html,/Nothing is charged today/);
- assert.match(html,/one guest/);assert.match(html,/not live remaining availability/);
+ assert.match(html,/one guest/);assert.match(html,/Live availability appears when checkout is connected/);
  assert.match(html,/room-private-canopy-1.jpg/);assert.match(html,/room-shared-cabin-1.jpg/);
  assert.match(html,/mailto:info@example.com/);
  assert.doesNotMatch(html,/checkout\.stripe\.com|name="card/);

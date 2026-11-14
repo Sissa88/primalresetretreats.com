@@ -1,4 +1,4 @@
-// Informational estimates only. A future payment backend must calculate its own prices.
+// Shared pricing arithmetic. The booking API loads trusted configuration and recalculates every order.
 export function calculateQuote(config,roomID,enteredCode=''){
  const room=config.rooms.find(room=>room.id===roomID);
  if(!room)throw new Error('Unknown accommodation');
