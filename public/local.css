@@ -221,7 +221,10 @@ body .home-nav>a,body .home-mobile-menu nav>a{font-size:14px;letter-spacing:.055
 /* Keep section 02's retreat presentation compact, including a single listing. */
 #retreats.cms-section{padding:64px 32px}
 #retreats .cms-container{max-width:1000px}
-#retreats .retreat-grid{max-width:760px;margin-inline:auto;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
-#retreats .retreat-card-artwork{height:300px;padding:20px}
+#retreats .retreat-grid{max-width:900px;margin-inline:auto;grid-template-columns:minmax(0,1fr)}
+#retreats .retreat-card{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);align-items:center}
+#retreats .retreat-card>img{height:100%;min-height:300px;aspect-ratio:auto;object-fit:cover}
+#retreats .retreat-card-artwork{height:100%;min-height:340px;padding:24px}
+#retreats .retreat-card-artwork>img{width:100%;height:auto;max-height:340px;object-fit:contain}
 #retreats .retreat-card>div:not(.retreat-card-artwork){padding:24px}
-@media(max-width:767px){#retreats.cms-section{padding:48px 24px}#retreats .retreat-card-artwork{height:260px;padding:16px}#retreats .retreat-card>div:not(.retreat-card-artwork){padding:22px}}
+@media(max-width:767px){#retreats.cms-section{padding:48px 24px}#retreats .retreat-card{grid-template-columns:minmax(0,1fr)}#retreats .retreat-card-artwork{height:260px;min-height:0;padding:16px}#retreats .retreat-card-artwork>img{height:100%;width:auto;max-width:100%}#retreats .retreat-card>div:not(.retreat-card-artwork){padding:22px}}
