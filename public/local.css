@@ -217,3 +217,11 @@ body .home-nav>a,body .home-mobile-menu nav>a{font-size:14px;letter-spacing:.055
 .founder-identity h2{font-size:clamp(30px,3vw,42px)!important;line-height:1.15;margin:16px 0 12px;text-align:left}.founder-identity .founder-role{margin-bottom:25px}.founder-copy{padding-top:0}
 .founder-details{margin-top:4px;padding-top:0}
 .founder-details .coach-full-bio{font-size:15px;line-height:1.85;color:#414c40}
+
+/* Keep section 02's retreat presentation compact, including a single listing. */
+#retreats.cms-section{padding:64px 32px}
+#retreats .cms-container{max-width:1000px}
+#retreats .retreat-grid{max-width:760px;margin-inline:auto;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+#retreats .retreat-card-artwork{height:300px;padding:20px}
+#retreats .retreat-card>div:not(.retreat-card-artwork){padding:24px}
+@media(max-width:767px){#retreats.cms-section{padding:48px 24px}#retreats .retreat-card-artwork{height:260px;padding:16px}#retreats .retreat-card>div:not(.retreat-card-artwork){padding:22px}}
