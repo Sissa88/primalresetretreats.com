@@ -1,4 +1,4 @@
-import pricing from '../../content/pricing.json' with {type:'json'};
+import pricing from './pricing-config.js';
 import {calculateQuote} from '../../public/pricing-model.js';
 export const TOTAL_CAPACITY=15;
 export function json(data,status=200){return Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}

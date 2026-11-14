@@ -35,6 +35,8 @@ async function renderTemplate(name,data,extra,settings){
 export async function build(){
  const settings=await json('content/settings.json');
  const pricing=await json('content/pricing.json');
+ // Plain JS keeps server pricing compatible with Pages' bundled Functions compiler.
+ await writeFile(path.join(root,'functions/_lib/pricing-config.js'),'// Generated from content/pricing.json by npm run build. Do not edit.\nexport default '+JSON.stringify({rooms:pricing.rooms.map(({id,name,price})=>({id,name,price})),deposit_percent:pricing.deposit_percent,promo_enabled:pricing.promo_enabled,promo_code:pricing.promo_code,promo_percent:pricing.promo_percent})+';\n');
  const {coaches}=await json('content/coaches.json');
  const coachGrid=renderCoachGrid(coaches,{esc,imageURL})+renderFounder(await json('content/founder.json'),{esc,imageURL});
  const faq=renderFAQ(await json('content/faq.json'),{esc});
