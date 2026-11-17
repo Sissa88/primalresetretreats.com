@@ -12,8 +12,26 @@ export async function onRequestPost({request,env,liveTest=false}){
  if(data.marketingOptIn!==undefined&&typeof data.marketingOptIn!=='boolean')return json({error:'Invalid marketing preference.'},400);
  if(liveTest)q={...q,base:100,discount:0,total:100,deposit:100,balance:0,code:'INTERNAL_LIVE_TEST'};
  const id=liveTest?'003d9a78-1cd0-486d-b6c1-b4f60098b1cd':crypto.randomUUID(),db=env.BOOKING_DB;
+ let reservedNow=false;
  try{
+  if(liveTest){
+   const existing=await db.prepare('SELECT * FROM bookings WHERE id=?').bind(id).first();
+   if(existing){
+    if(existing.promo_code!=='INTERNAL_LIVE_TEST'||existing.deposit_cents!==100||!existing.paypal_order_id)return json({error:'The existing test needs review. No new payment was created.'},409);
+    if(existing.status==='cancelled')return json({error:'This test was closed. No new payment was created.'},409);
+    const order=await paypal(env,'/v2/checkout/orders/'+encodeURIComponent(existing.paypal_order_id));
+    const unit=order.purchase_units?.find(u=>u.custom_id===id||u.reference_id===id);
+    if(!unit||unit.amount?.currency_code!=='USD'||unit.amount?.value!=='1.00')return json({error:'The existing test order could not be verified. No new payment was created.'},409);
+    const origin=new URL(request.url).origin;
+    if(existing.status==='paid'||existing.status==='processing'||order.status==='COMPLETED')return json({reference:id,orderID:existing.paypal_order_id,approvalURL:origin+'/api/booking/live-test?returned=1',resumed:true});
+    if(!['CREATED','SAVED','PAYER_ACTION_REQUIRED','APPROVED'].includes(order.status))return json({error:'The existing PayPal order is no longer available. No new payment was created.'},409);
+    const renewed=await db.prepare("UPDATE bookings SET expires_at=unixepoch()+900 WHERE id=? AND status='held' AND (expires_at>unixepoch() OR ((SELECT COUNT(*) FROM bookings WHERE id<>? AND (status IN ('paid','processing') OR (status='held' AND expires_at>unixepoch())))<15 AND (SELECT COUNT(*) FROM bookings WHERE id<>? AND room_id='shared' AND (status IN ('paid','processing') OR (status='held' AND expires_at>unixepoch())))<(SELECT capacity FROM retreat_capacity WHERE room_id='shared')))").bind(id,id,id).run();
+    if(!renewed.meta.changes)return json({error:'No shared place is currently available for this test. No new payment was created.'},409);
+    return json({reference:id,orderID:existing.paypal_order_id,approvalURL:'https://www.paypal.com/checkoutnow?token='+encodeURIComponent(existing.paypal_order_id),holdMinutes:15,resumed:true});
+   }
+  }
   if(!await reserve(db,id,q))return json({error:'This accommodation has just sold out. Please choose another room.'},409);
+  reservedNow=true;
   await db.prepare('UPDATE bookings SET terms_url=?,terms_accepted_at=unixepoch() WHERE id=?').bind(env.BOOKING_TERMS_URL,id).run();
   // Additive table creation supports existing installations without altering bookings.
   await db.prepare('CREATE TABLE IF NOT EXISTS booking_guests (booking_id TEXT PRIMARY KEY REFERENCES bookings(id),full_name TEXT NOT NULL,email TEXT NOT NULL)').run();
@@ -28,7 +46,7 @@ export async function onRequestPost({request,env,liveTest=false}){
   await db.prepare('UPDATE bookings SET paypal_order_id=? WHERE id=?').bind(order.id,id).run();
   return json({reference:id,orderID:order.id,...(card?{}:{approvalURL:approval}),holdMinutes:15});
  }catch{
-  await db.prepare("UPDATE bookings SET status='cancelled' WHERE id=? AND status='held'").bind(id).run();
+  if(reservedNow)await db.prepare("UPDATE bookings SET status='cancelled' WHERE id=? AND status='held'").bind(id).run();
   return json({error:'We could not start checkout. No booking has been confirmed. Please try again.'},502);
  }
 }
