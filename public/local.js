@@ -2,6 +2,11 @@
 for (const form of document.querySelectorAll('.inquiry-form')) {
  const status = form.querySelector('.form-status');
  const button = form.querySelector('button[type=submit]');
+ const readyLabel=button.dataset?.readyLabel||button.textContent;
+ const restoreButton=()=>{if(['formsubmit','formspree'].includes(form.dataset.provider)){button.disabled=false;button.textContent=readyLabel;}};
+ restoreButton();
+ if(typeof window!=='undefined')window.addEventListener('pageshow',restoreButton);
+
  form.addEventListener('invalid',event=>{
   const label=event.target.labels?.[0]?.textContent?.replace(/\s+/g,' ').trim()||'the highlighted field';
   status.textContent='Please check '+label+': '+event.target.validationMessage;

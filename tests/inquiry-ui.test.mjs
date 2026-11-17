@@ -22,3 +22,11 @@ test('customer database failure cannot prevent native contact email submission',
  vm.runInNewContext(code,{document,crypto,AbortSignal,HTMLFormElement:{prototype:{submit(){nativeSubmitted=true;}}},fetch:async()=>({ok:false,json:async()=>({error:'Database temporarily unavailable'})})});
  await handler({preventDefault(){}});assert.equal(nativeSubmitted,true);assert.match(status.textContent,/email submission/);
 });
+test('configured send buttons recover from persisted disabled state on page load and browser back',()=>{
+ let onShow;
+ const status={textContent:''},button={disabled:true,textContent:'Sending…',dataset:{readyLabel:'Send inquiry ↗'}};
+ const form={dataset:{kind:'retreat',provider:'formsubmit'},querySelector:selector=>selector==='.form-status'?status:button,addEventListener(){}};
+ const document={querySelectorAll:selector=>selector==='.inquiry-form'?[form]:[],querySelector:()=>null,createElement:()=>({})};
+ const window={addEventListener:(name,callback)=>{if(name==='pageshow')onShow=callback;}};
+ vm.runInNewContext(code,{document,window});assert.equal(button.disabled,false);assert.equal(button.textContent,'Send inquiry ↗');button.disabled=true;button.textContent='Sending…';onShow();assert.equal(button.disabled,false);assert.equal(button.textContent,'Send inquiry ↗');
+});
