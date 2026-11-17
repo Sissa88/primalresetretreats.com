@@ -5,7 +5,7 @@ export async function onRequestPost(context){
  let data;try{data=await context.request.json();}catch{return json({error:'Invalid request'},400);}
  if(typeof data.token!=='string'||data.token.length>100)return json({error:'Private test link required'},403);
  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(data.token));
- if(Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('')!=='3974bb8bb0916dcc4f46ce54e2b61b065ea5becd6f29c7cf12f5fec96ea91a06')return json({error:'Private test link required'},403);
+ if(Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('')!=='be606cde2e10053342a97c866d7df9cab6c7717d028f844640b4e7f7c1d1f06a')return json({error:'Private test link required'},403);
  if(Date.now()>Date.parse('2026-11-20T10:00:00Z'))return json({error:'Test link expired'},403);
  const request=new Request(context.request.url,{method:'POST',headers:{Origin:new URL(context.request.url).origin,'Content-Type':'application/json'},body:JSON.stringify({room:'shared',termsAccepted:true,method:'paypal',guest:data.guest,marketingOptIn:false})});
  return create({...context,request,liveTest:true});
