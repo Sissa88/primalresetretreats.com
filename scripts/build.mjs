@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {cp,mkdir,readFile,writeFile,readdir,rm} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -34,6 +35,7 @@ async function renderTemplate(name,data,extra,settings){
 }
 export async function build(){
  const settings=await json('content/settings.json');
+ const localScriptVersion=createHash('sha256').update(await readFile(path.join(root,'public/local.js'))).digest('hex').slice(0,12);
  const pricing=await json('content/pricing.json');
  // Plain JS keeps server pricing compatible with Pages' bundled Functions compiler.
  await writeFile(path.join(root,'functions/_lib/pricing-config.js'),'// Generated from content/pricing.json by npm run build. Do not edit.\nexport default '+JSON.stringify({rooms:pricing.rooms.map(({id,name,price})=>({id,name,price})),deposit_percent:pricing.deposit_percent,promo_enabled:pricing.promo_enabled,promo_code:pricing.promo_code,promo_percent:pricing.promo_percent})+';\n');
@@ -53,6 +55,7 @@ export async function build(){
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});
  const homeDescription=pages.find(p=>p.slug==='home').description;
  const put=async (url,html)=>{
+  html=html.replace(/src="\/local.js"/g,`src="/local.js?v=${localScriptVersion}"`);
   const customHeader=html.includes('data-custom-header');
   if(!customHeader){
    html=html.replace(/<header\b[\s\S]*?<\/header>/,header=>header.replace(/(<a\b[^>]*href="\/"[^>]*>)[\s\S]*?<\/a>/,`$1<img class="site-brand-logo" src="/brand/primal-reset-retreats-logo-320.png" alt="Primal Reset Retreats" width="52" height="52"><span>Primal Reset<small class="site-brand-subtitle">Retreats</small></span></a>`));
