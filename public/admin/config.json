@@ -80,11 +80,11 @@
               "widget": "select",
               "options": [
                 {
-                  "label": "FormSubmit \u2014 verify the contact email first",
+                  "label": "FormSubmit — verify the contact email first",
                   "value": "formsubmit"
                 },
                 {
-                  "label": "Disabled \u2014 email link only",
+                  "label": "Disabled — email link only",
                   "value": "disabled"
                 }
               ],
@@ -269,7 +269,7 @@
               "min": 2,
               "max": 2,
               "collapsed": true,
-              "summary": "{{fields.name}} \u2014 ${{fields.price}}",
+              "summary": "{{fields.name}} — ${{fields.price}}",
               "fields": [
                 {
                   "name": "id",
@@ -411,7 +411,7 @@
       "files": [
         {
           "name": "founder",
-          "label": "Dan\u2019s biography and portrait",
+          "label": "Dan’s biography and portrait",
           "file": "content/founder.json",
           "fields": [
             {
@@ -445,7 +445,7 @@
               "label": "Portrait",
               "widget": "image",
               "required": false,
-              "hint": "Leave empty to show the portrait placeholder. Upload Dan\u2019s photo here when ready."
+              "hint": "Leave empty to show the portrait placeholder. Upload Dan’s photo here when ready."
             },
             {
               "name": "image_alt",
@@ -605,7 +605,7 @@
       "extension": "json",
       "format": "json",
       "slug": "{{slug}}",
-      "summary": "{{title}} \u2014 {{dates}}",
+      "summary": "{{title}} — {{dates}}",
       "fields": [
         {
           "name": "title",
@@ -624,7 +624,7 @@
         },
         {
           "name": "logo",
-          "label": "This retreat\u2019s own logo",
+          "label": "This retreat’s own logo",
           "widget": "image",
           "required": false,
           "hint": "Used only for this retreat and its own listing. This does not change the website logo or favicon."
@@ -651,7 +651,7 @@
           "name": "location",
           "label": "Location",
           "widget": "string",
-          "default": "Big Island \u00b7 Hawai\u02bbi"
+          "default": "Big Island · Hawaiʻi"
         },
         {
           "name": "capacity",
@@ -778,6 +778,54 @@
           "name": "body",
           "label": "Page content",
           "widget": "markdown"
+        }
+      ]
+    },
+    {
+      "name": "booking_email",
+      "label": "Booking confirmation email",
+      "files": [
+        {
+          "name": "booking_email",
+          "label": "Confirmation wording",
+          "file": "content/booking-email.json",
+          "fields": [
+            {
+              "name": "subject",
+              "label": "Subject",
+              "widget": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "widget": "string"
+            },
+            {
+              "name": "intro",
+              "label": "Welcome paragraph",
+              "widget": "text"
+            },
+            {
+              "name": "travel_note",
+              "label": "Travel and minimum guest guidance",
+              "widget": "text"
+            },
+            {
+              "name": "next_steps",
+              "label": "What happens next",
+              "widget": "list",
+              "field": {
+                "name": "step",
+                "label": "Step",
+                "widget": "text"
+              }
+            },
+            {
+              "name": "signature",
+              "label": "Signature",
+              "widget": "string"
+            }
+          ]
         }
       ]
     }

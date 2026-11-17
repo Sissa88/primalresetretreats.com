@@ -1,3 +1,4 @@
+import {emailEnabled} from '../../_lib/confirmation-email.js';
 import {json,originOK,paypal,availability} from '../../_lib/booking.js';
 import {browserClientToken} from '../../_lib/card-token.js';
 // This route cannot create/capture orders, change stock, or enable checkout.
@@ -6,7 +7,7 @@ export async function onRequestPost({request,env}){
  if(!env.PAYPAL_CLIENT_ID||!env.PAYPAL_CLIENT_SECRET)return json({error:'PayPal credentials have not been configured.'},503);
  try{
   const clientToken=await browserClientToken(env);
-  const checks={mode:env.PAYPAL_ENV==='live'?'live':'sandbox',checkoutPaused:env.BOOKING_ENABLED!=='true',connection:true,termsReady:!!env.BOOKING_TERMS_URL?.endsWith('/booking-terms/'),webhookRegistered:false,databaseReady:false,freshDatabase:false};
+  const checks={mode:env.PAYPAL_ENV==='live'?'live':'sandbox',checkoutPaused:env.BOOKING_ENABLED!=='true',connection:true,bookingEmailConfigured:emailEnabled(env),termsReady:!!env.BOOKING_TERMS_URL?.endsWith('/booking-terms/'),webhookRegistered:false,databaseReady:false,freshDatabase:false};
   if(env.PAYPAL_WEBHOOK_ID){try{
    const hook=await paypal(env,'/v1/notifications/webhooks/'+encodeURIComponent(env.PAYPAL_WEBHOOK_ID));
    checks.webhookRegistered=hook.url===new URL(request.url).origin+'/api/booking/webhook'&&hook.event_types?.some(e=>e.name==='PAYMENT.CAPTURE.COMPLETED'||e.name==='*')===true;

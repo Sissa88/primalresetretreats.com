@@ -1,3 +1,4 @@
+import {sendBookingConfirmation} from '../../_lib/confirmation-email.js';
 import {syncPaidCustomer} from '../../_lib/customers.js';
 import {json,paypal,markPaid} from '../../_lib/booking.js';
 export async function onRequestPost({request,env}){
@@ -10,7 +11,7 @@ export async function onRequestPost({request,env}){
   if(event.event_type==='PAYMENT.CAPTURE.COMPLETED'){
    const capture=event.resource,orderID=capture?.supplementary_data?.related_ids?.order_id;
    const booking=await env.BOOKING_DB.prepare('SELECT * FROM bookings WHERE paypal_order_id=?').bind(orderID||'').first();
-   if(booking){if(booking.status!=='paid')await markPaid(env.BOOKING_DB,booking,capture);await syncPaidCustomer(env.BOOKING_DB,booking.id);}
+   if(booking){if(booking.status!=='paid')await markPaid(env.BOOKING_DB,booking,capture);await syncPaidCustomer(env.BOOKING_DB,booking.id);await sendBookingConfirmation(env,booking.id);}
   }
   return json({received:true});
  }catch{return json({error:'Webhook could not be processed'},500);}
