@@ -98,7 +98,7 @@ async function confirmPayment(reference){
    byID('card-checkout').hidden=true;
   }else{
    paymentStatus.textContent=`Your deposit confirmation is pending. Reference: ${reference}. Please check again or contact info@primalresetretreats.com before making another payment.`;
-   pay.textContent='Check payment status';pay.disabled=false;pay.onclick=()=>confirmPayment(reference);
+   byID('paypal-button-label').textContent='Check payment status';pay.disabled=false;pay.onclick=()=>confirmPayment(reference);
   }
  }catch(e){paymentStatus.textContent=e.message+' Contact info@primalresetretreats.com with reference '+reference+' before paying again.';}
 }

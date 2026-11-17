@@ -32,3 +32,10 @@
 .card-field-label{display:block;font-size:14px;margin-top:14px}
 #card-country,#card-postal{width:100%;height:50px;margin:6px 0 18px;padding:12px;border:1px solid #25372a55;border-radius:4px;background:white}
 #card-deposit{width:100%;min-height:54px}#card-deposit:disabled{opacity:.55;cursor:not-allowed}
+
+.payment-method-title{display:flex;align-items:center;gap:14px;flex:1;min-width:0;text-align:left}
+.payment-brand-icons{display:inline-flex;align-items:center;gap:6px;flex-shrink:0}
+.payment-brand-icons img{display:block;width:44px;height:28px;object-fit:contain}
+#paypal-deposit{display:flex;align-items:center;justify-content:center;gap:12px}
+.paypal-method-icon{display:block;width:52px;height:33px;object-fit:contain;flex-shrink:0}
+@media(max-width:480px){.payment-method-title{flex-wrap:wrap;gap:10px}.card-checkout>summary{align-items:flex-start}}
