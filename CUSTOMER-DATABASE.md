@@ -5,7 +5,7 @@ Customer profiles live in the existing private Cloudflare D1 binding `BOOKING_DB
 ## What is stored
 
 - **Paid guests:** attendee name and email; a guest profile is synchronised after verified payment, including verified webhook retries. An abandoned checkout does not become a paid customer profile.
-- **Retreat inquiries:** name, email, age, country and optional phone. The message body stays in the existing email/form service rather than this database. Coach applications continue their existing email flow and are not added to the customer database.
+- **Retreat inquiries:** name, email, age, country and optional phone. The message body stays in the existing email/form service rather than this database. With JavaScript, submission uses FormSubmit’s AJAX endpoint and returns to the website thank-you page only after an explicit success acknowledgement. The native form action and its _next field remain a fallback. Coach applications continue their existing email flow and are not added to the customer database.
 - **Marketing:** separate optional, unchecked consent. It records wording, version, timestamp and source. Providing booking details or permission to reply to an inquiry is not marketing consent.
 - No card numbers, security codes or PayPal passwords are stored here. Cardholder names remain separate from guest profiles.
 

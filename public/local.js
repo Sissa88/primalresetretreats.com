@@ -1,61 +1,43 @@
-'use strict';
-for (const form of document.querySelectorAll('.inquiry-form')) {
- const status = form.querySelector('.form-status');
- const button = form.querySelector('button[type=submit]');
+"use strict";
+for(const form of document.querySelectorAll('.inquiry-form')){
+ const status=form.querySelector('.form-status'),button=form.querySelector('button[type=submit]');
  const readyLabel=button.dataset?.readyLabel||button.textContent;
  const restoreButton=()=>{if(['formsubmit','formspree'].includes(form.dataset.provider)){button.disabled=false;button.textContent=readyLabel;}};
  restoreButton();
  if(typeof window!=='undefined')window.addEventListener('pageshow',restoreButton);
-
  form.addEventListener('invalid',event=>{
   const label=event.target.labels?.[0]?.textContent?.replace(/\s+/g,' ').trim()||'the highlighted field';
   status.textContent='Please check '+label+': '+event.target.validationMessage;
  },true);
- form.addEventListener('submit', async event => {
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!form.reportValidity()||button.disabled)return;
+  if(!form.elements.name.value.trim()||!form.elements.message.value.trim()||!form.elements.country.value.trim()){status.textContent='Please enter your name, country, and a short message.';return;}
+  const isFormSubmit=form.dataset.provider==='formsubmit'&&/^https:\/\/formsubmit\.co\/[^/?#]+$/.test(form.action);
+  const isFormspree=form.dataset.provider==='formspree'&&/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(form.action);
+  if(!isFormSubmit&&!isFormspree){status.textContent='Online inquiries are not connected. Please email us directly.';return;}
+  const formData=new FormData(form),payload=Object.fromEntries(formData);
+  button.disabled=true;button.textContent='Sending…';status.textContent='Sending your message…';
+  let sent=false;
   if(form.dataset.kind==='retreat'){
-   event.preventDefault();
-   if(!form.reportValidity()||button.disabled)return;
-   if(!form.elements.name.value.trim()||!form.elements.message.value.trim()||!form.elements.country.value.trim()){status.textContent='Please enter your name, country, and a short message.';return;}
-   const originalLabel=button.textContent;button.disabled=true;button.textContent='Sending…';status.textContent='Preparing your inquiry…';
    try{
     if(!form.dataset.customerId)form.dataset.customerId=crypto.randomUUID();
-    const response=await fetch('/api/contacts/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:form.dataset.customerId,name:form.elements.name.value,email:form.elements.email.value,phone:form.elements.phone.value,country:form.elements.country.value,age:form.elements.age.value,contactPermission:form.elements.contact_permission.checked,marketingOptIn:form.elements.marketing_opt_in?.checked===true,honey:form.elements._honey?.value||''}),signal:AbortSignal.timeout(8000)});
-    const saved=await response.json();if(!response.ok)throw Error(saved.error||'Could not save your contact details.');
-    status.textContent='Contact details saved. Opening secure email submission…';
-   }catch{status.textContent='Continuing with email submission. Contact details can be saved later.';}
-   if(form.dataset.provider==='formsubmit'){
-    try{HTMLFormElement.prototype.submit.call(form);}catch{status.textContent='Please email info@primalresetretreats.com directly while we check online delivery.';button.disabled=false;button.textContent=originalLabel;}
-    return;
-   }
-   button.disabled=false;button.textContent=originalLabel;
-  }else if(form.dataset.provider==='formsubmit'){
-   if(!form.elements.name.value.trim()||!form.elements.message.value.trim()||!form.elements.country.value.trim()){event.preventDefault();status.textContent='Please enter your name, country, and a short message.';}
-   return;
+    const response=await fetch('/api/contacts/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:form.dataset.customerId,name:payload.name,email:payload.email,phone:payload.phone||'',country:payload.country,age:payload.age,contactPermission:form.elements.contact_permission.checked,marketingOptIn:form.elements.marketing_opt_in?.checked===true,honey:payload._honey||''}),signal:AbortSignal.timeout(8000)});
+    if(!response.ok)throw Error();
+   }catch{/* Email delivery must still work if profile storage is temporarily unavailable. */}
   }
-  event.preventDefault();
-  if (!form.reportValidity() || button.disabled) return;
-  if (!/^https:\/\/formspree\.io\/f\/[a-zA-Z0-9]+$/.test(form.action)) {
-   status.textContent = 'Online inquiries are not connected yet. Please check back soon.'; return;
-  }
-  if (!form.elements.name.value.trim() || !form.elements.message.value.trim() || !form.elements.country.value.trim()) {
-   status.textContent = 'Please enter your name, country, and a short message.'; return;
-  }
-  const label = button.textContent;
-  button.disabled = true; button.textContent = 'Sending…';
-  status.textContent = 'Sending your message…';
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
-  try {
-   const response = await fetch(form.action, {method:'POST', body:new FormData(form), headers:{Accept:'application/json'}, signal:controller.signal});
-   const result = await response.json().catch(() => ({}));
-   if (!response.ok || result.ok === false) throw new Error('delivery');
-   status.textContent = 'Thank you. Your message has been sent to the retreat team.';
-   form.reset();
-  } catch {
-   status.textContent = 'We could not confirm delivery. Your message is still here. Please check your connection before trying again.';
-  } finally {
-   clearTimeout(timeout); button.disabled = false; button.textContent = label;
-  }
+  try{
+   const url=isFormSubmit?form.action.replace('https://formsubmit.co/','https://formsubmit.co/ajax/'):form.action;
+   const response=await fetch(url,{method:'POST',headers:{Accept:'application/json'},body:formData,signal:AbortSignal.timeout(20000)});
+   const result=await response.json();
+   const confirmed=isFormSubmit?(result.success===true||result.success==='true'):result.ok!==false;
+   if(!response.ok||!confirmed)throw Error('unconfirmed');
+   sent=true;status.textContent='Thank you. Your message has been submitted. Opening your confirmation…';button.textContent='Message sent';
+   form.reset();delete form.dataset.customerId;
+   window.location.assign('/thank-you/');
+  }catch{
+   status.textContent='We could not confirm submission. Your message is still here. Please email info@primalresetretreats.com if you need help before trying again.';
+  }finally{if(!sent)restoreButton();}
  });
 }
 for (const header of document.querySelectorAll('header:not([data-custom-header])')) {
