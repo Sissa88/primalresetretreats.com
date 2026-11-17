@@ -19,7 +19,7 @@ export async function availability(db){
  return {remaining:total,rooms:Object.fromEntries(results.map(r=>[r.room_id,Math.min(total,r.remaining)]))};
 }
 export async function reserve(db,id,q){
- const result=await db.prepare(`INSERT INTO bookings(id,room_id,status,expires_at,base_cents,discount_cents,total_cents,deposit_cents,balance_cents,promo_code)
+ const result=await db.prepare(`INSERT OR IGNORE INTO bookings(id,room_id,status,expires_at,base_cents,discount_cents,total_cents,deposit_cents,balance_cents,promo_code)
  SELECT ?,?,'held',unixepoch()+900,?,?,?,?,?,?
  WHERE (SELECT COUNT(*) FROM bookings WHERE status IN ('processing','paid') OR (status='held' AND expires_at>unixepoch())) < 15
  AND (SELECT COUNT(*) FROM bookings WHERE room_id=? AND (status IN ('processing','paid') OR (status='held' AND expires_at>unixepoch()))) < (SELECT capacity FROM retreat_capacity WHERE room_id=?)`).bind(id,q.roomID,q.base,q.discount,q.total,q.deposit,q.balance,q.code,q.roomID,q.roomID).run();

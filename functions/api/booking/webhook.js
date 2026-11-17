@@ -13,6 +13,10 @@ export async function onRequestPost({request,env}){
    const booking=await env.BOOKING_DB.prepare('SELECT * FROM bookings WHERE paypal_order_id=?').bind(orderID||'').first();
    if(booking){if(booking.status!=='paid')await markPaid(env.BOOKING_DB,booking,capture);await syncPaidCustomer(env.BOOKING_DB,booking.id);await sendBookingConfirmation(env,booking.id);}
   }
+  if(event.event_type==='PAYMENT.CAPTURE.REFUNDED'){
+   const refund=event.resource,captureID=refund?.supplementary_data?.related_ids?.capture_id||refund?.links?.find(l=>l.rel==='up')?.href?.match(/\/v2\/payments\/captures\/([A-Z0-9]+)(?:[/?#]|$)/)?.[1];
+   if(captureID&&refund.status==='COMPLETED'&&refund.amount?.currency_code==='USD'&&refund.amount?.value==='1.00')await env.BOOKING_DB.prepare("UPDATE bookings SET status='cancelled' WHERE paypal_capture_id=? AND promo_code='INTERNAL_LIVE_TEST' AND deposit_cents=100 AND status='paid'").bind(captureID).run();
+  }
   return json({received:true});
  }catch{return json({error:'Webhook could not be processed'},500);}
 }

@@ -6,6 +6,7 @@ export async function sendBookingConfirmation(env,id){
  if(!emailEnabled(env))return {status:'disabled'};
  const db=env.BOOKING_DB;if(!db)throw Error('Email database unavailable.');
  const booking=await db.prepare('SELECT * FROM bookings WHERE id=?').bind(id).first();
+ if(booking?.promo_code==='INTERNAL_LIVE_TEST')return {status:'test-excluded'};
  if(!booking||booking.status!=='paid')return {status:'not-paid'};
  const guest=await db.prepare('SELECT full_name,email FROM booking_guests WHERE booking_id=?').bind(id).first();
  if(!guest?.email||!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(guest.email))throw Error('A valid guest email is required.');

@@ -1,6 +1,6 @@
 import {recordBookingChoice} from '../../_lib/customers.js';
 import {json,ready,originOK,input,quote,reserve,paypal} from '../../_lib/booking.js';
-export async function onRequestPost({request,env}){
+export async function onRequestPost({request,env,liveTest=false}){
  if(!ready(env))return json({error:'Online payments are not connected yet.'},503);
  if(!originOK(request))return json({error:'Please start checkout on our website.'},403);
  let data,q;
@@ -10,7 +10,8 @@ export async function onRequestPost({request,env}){
  if(typeof email!=='string'||email.length>180||! /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email.trim()))throw Error('Please enter a valid guest email address.');
  if(data.method==='card'&&(typeof data.cardholderName!=='string'||!data.cardholderName.trim()||data.cardholderName.length>120||/[\x00-\x1f]/.test(data.cardholderName)))throw Error('Please enter the name on the card.');}catch(e){return json({error:e.message},400);}
  if(data.marketingOptIn!==undefined&&typeof data.marketingOptIn!=='boolean')return json({error:'Invalid marketing preference.'},400);
- const id=crypto.randomUUID(),db=env.BOOKING_DB;
+ if(liveTest)q={...q,base:100,discount:0,total:100,deposit:100,balance:0,code:'INTERNAL_LIVE_TEST'};
+ const id=liveTest?'003d9a78-1cd0-486d-b6c1-b4f60098b1cd':crypto.randomUUID(),db=env.BOOKING_DB;
  try{
   if(!await reserve(db,id,q))return json({error:'This accommodation has just sold out. Please choose another room.'},409);
   await db.prepare('UPDATE bookings SET terms_url=?,terms_accepted_at=unixepoch() WHERE id=?').bind(env.BOOKING_TERMS_URL,id).run();
@@ -20,8 +21,8 @@ export async function onRequestPost({request,env}){
   await recordBookingChoice(db,id,data.marketingOptIn);
   const origin=new URL(request.url).origin;
   const card=data.method==='card';
-  const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+'/pricing/?booking_return=1',cancel_url:origin+'/pricing/?booking_cancel=1'}}};
-  const order=await paypal(env,'/v2/checkout/orders',{method:'POST',requestID:id,body:{intent:'CAPTURE',purchase_units:[{reference_id:id,custom_id:id,description:`Men’s Rebirth — ${q.roomName} — 50% deposit — April 2027`,amount:{currency_code:'USD',value:(q.deposit/100).toFixed(2)}}],payment_source:source}});
+  const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+(liveTest?'/api/booking/live-test?returned=1':'/pricing/?booking_return=1'),cancel_url:origin+(liveTest?'/api/booking/live-test?cancelled=1':'/pricing/?booking_cancel=1')}}};
+  const order=await paypal(env,'/v2/checkout/orders',{method:'POST',requestID:id,body:{intent:'CAPTURE',purchase_units:[{reference_id:id,custom_id:id,description:liveTest?'Owner checkout test — USD 1 — not a retreat booking':`Men’s Rebirth — ${q.roomName} — 50% deposit — April 2027`,amount:{currency_code:'USD',value:(q.deposit/100).toFixed(2)}}],payment_source:source}});
   const approval=order.links?.find(l=>l.rel==='payer-action'||l.rel==='approve')?.href;
   if(!order.id||(!card&&(!approval||!/^https:\/\/(www\.)?(sandbox\.)?paypal\.com\//.test(approval))))throw Error('Checkout unavailable');
   await db.prepare('UPDATE bookings SET paypal_order_id=? WHERE id=?').bind(order.id,id).run();

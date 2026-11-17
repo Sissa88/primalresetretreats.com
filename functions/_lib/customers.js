@@ -10,7 +10,7 @@ export const CUSTOMER_SCHEMA=[
  `CREATE VIEW IF NOT EXISTS customer_directory AS SELECT email,full_name,phone,country,age,is_guest,is_inquiry,created_at,updated_at FROM customer_contacts`,
  `CREATE VIEW IF NOT EXISTS marketing_contacts AS SELECT c.email,c.full_name,c.country,s.consented_at,s.consent_version,s.source,'/unsubscribe/?token='||s.unsubscribe_token AS unsubscribe_path FROM customer_contacts c JOIN marketing_subscribers s ON s.email=c.email WHERE s.active=1`
 ];
-export async function ensureCustomers(db){await db.batch([...CUSTOMER_SCHEMA.map(sql=>db.prepare(sql)),db.prepare("INSERT INTO customer_contacts(email,full_name,is_guest) SELECT lower(trim(g.email)),g.full_name,1 FROM booking_guests g JOIN bookings b ON b.id=g.booking_id WHERE b.status='paid' ON CONFLICT(email) DO UPDATE SET is_guest=1")]);}
+export async function ensureCustomers(db){await db.batch([...CUSTOMER_SCHEMA.map(sql=>db.prepare(sql)),db.prepare("INSERT INTO customer_contacts(email,full_name,is_guest) SELECT lower(trim(g.email)),g.full_name,1 FROM booking_guests g JOIN bookings b ON b.id=g.booking_id WHERE b.status='paid' AND b.promo_code<>'INTERNAL_LIVE_TEST' ON CONFLICT(email) DO UPDATE SET is_guest=1")]);}
 export function validateContact(data,{inquiry=false}={}){
  const name=typeof data.name==='string'?data.name.trim():'',email=typeof data.email==='string'?data.email.trim().toLowerCase():'';
  if(!name||name.length>120||/[\x00-\x1f]/.test(name))throw Error('Please enter your full name.');
@@ -33,7 +33,7 @@ export async function optIn(db,email,eventID,source,version=MARKETING_VERSION,te
 }
 export async function syncPaidCustomer(db,id){
  await ensureCustomers(db);
- const g=await db.prepare(`SELECT g.full_name,g.email,c.opt_in,c.consent_version,c.consent_text FROM booking_guests g JOIN bookings b ON b.id=g.booking_id LEFT JOIN booking_marketing_choices c ON c.booking_id=b.id WHERE b.id=? AND b.status='paid'`).bind(id).first();
+ const g=await db.prepare(`SELECT g.full_name,g.email,c.opt_in,c.consent_version,c.consent_text FROM booking_guests g JOIN bookings b ON b.id=g.booking_id LEFT JOIN booking_marketing_choices c ON c.booking_id=b.id WHERE b.id=? AND b.status='paid' AND b.promo_code<>'INTERNAL_LIVE_TEST'`).bind(id).first();
  if(!g)return;
  const c=validateContact({name:g.full_name,email:g.email});await saveContact(db,c,'booking');
  if(g.opt_in===1)await optIn(db,c.email,'booking:'+id,'booking',g.consent_version,g.consent_text);
