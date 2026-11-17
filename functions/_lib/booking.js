@@ -2,7 +2,7 @@ import pricing from './pricing-config.js';
 import {calculateQuote} from '../../public/pricing-model.js';
 export const TOTAL_CAPACITY=15;
 export function json(data,status=200){return Response.json(data,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});}
-export function ready(env){return /^https:\/\//.test(env.BOOKING_TERMS_URL||'')&&env.BOOKING_ENABLED==='true'&&!!env.BOOKING_DB&&!!env.PAYPAL_CLIENT_ID&&!!env.PAYPAL_CLIENT_SECRET&&!!env.PAYPAL_WEBHOOK_ID&&!!env.BOOKING_TERMS_URL;}
+export function ready(env){return !(env.PAYPAL_ENV==='live'&&/\/sandbox-terms(?:[/?#]|$)/i.test(env.BOOKING_TERMS_URL||''))&&/^https:\/\//.test(env.BOOKING_TERMS_URL||'')&&env.BOOKING_ENABLED==='true'&&!!env.BOOKING_DB&&!!env.PAYPAL_CLIENT_ID&&!!env.PAYPAL_CLIENT_SECRET&&!!env.PAYPAL_WEBHOOK_ID&&!!env.BOOKING_TERMS_URL;}
 export function originOK(request){return request.headers.get('Origin')===new URL(request.url).origin;}
 export async function input(request){if(!request.headers.get('content-type')?.startsWith('application/json'))throw Error('JSON required');const body=await request.text();if(body.length>2048)throw Error('Request too large');return JSON.parse(body);}
 export function quote(room,code=''){

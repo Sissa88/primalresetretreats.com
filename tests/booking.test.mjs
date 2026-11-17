@@ -89,3 +89,9 @@ test('PayPal capture of the exact deposit confirms once and keeps the balance un
  const retry=await capture({env:{...env,BOOKING_DB:db},request:request()});assert.equal((await retry.json()).status,'paid');assert.equal(captures,1);
  assert.equal((await availability(db)).remaining,14);
 });
+
+test('draft sandbox terms cannot enable live checkout',()=>{
+ const configured={...env,BOOKING_DB:{},BOOKING_TERMS_URL:'https://example.com/sandbox-terms/'};
+ assert.equal(ready(configured),true);
+ assert.equal(ready({...configured,PAYPAL_ENV:'live'}),false);
+});
