@@ -16,7 +16,7 @@ function setup({dbOK=true,providerOK=true,providerResult={success:'true'},initia
  return {calls,status,button,form,submit:()=>submitHandler({preventDefault(){}}),show:()=>onShow(),get redirect(){return redirect;},get reset(){return reset;}};
 }
 test('successful provider acknowledgement redirects to the website thank-you page',async()=>{
- const f=setup();await f.submit();assert.equal(f.redirect,'/thank-you/');assert.equal(f.reset,true);assert.equal(f.calls.length,2);assert.equal(f.calls[0].url,'/api/contacts/inquiry');assert.equal(f.calls[0].body.marketingOptIn,false);assert.equal(f.calls[0].body.message,undefined);assert.equal(f.calls[1].url,'https://formsubmit.co/ajax/info@primalresetretreats.com');assert.match(f.calls[1].body.message,/only to the email provider/);
+ const f=setup();await f.submit();assert.equal(f.redirect,'/thank-you/');assert.equal(f.reset,true);assert.equal(f.calls.length,2);assert.equal(f.calls[0].url,'/api/contacts/inquiry');assert.equal(f.calls[0].body.marketingOptIn,false);assert.equal(f.calls[0].body.message,undefined);assert.equal(f.calls[1].url,'/api/contacts/send');assert.match(f.calls[1].body.message,/only to the email provider/);
 });
 test('database failure cannot prevent email submission or its thank-you redirect',async()=>{
  const f=setup({dbOK:false});await f.submit();assert.equal(f.redirect,'/thank-you/');assert.equal(f.calls.length,2);
@@ -27,7 +27,7 @@ test('a failed or unconfirmed delivery never shows thank-you or discards the mes
  }
 });
 test('coach applications use the same acknowledgement-driven return flow without guest database capture',async()=>{
- const f=setup({kind:'coach',providerResult:{success:true}});await f.submit();assert.equal(f.redirect,'/thank-you/');assert.equal(f.calls.length,1);assert.match(f.calls[0].url,/\/ajax\//);
+ const f=setup({kind:'coach',providerResult:{success:true}});await f.submit();assert.equal(f.redirect,'/thank-you/');assert.equal(f.calls.length,1);assert.equal(f.calls[0].url,'/api/contacts/send');
 });
 test('configured send buttons recover from Firefox reload and back navigation',()=>{
  const f=setup({initiallyDisabled:true});assert.equal(f.button.disabled,false);assert.equal(f.button.textContent,'Send inquiry ↗');f.button.disabled=true;f.button.textContent='Sending…';f.show();assert.equal(f.button.disabled,false);assert.equal(f.button.textContent,'Send inquiry ↗');

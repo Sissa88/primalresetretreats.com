@@ -2,6 +2,7 @@
 for(const form of document.querySelectorAll('.inquiry-form')){
  const status=form.querySelector('.form-status'),button=form.querySelector('button[type=submit]');
  const readyLabel=button.dataset?.readyLabel||button.textContent;
+ let deliveryId='',deliverySnapshot='';
  const restoreButton=()=>{if(['formsubmit','formspree'].includes(form.dataset.provider)){button.disabled=false;button.textContent=readyLabel;}};
  restoreButton();
  if(typeof window!=='undefined')window.addEventListener('pageshow',restoreButton);
@@ -27,16 +28,18 @@ for(const form of document.querySelectorAll('.inquiry-form')){
    }catch{/* Email delivery must still work if profile storage is temporarily unavailable. */}
   }
   try{
-   const url=isFormSubmit?form.action.replace('https://formsubmit.co/','https://formsubmit.co/ajax/'):form.action;
-   const response=await fetch(url,{method:'POST',headers:{Accept:'application/json'},body:formData,signal:AbortSignal.timeout(20000)});
+   const snapshot=JSON.stringify(payload);
+   if(snapshot!==deliverySnapshot){deliverySnapshot=snapshot;deliveryId=crypto.randomUUID();}
+   const url=isFormSubmit?'/api/contacts/send':form.action;
+   const response=await fetch(url,{method:'POST',headers:isFormSubmit?{Accept:'application/json','Content-Type':'application/json'}:{Accept:'application/json'},body:isFormSubmit?JSON.stringify({...payload,id:deliveryId,kind:form.dataset.kind}):formData,signal:AbortSignal.timeout(25000)});
    const result=await response.json();
    const confirmed=isFormSubmit?(result.success===true||result.success==='true'):result.ok!==false;
-   if(!response.ok||!confirmed)throw Error('unconfirmed');
+   if(!response.ok||!confirmed)throw Error(result.error||'We could not confirm submission. Your message is still here. Please email info@primalresetretreats.com before trying again.');
    sent=true;status.textContent='Thank you. Your message has been submitted. Opening your confirmation…';button.textContent='Message sent';
-   form.reset();delete form.dataset.customerId;
+   form.reset();delete form.dataset.customerId;deliveryId='';deliverySnapshot='';
    window.location.assign('/thank-you/');
-  }catch{
-   status.textContent='We could not confirm submission. Your message is still here. Please email info@primalresetretreats.com if you need help before trying again.';
+  }catch(error){
+   status.textContent=error.message==='Failed to fetch'||error.name==='TimeoutError'?'The connection was interrupted. Please email info@primalresetretreats.com before sending again.':error.message||'We could not confirm submission. Please email info@primalresetretreats.com before trying again.';
   }finally{if(!sent)restoreButton();}
  });
 }
