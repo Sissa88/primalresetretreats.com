@@ -1,3 +1,4 @@
+import {setupCardCheckout} from './card-checkout.js';
 import {calculateQuote,money} from './pricing-model.js';
 const config=JSON.parse(document.getElementById('pricing-data').textContent);
 const byID=id=>document.getElementById(id);
@@ -39,12 +40,14 @@ paint();
 
 // The browser displays estimates; the booking API recalculates all payable amounts.
 const review=byID('deposit-review'),pay=byID('paypal-deposit'),terms=byID('booking-terms'),paymentStatus=byID('payment-status');
-let checkoutEnabled=false,checkoutBusy=false,liveRooms=null;
+let checkoutEnabled=false,checkoutBusy=false,liveRooms=null,cardCheckout=null;
+function canPay(){return checkoutEnabled&&terms.checked&&!checkoutBusy&&liveRooms?.[roomID]!==0;}
 function paintReview(){
  const q=calculateQuote(config,roomID,code);
  for(const [id,value] of Object.entries({'review-room':q.roomName,'review-base':money(q.base),'review-discount':'−'+money(q.discount),'review-total':money(q.total),'review-deposit-amount':money(q.deposit),'review-balance':money(q.balance),'review-code':q.code?'Promotion: '+q.code:'No promotion applied.'}))byID(id).textContent=value;
  byID('review-discount-row').hidden=!q.promoApplied;
- pay.disabled=!checkoutEnabled||!terms.checked||checkoutBusy||liveRooms?.[roomID]===0;
+ pay.disabled=!canPay();
+ cardCheckout?.update();
 }
 byID('review-deposit').addEventListener('click',()=>{review.hidden=false;paintReview();review.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
 for(const radio of document.querySelectorAll('input[name="accommodation"]'))radio.addEventListener('change',paintReview);
@@ -92,6 +95,7 @@ async function confirmPayment(reference){
    byID('checkout-mode').textContent='DEPOSIT PAID — PLACE RESERVED';pay.hidden=true;byID('review-deposit').disabled=true;
    for(const el of document.querySelectorAll('input[name="accommodation"],#apply-promo,#promo-code,#booking-terms'))el.disabled=true;
    sessionStorage.removeItem('primal-booking');
+   byID('card-checkout').hidden=true;
   }else{
    paymentStatus.textContent=`Your deposit confirmation is pending. Reference: ${reference}. Please check again or contact info@primalresetretreats.com before making another payment.`;
    pay.textContent='Check payment status';pay.disabled=false;pay.onclick=()=>confirmPayment(reference);
@@ -99,6 +103,14 @@ async function confirmPayment(reference){
  }catch(e){paymentStatus.textContent=e.message+' Contact info@primalresetretreats.com with reference '+reference+' before paying again.';}
 }
 await refreshAvailability();
+if(checkoutEnabled){cardCheckout=await setupCardCheckout({api,money,quote:()=>calculateQuote(config,roomID,code),canPay,setBusy:value=>{checkoutBusy=value;for(const radio of document.querySelectorAll('input[name="accommodation"]'))radio.disabled=value||liveRooms?.[radio.value]===0;for(const input of [promo,apply,terms])if(input)input.disabled=value;paintReview();},confirm:confirmPayment,start:async method=>{
+ if(sessionStorage.getItem('primal-booking'))throw Error('An existing checkout needs to be checked first.');
+ sessionStorage.setItem('primal-storage-check','1');sessionStorage.removeItem('primal-storage-check');
+ const booking=await api('create',{room:roomID,code,termsAccepted:terms.checked,method});
+ sessionStorage.setItem('primal-booking',JSON.stringify({reference:booking.reference,orderID:booking.orderID}));
+ return booking;
+},cancel:async reference=>{await api('cancel',{reference});sessionStorage.removeItem('primal-booking');}});}
+
 if(params.has('booking_return')||params.has('booking_cancel')){
  let saved;try{saved=JSON.parse(sessionStorage.getItem('primal-booking')||'null');}catch{}
  if(saved?.reference){

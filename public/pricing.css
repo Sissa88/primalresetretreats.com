@@ -23,3 +23,12 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 
 .price-page [hidden]{display:none!important}
+.card-checkout{margin:24px 0;padding:20px;border:1px solid #25372a40;background:#fff8}
+.card-checkout>summary{cursor:pointer;text-transform:uppercase;font-size:16px;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none}
+.card-checkout>summary::after{content:'+'}.card-checkout[open]>summary::after{content:'−'}
+.card-checkout #card-status{font-size:13px;line-height:1.7;margin:12px 0}
+.secure-card-field{height:52px;width:100%;border:1px solid #25372a55;background:white;border-radius:4px;margin:6px 0 16px}
+.card-field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-width:0}.card-field-row>div{min-width:0}
+.card-field-label{display:block;font-size:14px;margin-top:14px}
+#card-country,#card-postal{width:100%;height:50px;margin:6px 0 18px;padding:12px;border:1px solid #25372a55;border-radius:4px;background:white}
+#card-deposit{width:100%;min-height:54px}#card-deposit:disabled{opacity:.55;cursor:not-allowed}

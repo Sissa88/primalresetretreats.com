@@ -95,3 +95,19 @@ test('draft sandbox terms cannot enable live checkout',()=>{
  assert.equal(ready(configured),true);
  assert.equal(ready({...configured,PAYPAL_ENV:'live'}),false);
 });
+test('card orders charge only the server-calculated deposit and share room inventory',async t=>{
+ const db=await database(t),original=globalThis.fetch;t.after(()=>globalThis.fetch=original);let posted;
+ globalThis.fetch=async (url,options)=>{
+  if(String(url).includes('oauth2'))return Response.json({access_token:'test'});
+  posted=JSON.parse(options.body);return Response.json({id:'CARD-ORDER-1',status:'CREATED'});
+ };
+ const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'card',room:'private',code:'OPENGATEHOSTEL',termsAccepted:true,amount:'1.00'})});
+ const response=await create({env:{...env,BOOKING_DB:db},request});assert.equal(response.status,200);
+ const result=await response.json();assert.equal(result.orderID,'CARD-ORDER-1');assert.equal(result.approvalURL,undefined);
+ assert.equal(posted.purchase_units[0].amount.value,'2047.50');assert.equal(posted.payment_source.card.attributes.verification.method,'SCA_WHEN_REQUIRED');
+ assert.equal((await availability(db)).rooms.private,4);assert.equal((await availability(db)).remaining,14);
+});
+test('unsupported payment method is rejected before reserving a place',async()=>{
+ const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'unknown',room:'private',termsAccepted:true})});
+ const result=await create({env:{...env,BOOKING_DB:{}},request});assert.equal(result.status,400);
+});

@@ -11,6 +11,7 @@ export async function onRequestPost({request,env}){
   // Do not pin an unapproved order: it must still expire normally.
   let order=await paypal(env,'/v2/checkout/orders/'+encodeURIComponent(booking.paypal_order_id));
   if(!['APPROVED','COMPLETED'].includes(order.status))return json({error:'The deposit has not been approved in PayPal. Please complete or cancel checkout.'},409);
+  if(order.payment_source?.card?.authentication_result?.liability_shift==='NO')return json({error:'Card authentication could not be verified. Please use another payment method.'},402);
   if(booking.status==='held'){
    const lock=await db.prepare("UPDATE bookings SET status='processing' WHERE id=? AND status='held' AND expires_at>unixepoch()").bind(id).run();
    if(!lock.meta.changes)return json({error:'Your checkout hold expired. Please contact us if you see a payment in PayPal.'},409);
