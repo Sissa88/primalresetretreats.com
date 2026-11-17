@@ -1,5 +1,5 @@
 // SDK v6 creates PayPal-hosted fields; our code never reads card numbers or CVVs.
-export async function setupCardCheckout({api,start,confirm,cancel,canPay,setBusy,money,quote}){
+export async function setupCardCheckout({api,start,confirm,cancel,canPay,setBusy,money,quote,validateGuest=()=>true}){
  const el=id=>document.getElementById(id),panel=el('card-checkout'),button=el('card-deposit'),status=el('card-status');
  let loading=false,session=null;
  const countryNames=new Intl.DisplayNames(['en'],{type:'region'});
@@ -29,11 +29,14 @@ export async function setupCardCheckout({api,start,confirm,cancel,canPay,setBusy
  });
  button.addEventListener('click',async()=>{
   if(button.disabled||!canPay())return;
+  if(!validateGuest())return;
+  const name=el('card-name');name.value=name.value.trim();
+  if(!name.reportValidity()){status.textContent='Please enter the name exactly as it appears on the card.';return;}
   if(!el('card-country').value){status.textContent='Please select your billing country.';el('card-country').focus();return;}
   let booking=null,submitted=false;
   setBusy(true);update();status.textContent='Checking availability and preparing your deposit…';
   try{
-   booking=await start('card');
+   booking=await start('card',name.value);
    const postal=el('card-postal').value.trim();
    const result=await session.submit(booking.orderID,{billingAddress:{countryCode:el('card-country').value,...(postal?{postalCode:postal}:{})}});
    if(result.state==='succeeded'){

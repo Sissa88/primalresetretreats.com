@@ -101,13 +101,23 @@ test('card orders charge only the server-calculated deposit and share room inven
   if(String(url).includes('oauth2'))return Response.json({access_token:'test'});
   posted=JSON.parse(options.body);return Response.json({id:'CARD-ORDER-1',status:'CREATED'});
  };
- const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'card',room:'private',code:'OPENGATEHOSTEL',termsAccepted:true,amount:'1.00'})});
+ const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'card',guest:{name:'Guest Attendee',email:'guest@example.com'},cardholderName:'Alex Cardholder',room:'private',code:'OPENGATEHOSTEL',termsAccepted:true,amount:'1.00'})});
  const response=await create({env:{...env,BOOKING_DB:db},request});assert.equal(response.status,200);
  const result=await response.json();assert.equal(result.orderID,'CARD-ORDER-1');assert.equal(result.approvalURL,undefined);
  assert.equal(posted.purchase_units[0].amount.value,'2047.50');assert.equal(posted.payment_source.card.attributes.verification.method,'SCA_WHEN_REQUIRED');
+ assert.equal(posted.payment_source.card.name,'Alex Cardholder');
+ const guest=await db.prepare('SELECT full_name,email FROM booking_guests WHERE booking_id=?').bind(result.reference).first();
+ assert.deepEqual(guest,{full_name:'Guest Attendee',email:'guest@example.com'});
  assert.equal((await availability(db)).rooms.private,4);assert.equal((await availability(db)).remaining,14);
 });
 test('unsupported payment method is rejected before reserving a place',async()=>{
  const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'unknown',room:'private',termsAccepted:true})});
  const result=await create({env:{...env,BOOKING_DB:{}},request});assert.equal(result.status,400);
+});
+test('missing attendee details or cardholder name cannot create an inventory hold',async()=>{
+ for(const extra of [{},{guest:{name:'Guest',email:'invalid'},cardholderName:'Payer'},{guest:{name:'Guest',email:'guest@example.com'}}]){
+  const request=new Request('https://example.com/api/booking/create',{method:'POST',headers:{Origin:'https://example.com','Content-Type':'application/json'},body:JSON.stringify({method:'card',room:'private',termsAccepted:true,...extra})});
+  const response=await create({env:{...env,BOOKING_DB:{prepare(){throw Error('must not reserve');}}},request});
+  assert.equal(response.status,400);
+ }
 });

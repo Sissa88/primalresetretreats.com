@@ -4,7 +4,7 @@ import {setupCardCheckout} from '../public/card-checkout.js';
 async function fixture(t,result){
  const oldDocument=globalThis.document,oldWindow=globalThis.window;t.after(()=>{globalThis.document=oldDocument;globalThis.window=oldWindow;});
  const nodes=new Map();
- const el=id=>{if(!nodes.has(id))nodes.set(id,{value:id==='card-country'?'US':'',open:true,hidden:false,disabled:false,children:[],events:{},appendChild(child){this.children.push(child);},addEventListener(name,fn){this.events[name]=fn;},focus(){}});return nodes.get(id);};
+ const el=id=>{if(!nodes.has(id))nodes.set(id,{value:id==='card-country'?'US':id==='card-name'?'Alex Cardholder':'',open:true,hidden:false,disabled:false,children:[],events:{},appendChild(child){this.children.push(child);},addEventListener(name,fn){this.events[name]=fn;},focus(){},reportValidity(){return !!this.value;}});return nodes.get(id);};
  globalThis.document={getElementById:el,createElement:()=>({})};
  let submitted,confirmed=0,cancelled=0,busy=false;
  globalThis.window={paypal:{createInstance:async()=>({findEligibleMethods:async()=>({isEligible:()=>true}),createCardFieldsOneTimePaymentSession:()=>({createCardFieldsComponent:({type})=>({type}),submit:async(order,options)=>{submitted={order,options};if(result instanceof Error)throw result;return result;}})})}};
@@ -21,4 +21,7 @@ test('cancelled card authentication releases an uncaptured hold and permits retr
 });
 test('uncertain card submission keeps the hold and checks status instead of a new charge',async t=>{
  const f=await fixture(t,Error('Network interruption'));await f.pay();assert.equal(f.confirmed,1);assert.equal(f.cancelled,0);assert.equal(f.busy,true);
+});
+test('missing cardholder name is reported before starting card payment',async t=>{
+ const f=await fixture(t,{state:'succeeded'});f.el('card-name').value='  ';await f.pay();assert.equal(f.submitted,undefined);assert.equal(f.confirmed,0);assert.equal(f.busy,false);
 });

@@ -30,7 +30,7 @@
 .secure-card-field{height:52px;width:100%;border:1px solid #25372a55;background:white;border-radius:4px;margin:6px 0 16px}
 .card-field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-width:0}.card-field-row>div{min-width:0}
 .card-field-label{display:block;font-size:14px;margin-top:14px}
-#card-country,#card-postal{width:100%;height:50px;margin:6px 0 18px;padding:12px;border:1px solid #25372a55;border-radius:4px;background:white}
+#guest-name,#guest-email,#card-name,#card-country,#card-postal{width:100%;height:50px;margin:6px 0 18px;padding:12px;border:1px solid #25372a55;border-radius:4px;background:white}
 #card-deposit{width:100%;min-height:54px}#card-deposit:disabled{opacity:.55;cursor:not-allowed}
 
 .payment-method-title{display:flex;align-items:center;gap:14px;flex:1;min-width:0;text-align:left}

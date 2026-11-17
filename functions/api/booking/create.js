@@ -3,14 +3,21 @@ export async function onRequestPost({request,env}){
  if(!ready(env))return json({error:'Online payments are not connected yet.'},503);
  if(!originOK(request))return json({error:'Please start checkout on our website.'},403);
  let data,q;
- try{data=await input(request);if(data.termsAccepted!==true)throw Error('Please accept the booking terms.');q=quote(data.room,data.code||'');if(data.method&&!['paypal','card'].includes(data.method))throw Error('Invalid payment method.');}catch(e){return json({error:e.message},400);}
+ try{data=await input(request);if(data.termsAccepted!==true)throw Error('Please accept the booking terms.');q=quote(data.room,data.code||'');if(data.method&&!['paypal','card'].includes(data.method))throw Error('Invalid payment method.');
+ const name=data.guest?.name,email=data.guest?.email;
+ if(typeof name!=='string'||!name.trim()||name.length>120||/[\x00-\x1f]/.test(name))throw Error('Please enter the guest’s full name.');
+ if(typeof email!=='string'||email.length>180||! /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email.trim()))throw Error('Please enter a valid guest email address.');
+ if(data.method==='card'&&(typeof data.cardholderName!=='string'||!data.cardholderName.trim()||data.cardholderName.length>120||/[\x00-\x1f]/.test(data.cardholderName)))throw Error('Please enter the name on the card.');}catch(e){return json({error:e.message},400);}
  const id=crypto.randomUUID(),db=env.BOOKING_DB;
  try{
   if(!await reserve(db,id,q))return json({error:'This accommodation has just sold out. Please choose another room.'},409);
   await db.prepare('UPDATE bookings SET terms_url=?,terms_accepted_at=unixepoch() WHERE id=?').bind(env.BOOKING_TERMS_URL,id).run();
+  // Additive table creation supports existing installations without altering bookings.
+  await db.prepare('CREATE TABLE IF NOT EXISTS booking_guests (booking_id TEXT PRIMARY KEY REFERENCES bookings(id),full_name TEXT NOT NULL,email TEXT NOT NULL)').run();
+  await db.prepare('INSERT INTO booking_guests(booking_id,full_name,email) VALUES(?,?,?)').bind(id,data.guest.name.trim(),data.guest.email.trim()).run();
   const origin=new URL(request.url).origin;
   const card=data.method==='card';
-  const source=card?{card:{attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+'/pricing/?booking_return=1',cancel_url:origin+'/pricing/?booking_cancel=1'}}};
+  const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+'/pricing/?booking_return=1',cancel_url:origin+'/pricing/?booking_cancel=1'}}};
   const order=await paypal(env,'/v2/checkout/orders',{method:'POST',requestID:id,body:{intent:'CAPTURE',purchase_units:[{reference_id:id,custom_id:id,description:`Men’s Rebirth — ${q.roomName} — 50% deposit — April 2027`,amount:{currency_code:'USD',value:(q.deposit/100).toFixed(2)}}],payment_source:source}});
   const approval=order.links?.find(l=>l.rel==='payer-action'||l.rel==='approve')?.href;
   if(!order.id||(!card&&(!approval||!/^https:\/\/(www\.)?(sandbox\.)?paypal\.com\//.test(approval))))throw Error('Checkout unavailable');
