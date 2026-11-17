@@ -1,3 +1,4 @@
+import {recordBookingChoice} from '../../_lib/customers.js';
 import {json,ready,originOK,input,quote,reserve,paypal} from '../../_lib/booking.js';
 export async function onRequestPost({request,env}){
  if(!ready(env))return json({error:'Online payments are not connected yet.'},503);
@@ -8,6 +9,7 @@ export async function onRequestPost({request,env}){
  if(typeof name!=='string'||!name.trim()||name.length>120||/[\x00-\x1f]/.test(name))throw Error('Please enter the guest’s full name.');
  if(typeof email!=='string'||email.length>180||! /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email.trim()))throw Error('Please enter a valid guest email address.');
  if(data.method==='card'&&(typeof data.cardholderName!=='string'||!data.cardholderName.trim()||data.cardholderName.length>120||/[\x00-\x1f]/.test(data.cardholderName)))throw Error('Please enter the name on the card.');}catch(e){return json({error:e.message},400);}
+ if(data.marketingOptIn!==undefined&&typeof data.marketingOptIn!=='boolean')return json({error:'Invalid marketing preference.'},400);
  const id=crypto.randomUUID(),db=env.BOOKING_DB;
  try{
   if(!await reserve(db,id,q))return json({error:'This accommodation has just sold out. Please choose another room.'},409);
@@ -15,6 +17,7 @@ export async function onRequestPost({request,env}){
   // Additive table creation supports existing installations without altering bookings.
   await db.prepare('CREATE TABLE IF NOT EXISTS booking_guests (booking_id TEXT PRIMARY KEY REFERENCES bookings(id),full_name TEXT NOT NULL,email TEXT NOT NULL)').run();
   await db.prepare('INSERT INTO booking_guests(booking_id,full_name,email) VALUES(?,?,?)').bind(id,data.guest.name.trim(),data.guest.email.trim()).run();
+  await recordBookingChoice(db,id,data.marketingOptIn);
   const origin=new URL(request.url).origin;
   const card=data.method==='card';
   const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+'/pricing/?booking_return=1',cancel_url:origin+'/pricing/?booking_cancel=1'}}};

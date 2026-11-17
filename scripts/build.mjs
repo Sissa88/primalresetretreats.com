@@ -47,7 +47,7 @@ export async function build(){
  for(const item of [...retreats,...pages])if(!slugOK(item.slug))throw Error('Invalid page filename: '+item.slug);
  const custom=pages.filter(x=>!['home','coach-with-us'].includes(x.slug)&&x.published!==false);
  for(const p of custom)if(['admin','api','retreats','pricing','book'].includes(p.slug))throw Error('Reserved page name: '+p.slug);
- const links=`<nav class="extra-links" aria-label="More pages"><a href="/pricing/">Pricing &amp; payment</a>${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`;
+ const links=`<nav class="extra-links" aria-label="More pages"><a href="/privacy/">Privacy</a><a href="/booking-terms/">Booking terms</a><a href="/pricing/">Pricing &amp; payment</a>${custom.map(p=>`<a href="/${p.slug}/">${esc(p.title)}</a>`).join('')}</nav>`;
  const out=path.join(root,'dist');await rm(out,{recursive:true,force:true});await cp(path.join(root,'public'),out,{recursive:true});
  // Page HTML is generated from templates and JSON; remove the earlier snapshot pages.
  for(const file of ['index.html','coach-with-us/index.html','retreats/mens-rebirth/index.html'])await rm(path.join(out,file),{force:true});

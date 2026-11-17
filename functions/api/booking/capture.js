@@ -1,3 +1,4 @@
+import {syncPaidCustomer} from '../../_lib/customers.js';
 import {json,ready,originOK,input,paypal,markPaid,receipt} from '../../_lib/booking.js';
 export async function onRequestPost({request,env}){
  if(!ready(env))return json({error:'Payment connection unavailable.'},503);
@@ -7,7 +8,7 @@ export async function onRequestPost({request,env}){
  try{
   let booking=await db.prepare('SELECT * FROM bookings WHERE id=?').bind(id).first();
   if(!booking)return json({error:'Booking not found.'},404);
-  if(booking.status==='paid')return json(receipt(booking));
+  if(booking.status==='paid'){try{await syncPaidCustomer(db,id);}catch{console.warn('Customer sync needs retry.');}return json(receipt(booking));}
   // Do not pin an unapproved order: it must still expire normally.
   let order=await paypal(env,'/v2/checkout/orders/'+encodeURIComponent(booking.paypal_order_id));
   if(!['APPROVED','COMPLETED'].includes(order.status))return json({error:'The deposit has not been approved in PayPal. Please complete or cancel checkout.'},409);

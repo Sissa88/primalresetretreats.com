@@ -1,6 +1,6 @@
 # Put Primal Reset on your existing Cloudflare account
 
-This project is prepared for **Cloudflare Pages + GitHub + Decap CMS**. Hosting and the editor have free plans. Formspree's free plan currently allows **50 submissions per month across the account**, with a 30-day submission archive. Domain registration/renewal is separate. Do not enable a paid Cloudflare plan for this setup.
+This project uses **Cloudflare Pages + GitHub + Decap CMS**, with **Cloudflare D1** for private bookings and customer profiles. Contact email uses FormSubmit. Free plans are available within provider usage limits; domain registration/renewal is separate. See CUSTOM-DOMAIN-LAUNCH.md for the current domain launch checklist and CUSTOMER-DATABASE.md for private data exports.
 
 ## 1. Connect the repository to Pages
 

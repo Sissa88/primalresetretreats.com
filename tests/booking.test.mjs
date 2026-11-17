@@ -1,28 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,readFile,rm} from 'node:fs/promises';
-import {tmpdir} from 'node:os';
-import {join} from 'node:path';
-import {spawn} from 'node:child_process';
 import {quote,reserve,availability,ready,validCapture} from '../functions/_lib/booking.js';
 import {onRequestPost as create} from '../functions/api/booking/create.js';
 import {onRequestPost as capture} from '../functions/api/booking/capture.js';
 import {onRequestPost as webhook} from '../functions/api/booking/webhook.js';
-function python(payload){return new Promise((resolve,reject)=>{
- const child=spawn('python3',['-c',`import sqlite3,json,sys
-p=json.load(sys.stdin)
-c=sqlite3.connect(p['file'],timeout=10)
-c.row_factory=sqlite3.Row
-if 'schema' in p:c.executescript(p['schema']);c.commit();print('{}')
-else:
- cur=c.execute(p['sql'],p['args'])
- rows=[dict(r) for r in cur.fetchall()]
- changes=c.execute('SELECT changes()').fetchone()[0]
- c.commit()
- print(json.dumps({'results':rows,'meta':{'changes':changes}}))`]);
- let out='',err='';child.stdout.on('data',b=>out+=b);child.stderr.on('data',b=>err+=b);child.on('close',code=>code?reject(Error(err)):resolve(JSON.parse(out)));child.stdin.end(JSON.stringify(payload));
-});}
-async function database(t){const dir=await mkdtemp(join(tmpdir(),'retreat-booking-')),file=join(dir,'test.sqlite');t.after(()=>rm(dir,{recursive:true,force:true}));await python({file,schema:await readFile(new URL('../migrations/0001_bookings.sql',import.meta.url),'utf8')});return {prepare(sql){let args=[];const statement={bind(...a){args=a;return statement;},run(){return python({file,sql,args});},all(){return python({file,sql,args});},async first(){return (await python({file,sql,args})).results[0]||null;}};return statement;}};}
+import {database} from './sqlite-helper.mjs';
 const env={BOOKING_ENABLED:'true',PAYPAL_ENV:'sandbox',PAYPAL_CLIENT_ID:'test-id',PAYPAL_CLIENT_SECRET:'test-secret',PAYPAL_WEBHOOK_ID:'test-webhook',BOOKING_TERMS_URL:'https://example.com/terms'};
 test('server ignores customer price claims, calculates discounted deposit and fails closed',async()=>{
  assert.equal(quote('private','OPENGATEHOSTEL').deposit,204750);assert.equal(quote('shared').deposit,260000);

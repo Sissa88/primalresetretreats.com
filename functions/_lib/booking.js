@@ -1,3 +1,4 @@
+import {syncPaidCustomer} from './customers.js';
 import pricing from './pricing-config.js';
 import {calculateQuote} from '../../public/pricing-model.js';
 export const TOTAL_CAPACITY=15;
@@ -37,5 +38,6 @@ export function validCapture(booking,capture){return capture?.status==='COMPLETE
 export async function markPaid(db,booking,capture){
  if(!validCapture(booking,capture))throw Error('Payment is not yet confirmed');
  await db.prepare("UPDATE bookings SET status='paid',paypal_capture_id=?,paid_at=unixepoch() WHERE id=? AND status='processing'").bind(capture.id,booking.id).run();
+ try{await syncPaidCustomer(db,booking.id);}catch{console.warn('Customer sync needs retry for a completed booking.');}
 }
 export function receipt(booking){return {status:booking.status,reference:booking.id,room:booking.room_id,base:booking.base_cents,discount:booking.discount_cents,code:booking.promo_code,total:booking.total_cents,deposit:booking.deposit_cents,balance:booking.balance_cents,balanceDue:'February 1, 2027'};}

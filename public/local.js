@@ -3,10 +3,21 @@ for (const form of document.querySelectorAll('.inquiry-form')) {
  const status = form.querySelector('.form-status');
  const button = form.querySelector('button[type=submit]');
  form.addEventListener('submit', async event => {
-  if (form.dataset.provider === 'formsubmit') {
-   if (!form.elements.name.value.trim() || !form.elements.message.value.trim() || !form.elements.country.value.trim()) {
-    event.preventDefault(); status.textContent = 'Please enter your name, country, and a short message.';
-   }
+  if(form.dataset.kind==='retreat'){
+   event.preventDefault();
+   if(!form.reportValidity()||button.disabled)return;
+   if(!form.elements.name.value.trim()||!form.elements.message.value.trim()||!form.elements.country.value.trim()){status.textContent='Please enter your name, country, and a short message.';return;}
+   const originalLabel=button.textContent;button.disabled=true;status.textContent='Saving your contact details…';
+   try{
+    if(!form.dataset.customerId)form.dataset.customerId=crypto.randomUUID();
+    const response=await fetch('/api/contacts/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:form.dataset.customerId,name:form.elements.name.value,email:form.elements.email.value,phone:form.elements.phone.value,country:form.elements.country.value,age:form.elements.age.value,contactPermission:form.elements.contact_permission.checked,marketingOptIn:form.elements.marketing_opt_in.checked,honey:form.elements._honey?.value||''}),signal:AbortSignal.timeout(15000)});
+    const saved=await response.json();if(!response.ok)throw Error(saved.error||'Could not save your contact details.');
+    status.textContent='Contact details saved. Sending your message…';
+    if(form.dataset.provider==='formsubmit'){HTMLFormElement.prototype.submit.call(form);return;}
+   }catch(e){status.textContent=e.message||'Please try again or email info@primalresetretreats.com.';button.disabled=false;button.textContent=originalLabel;return;}
+   button.disabled=false;
+  }else if(form.dataset.provider==='formsubmit'){
+   if(!form.elements.name.value.trim()||!form.elements.message.value.trim()||!form.elements.country.value.trim()){event.preventDefault();status.textContent='Please enter your name, country, and a short message.';}
    return;
   }
   event.preventDefault();

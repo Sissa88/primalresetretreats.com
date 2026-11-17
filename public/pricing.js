@@ -82,7 +82,7 @@ pay.addEventListener('click',async()=>{
  checkoutBusy=true;paintReview();paymentStatus.textContent='Checking availability and preparing your secure PayPal checkout…';
  try{
   sessionStorage.setItem('primal-storage-check','1');sessionStorage.removeItem('primal-storage-check');
-  const data=await api('create',{room:roomID,code,termsAccepted:terms.checked,guest:guestDetails()});
+  const data=await api('create',{room:roomID,code,termsAccepted:terms.checked,guest:guestDetails(),marketingOptIn:byID('booking-marketing').checked});
   sessionStorage.setItem('primal-booking',JSON.stringify({reference:data.reference,orderID:data.orderID}));
   location.assign(data.approvalURL);
  }catch(e){paymentStatus.textContent=e.message;checkoutBusy=false;paintReview();}
@@ -99,7 +99,7 @@ async function confirmPayment(reference){
    byID('review-base').textContent=money(data.base);byID('review-discount').textContent='−'+money(data.discount);byID('review-discount-row').hidden=!data.discount;byID('review-code').textContent=data.code?'Promotion: '+data.code:'No promotion applied.';
    paymentStatus.textContent=`Your deposit is confirmed and one place is reserved. Booking reference: ${data.reference}. Remaining balance: ${money(data.balance)}, due ${data.balanceDue}. Keep your PayPal receipt.`;
    byID('checkout-mode').textContent='DEPOSIT PAID — PLACE RESERVED';pay.hidden=true;byID('review-deposit').disabled=true;
-   for(const el of document.querySelectorAll('input[name="accommodation"],#apply-promo,#promo-code,#booking-terms,#guest-name,#guest-email,#card-name'))el.disabled=true;
+   for(const el of document.querySelectorAll('input[name="accommodation"],#apply-promo,#promo-code,#booking-terms,#guest-name,#guest-email,#card-name,#booking-marketing'))el.disabled=true;
    sessionStorage.removeItem('primal-booking');
    byID('card-checkout').hidden=true;
   }else{
@@ -109,10 +109,10 @@ async function confirmPayment(reference){
  }catch(e){paymentStatus.textContent=e.message+' Contact info@primalresetretreats.com with reference '+reference+' before paying again.';}
 }
 await refreshAvailability();
-if(checkoutEnabled){cardCheckout=await setupCardCheckout({api,money,validateGuest,quote:()=>calculateQuote(config,roomID,code),canPay,setBusy:value=>{checkoutBusy=value;for(const radio of document.querySelectorAll('input[name="accommodation"]'))radio.disabled=value||liveRooms?.[radio.value]===0;for(const input of [promo,apply,terms,byID('guest-name'),byID('guest-email'),byID('card-name')])if(input)input.disabled=value;paintReview();},confirm:confirmPayment,start:async (method,cardholderName)=>{
+if(checkoutEnabled){cardCheckout=await setupCardCheckout({api,money,validateGuest,quote:()=>calculateQuote(config,roomID,code),canPay,setBusy:value=>{checkoutBusy=value;for(const radio of document.querySelectorAll('input[name="accommodation"]'))radio.disabled=value||liveRooms?.[radio.value]===0;for(const input of [promo,apply,terms,byID('guest-name'),byID('guest-email'),byID('card-name'),byID('booking-marketing')])if(input)input.disabled=value;paintReview();},confirm:confirmPayment,start:async (method,cardholderName)=>{
  if(sessionStorage.getItem('primal-booking'))throw Error('An existing checkout needs to be checked first.');
  sessionStorage.setItem('primal-storage-check','1');sessionStorage.removeItem('primal-storage-check');
- const booking=await api('create',{room:roomID,code,termsAccepted:terms.checked,method,guest:guestDetails(),cardholderName});
+ const booking=await api('create',{room:roomID,code,termsAccepted:terms.checked,method,guest:guestDetails(),marketingOptIn:byID('booking-marketing').checked,cardholderName});
  sessionStorage.setItem('primal-booking',JSON.stringify({reference:booking.reference,orderID:booking.orderID}));
  return booking;
 },cancel:async reference=>{await api('cancel',{reference});sessionStorage.removeItem('primal-booking');}});}

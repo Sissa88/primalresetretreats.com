@@ -6,3 +6,12 @@ dist/
 .env
 .env.*
 .wrangler/
+# Private customer exports and database backups (never website assets).
+*-private.sql
+*-private.sqlite3
+*-private.csv
+*.sqlite
+*.sqlite3
+*.db
+*.csv
+!database/customer-database-template.sqlite3
