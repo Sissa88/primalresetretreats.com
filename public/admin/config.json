@@ -80,16 +80,23 @@
               "widget": "select",
               "options": [
                 {
-                  "label": "FormSubmit — verify the contact email first",
+                  "label": "FormSubmit \u2014 verify the contact email first",
                   "value": "formsubmit"
                 },
                 {
-                  "label": "Disabled — email link only",
+                  "label": "Disabled \u2014 email link only",
                   "value": "disabled"
                 }
               ],
               "default": "formsubmit",
               "hint": "Formspree IDs, when present, take priority. FormSubmit sends to the Contact email above."
+            },
+            {
+              "name": "formsubmit_id",
+              "label": "FormSubmit recipient identifier",
+              "widget": "string",
+              "required": false,
+              "hint": "Identifier supplied in the FormSubmit activation email. Activate that email before using the form."
             }
           ]
         }
@@ -269,7 +276,7 @@
               "min": 2,
               "max": 2,
               "collapsed": true,
-              "summary": "{{fields.name}} — ${{fields.price}}",
+              "summary": "{{fields.name}} \u2014 ${{fields.price}}",
               "fields": [
                 {
                   "name": "id",
@@ -411,7 +418,7 @@
       "files": [
         {
           "name": "founder",
-          "label": "Dan’s biography and portrait",
+          "label": "Dan\u2019s biography and portrait",
           "file": "content/founder.json",
           "fields": [
             {
@@ -445,7 +452,7 @@
               "label": "Portrait",
               "widget": "image",
               "required": false,
-              "hint": "Leave empty to show the portrait placeholder. Upload Dan’s photo here when ready."
+              "hint": "Leave empty to show the portrait placeholder. Upload Dan\u2019s photo here when ready."
             },
             {
               "name": "image_alt",
@@ -605,7 +612,7 @@
       "extension": "json",
       "format": "json",
       "slug": "{{slug}}",
-      "summary": "{{title}} — {{dates}}",
+      "summary": "{{title}} \u2014 {{dates}}",
       "fields": [
         {
           "name": "title",
@@ -624,7 +631,7 @@
         },
         {
           "name": "logo",
-          "label": "This retreat’s own logo",
+          "label": "This retreat\u2019s own logo",
           "widget": "image",
           "required": false,
           "hint": "Used only for this retreat and its own listing. This does not change the website logo or favicon."
@@ -651,7 +658,7 @@
           "name": "location",
           "label": "Location",
           "widget": "string",
-          "default": "Big Island · Hawaiʻi"
+          "default": "Big Island \u00b7 Hawai\u02bbi"
         },
         {
           "name": "capacity",

@@ -5,7 +5,7 @@ const schema=`CREATE TABLE IF NOT EXISTS contact_delivery_requests (id TEXT PRIM
 export async function onRequestGet({request}){
  if(new URL(request.url).searchParams.get('probe')!=='1')return json({transport:'same-origin',ready:true});
  if(!originOK(request))return json({error:'Open this check on our website.'},403);
- try{const response=await fetch('https://formsubmit.co/ajax/'+config.contact_email,{method:'GET',headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)});return json({transport:'same-origin',providerReachable:true,providerStatus:response.status});}catch{return json({transport:'same-origin',providerReachable:false},503);}
+ try{const response=await fetch('https://formsubmit.co/ajax/'+(config.formsubmit_id||config.contact_email),{method:'GET',headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)});return json({transport:'same-origin',providerReachable:true,providerStatus:response.status});}catch{return json({transport:'same-origin',providerReachable:false},503);}
 }
 export async function onRequestPost({request,env}){
  if(!originOK(request))return json({error:'Please send your inquiry from our website.'},403);
@@ -38,7 +38,7 @@ export async function onRequestPost({request,env}){
   const lock=await db.prepare("UPDATE contact_delivery_requests SET status='sending',updated_at=unixepoch() WHERE id=? AND status IN ('pending','failed')").bind(data.id).run();
   if(!lock.meta.changes)return json({error:'This message is already being submitted. Please wait.'},409);
   attempted=true;
-  const response=await fetch('https://formsubmit.co/ajax/'+config.contact_email,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json',Origin:new URL(request.url).origin,Referer:new URL(request.url).origin+'/'},body:JSON.stringify(payload),signal:AbortSignal.timeout(15000)});
+  const response=await fetch('https://formsubmit.co/ajax/'+(config.formsubmit_id||config.contact_email),{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json',Origin:new URL(request.url).origin,Referer:new URL(request.url).origin+'/'},body:JSON.stringify(payload),signal:AbortSignal.timeout(15000)});
   const result=await response.json().catch(()=>null);
   if(!response.ok||!result||![true,'true'].includes(result.success)){
    const definiteRejection=result?.success===false||result?.success==='false'||(response.status>=400&&response.status<500);

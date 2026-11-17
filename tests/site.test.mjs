@@ -7,7 +7,7 @@ const get=rel=>readFile(path.join(root,rel),'utf8');
 test('rendered site has two email-connected forms and no browser-local submission storage',async()=>{
  const home=await get('dist/index.html'),coach=await get('dist/coach-with-us/index.html');
  assert.match(home,/data-kind="retreat"/);assert.match(coach,/data-kind="coach"/);
- assert.match(home,/action="https:\/\/formsubmit.co\/info@primalresetretreats.com"/);assert.match(coach,/action="https:\/\/formsubmit.co\/info@primalresetretreats.com"/);
+ assert.match(home,/action="https:\/\/formsubmit.co\/7e6131f9762722c6f31ce70aa2fbd74b"/);assert.match(coach,/action="https:\/\/formsubmit.co\/7e6131f9762722c6f31ce70aa2fbd74b"/);
  assert.doesNotMatch(await get('dist/local.js'),/localStorage|Saved on this device/);
  assert.doesNotMatch(home,/\{\{[A-Z_a-z0-9]+\}\}/);
 });

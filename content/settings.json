@@ -7,5 +7,6 @@
   "allow_indexing": true,
   "show_booking_button": true,
   "booking_button_label": "Book now",
-  "contact_form_provider": "formsubmit"
+  "contact_form_provider": "formsubmit",
+  "formsubmit_id": "7e6131f9762722c6f31ce70aa2fbd74b"
 }

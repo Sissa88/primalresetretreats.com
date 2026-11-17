@@ -5,7 +5,7 @@ export function renderForm(kind,settings,{esc}){
  if(id&&!/^[a-zA-Z0-9]+$/.test(id))throw Error('Use only the Formspree form ID, not its full URL.');
  const email=settings.contact_email||'';
  const provider=id?'formspree':settings.contact_form_provider==='formsubmit'&&email?'formsubmit':'unconfigured';
- const action=provider==='formspree'?`https://formspree.io/f/${id}`:provider==='formsubmit'?`https://formsubmit.co/${email}`:'';
+ const action=provider==='formspree'?`https://formspree.io/f/${id}`:provider==='formsubmit'?`https://formsubmit.co/${settings.formsubmit_id||email}`:'';
  const field=(name,label,{type='text',required=true,placeholder='',autocomplete='',extra=''}={})=>`<div class="contact-field"><label for="${kind}-${name}">${label}${required?' <span aria-hidden="true">*</span>':''}</label><input id="${kind}-${name}" name="${name}" type="${type}" ${required?'required':''} ${autocomplete?`autocomplete="${autocomplete}"`:''} placeholder="${esc(placeholder)}" ${extra}></div>`;
  const countries=['United States','Canada','United Kingdom','Australia','New Zealand','Germany','France','Netherlands','Switzerland','Austria','India','Japan','South Africa','Mexico','Brazil'];
  const note=provider==='unconfigured'?'Please email us directly while online inquiries are being connected.':'We’ll use your details to respond to your inquiry. Please avoid including sensitive health information.';
