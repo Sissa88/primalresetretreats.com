@@ -2,7 +2,6 @@
 for(const form of document.querySelectorAll('.inquiry-form')){
  const status=form.querySelector('.form-status'),button=form.querySelector('button[type=submit]');
  const readyLabel=button.dataset?.readyLabel||button.textContent;
- let deliveryId='',deliverySnapshot='';
  const restoreButton=()=>{if(['formsubmit','formspree'].includes(form.dataset.provider)){button.disabled=false;button.textContent=readyLabel;}};
  restoreButton();
  if(typeof window!=='undefined')window.addEventListener('pageshow',restoreButton);
@@ -27,16 +26,21 @@ for(const form of document.querySelectorAll('.inquiry-form')){
     if(!response.ok)throw Error();
    }catch{/* Email delivery must still work if profile storage is temporarily unavailable. */}
   }
+  if(isFormSubmit){
+   // Let FormSubmit complete its CAPTCHA and redirect using the hidden _next.
+   // A timed-out AJAX relay can deliver email without returning an acknowledgement.
+   status.textContent='Opening the secure spam check. After submitting, you will return to our thank-you page.';
+   button.textContent='Continue…';
+   HTMLFormElement.prototype.submit.call(form);
+   return;
+  }
   try{
-   const snapshot=JSON.stringify(payload);
-   if(snapshot!==deliverySnapshot){deliverySnapshot=snapshot;deliveryId=crypto.randomUUID();}
-   const url=isFormSubmit?'/api/contacts/send':form.action;
-   const response=await fetch(url,{method:'POST',headers:isFormSubmit?{Accept:'application/json','Content-Type':'application/json'}:{Accept:'application/json'},body:isFormSubmit?JSON.stringify({...payload,id:deliveryId,kind:form.dataset.kind}):formData,signal:AbortSignal.timeout(25000)});
+   const response=await fetch(form.action,{method:'POST',headers:{Accept:'application/json'},body:formData,signal:AbortSignal.timeout(25000)});
    const result=await response.json();
-   const confirmed=isFormSubmit?(result.success===true||result.success==='true'):result.ok!==false;
+   const confirmed=result.ok!==false;
    if(!response.ok||!confirmed)throw Error(result.error||'We could not confirm submission. Your message is still here. Please email info@primalresetretreats.com before trying again.');
    sent=true;status.textContent='Thank you. Your message has been submitted. Opening your confirmation…';button.textContent='Message sent';
-   form.reset();delete form.dataset.customerId;deliveryId='';deliverySnapshot='';
+   form.reset();delete form.dataset.customerId;
    window.location.assign('/thank-you/');
   }catch(error){
    status.textContent=error.message==='Failed to fetch'||error.name==='TimeoutError'?'The connection was interrupted. Please email info@primalresetretreats.com before sending again.':error.message||'We could not confirm submission. Please email info@primalresetretreats.com before trying again.';
