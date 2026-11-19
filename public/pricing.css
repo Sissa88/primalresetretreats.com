@@ -39,3 +39,40 @@
 #paypal-deposit{display:flex;align-items:center;justify-content:center;gap:12px}
 .paypal-method-icon{display:block;width:52px;height:33px;object-fit:contain;flex-shrink:0}
 @media(max-width:480px){.payment-method-title{flex-wrap:wrap;gap:10px}.card-checkout>summary{align-items:flex-start}}
+
+/* Compact room choices first; pricing and payment follow below. */
+.price-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;max-width:1000px;padding-bottom:44px}
+.price-selections{display:contents}
+.price-rooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;grid-column:1/-1}
+.price-rooms>legend{margin-bottom:16px}
+.price-room{grid-template-columns:1fr;min-height:0;margin:0;align-content:start}
+.price-room-photo{min-height:0;aspect-ratio:16/7}
+.price-room-copy{padding:20px}
+.price-room-name{font-size:28px;margin:10px 0 8px}
+.price-room-description{margin:10px 0;font-size:13px}
+.price-room-amount{font-size:25px;margin-top:auto}
+.price-main>.price-summary{position:static;top:auto;padding:24px}
+.price-summary h2{font-size:34px;margin:12px 0 18px}
+.price-summary h2 br{display:none}
+.price-summary dl>div{padding:10px 0}
+.price-deposit{padding:16px;margin:18px 0 8px}
+.price-deposit>strong{font-size:34px}
+.price-promo{margin-top:0;padding:24px;align-self:start}
+.deposit-review{max-width:1000px;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:32px;padding-top:40px}
+@media(max-width:760px){
+ .price-main{grid-template-columns:minmax(0,1fr);gap:22px}
+ .price-rooms{gap:12px}
+ .price-room-copy{padding:14px}
+ .price-room-name{font-size:22px}
+ .price-room-photo{min-height:0;aspect-ratio:4/3}
+ .price-room-top{gap:6px;align-items:flex-start}
+ .price-room-top .price-kicker{font-size:8px;letter-spacing:.03em}
+ .price-room-description{font-size:12px;line-height:1.6}
+ .price-room-amount{font-size:23px}
+ .price-room-amount small,.price-capacity{font-size:9px;letter-spacing:.02em}
+ .price-features{font-size:11px;gap:5px}
+ .deposit-review{grid-template-columns:minmax(0,1fr);gap:22px}
+}
+@media(max-width:350px){.price-rooms{grid-template-columns:minmax(0,1fr)}}
+body.price-page .price-room-name{font-size:28px!important}
+@media(max-width:760px){body.price-page .price-room-name{font-size:22px!important}}
