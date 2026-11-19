@@ -37,6 +37,7 @@ test('invalid room and price settings fail rather than producing a misleading qu
 test('pricing page is an inquiry preview with real photos and no payment collection',()=>{
  const html=renderPricing(config,{esc,imageURL,formHtml:'<form></form>',contactEmail:'info@example.com'});
  assert.match(html,/No payments collected/);assert.match(html,/Nothing is charged today/);
+ assert.match(html,/id="review-deposit" href="#deposit-review">BOOK/);assert.match(html,/id="deposit-review" tabindex="-1" aria-labelledby/);
  assert.match(html,/one guest/);assert.match(html,/Live availability appears when checkout is connected/);
  assert.match(html,/room-private-canopy-1.jpg/);assert.match(html,/room-shared-cabin-1.jpg/);
  assert.match(html,/mailto:info@example.com/);
@@ -45,6 +46,7 @@ test('pricing page is an inquiry preview with real photos and no payment collect
 test('built site exposes the editable pricing collection and clear pricing navigation',async()=>{
  const home=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
  assert.match(home,/class="home-nav"/);assert.match(home,/href="\/pricing\/" class="home-pricing-link">PRICING &amp; PAYMENT/);
+ const page=await readFile(new URL('../dist/pricing/index.html',import.meta.url),'utf8');assert.match(page,/class="site-book-button" href="#deposit-review"/);
  const cms=JSON.parse(await readFile(new URL('../dist/admin/config.json',import.meta.url),'utf8'));
  const pricing=cms.collections.find(c=>c.name==='pricing');assert.equal(pricing.files[0].file,'content/pricing.json');
  assert.match(await readFile(new URL('../dist/_redirects',import.meta.url),'utf8'),/\/book \/pricing\/ 301/);

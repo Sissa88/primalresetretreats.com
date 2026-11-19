@@ -71,7 +71,7 @@ export async function build(){
     const contact=/(<a\b[^>]*href="(?:#inquire|\/#inquire)"[^>]*>)[\s\S]*?<\/a>/;
     return contact.test(header)?header.replace(contact,'$1Contact us ↗</a>'):header.replace('</header>','<a class="site-contact-button" href="/#inquire">Contact us ↗</a></header>');
    });
-   if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="/pricing/">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);
+   if(settings.show_booking_button!==false)html=html.replace('</header>',`<a class="site-book-button" href="${url==='pricing'?'#deposit-review':'/pricing/'}">${esc(settings.booking_button_label||'Book now')} ↗</a></header>`);
   }
   html=html.replace(/<link\b[^>]*rel="(?:icon|shortcut icon|apple-touch-icon|canonical)"[^>]*>/g,'');
   const siteOrigin=settings.site_url.replace(/\/$/,'');

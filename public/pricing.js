@@ -54,7 +54,7 @@ function paintReview(){
  pay.disabled=!canPay();
  cardCheckout?.update();
 }
-byID('review-deposit').addEventListener('click',()=>{review.hidden=false;paintReview();review.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+byID('review-deposit').addEventListener('click',event=>{event.preventDefault();review.hidden=false;paintReview();history.replaceState(null,'',location.pathname+location.search+'#deposit-review');review.focus({preventScroll:true});review.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
 for(const radio of document.querySelectorAll('input[name="accommodation"]'))radio.addEventListener('change',paintReview);
 apply?.addEventListener('click',paintReview);promo?.addEventListener('input',paintReview);terms.addEventListener('change',paintReview);
 async function api(path,body){const response=await fetch('/api/booking/'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await response.json();if(!response.ok)throw Error(data.error||'Could not complete this request.');return data;}
