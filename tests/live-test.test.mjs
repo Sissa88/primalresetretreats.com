@@ -10,7 +10,7 @@ test('private live test rejects missing or incorrect bearer token before accessi
 });
 test('public checkout cannot enable $1 pricing with client-controlled test flags',async t=>{
  const db=await database(t),old=globalThis.fetch;t.after(()=>globalThis.fetch=old);let amount;
- globalThis.fetch=async(url,options)=>{if(url.endsWith('/token'))return Response.json({access_token:'mock'});amount=JSON.parse(options.body).purchase_units[0].amount.value;return Response.json({id:'ORDER',links:[{rel:'payer-action',href:'https://www.paypal.com/checkoutnow?token=ORDER'}]});};
+ globalThis.fetch=async(url,options)=>{if(url.endsWith('/token'))return Response.json({access_token:'mock'});const order=JSON.parse(options.body);assert.equal(order.payment_source.paypal.experience_context.landing_page,'LOGIN');amount=order.purchase_units[0].amount.value;return Response.json({id:'ORDER',links:[{rel:'payer-action',href:'https://www.paypal.com/checkoutnow?token=ORDER'}]});};
  const r=await create({request:request({room:'shared',termsAccepted:true,guest:{name:'Owner',email:'owner@example.com'},liveTest:true,deposit:100}),env:{...env,BOOKING_DB:db}});
  assert.equal(r.status,200);assert.equal(amount,'2600.00');
 });

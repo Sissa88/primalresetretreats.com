@@ -36,6 +36,7 @@ async function renderTemplate(name,data,extra,settings){
 }
 export async function build(){
  const settings=await json('content/settings.json');
+ const pricingScriptVersion=createHash('sha256').update(await readFile(path.join(root,'public/pricing.js'))).digest('hex').slice(0,12);
  const pricingStyleVersion=createHash('sha256').update(await readFile(path.join(root,'public/pricing.css'))).digest('hex').slice(0,12);
  const localScriptVersion=createHash('sha256').update(await readFile(path.join(root,'public/local.js'))).digest('hex').slice(0,12);
  const pricing=await json('content/pricing.json');
@@ -66,6 +67,7 @@ export async function build(){
  const put=async (url,html)=>{
   html=html.replace(/src="\/local.js"/g,`src="/local.js?v=${localScriptVersion}"`);
   html=html.replace(/href="\/pricing.css"/g,`href="/pricing.css?v=${pricingStyleVersion}"`);
+  html=html.replace(/src="\/pricing.js"/g,`src="/pricing.js?v=${pricingScriptVersion}"`);
   const customHeader=html.includes('data-custom-header');
   if(!customHeader){
    html=html.replace(/<header\b[\s\S]*?<\/header>/,header=>header.replace(/(<a\b[^>]*href="\/"[^>]*>)[\s\S]*?<\/a>/,`$1<img class="site-brand-logo" src="/brand/primal-reset-retreats-logo-320.png" alt="Primal Reset Retreats" width="52" height="52"><span>Primal Reset<small class="site-brand-subtitle">Retreats</small></span></a>`));

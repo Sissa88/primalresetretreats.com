@@ -70,7 +70,7 @@ async function refreshAvailability(){
   byID('checkout-availability').textContent=`${data.remaining} places available · ${data.rooms.private} private · ${data.rooms.shared} shared`;
   byID('deposit-explanation').textContent='Only the 50% deposit is charged now. The balance is due February 1, 2027.';
   byID('booking-terms-link').href=termsURL.href;byID('booking-terms-link').hidden=false;byID('booking-terms-pending').hidden=true;terms.disabled=false;
-  paymentStatus.textContent='You’ll continue to PayPal to approve your deposit. Your checkout hold lasts 15 minutes.';
+  paymentStatus.textContent='Select Log in to PayPal to open secure PayPal checkout and approve your deposit. If you are already signed in, PayPal may open payment approval directly. Your checkout hold lasts 15 minutes.';
   for(const radio of document.querySelectorAll('input[name="accommodation"]')){radio.disabled=data.rooms[radio.value]===0;}
   paintReview();
  }catch{/* The static preview remains usable when the payment backend is not connected. */}
@@ -79,7 +79,7 @@ pay.addEventListener('click',async()=>{
  if(pay.disabled||checkoutBusy)return;
  if(!validateGuest())return;
  if(sessionStorage.getItem('primal-booking')){paymentStatus.textContent='You already have a checkout in progress. Finish or cancel it before starting another.';return;}
- checkoutBusy=true;paintReview();paymentStatus.textContent='Checking availability and preparing your secure PayPal checkout…';
+ checkoutBusy=true;paintReview();paymentStatus.textContent='Opening secure PayPal checkout…';
  try{
   sessionStorage.setItem('primal-storage-check','1');sessionStorage.removeItem('primal-storage-check');
   const data=await api('create',{room:roomID,code,termsAccepted:terms.checked,guest:guestDetails(),marketingOptIn:byID('booking-marketing').checked});

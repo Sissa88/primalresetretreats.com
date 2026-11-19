@@ -39,7 +39,7 @@ export async function onRequestPost({request,env,liveTest=false}){
   await recordBookingChoice(db,id,data.marketingOptIn);
   const origin=new URL(request.url).origin;
   const card=data.method==='card';
-  const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+(liveTest?'/api/booking/live-test?returned=1':'/pricing/?booking_return=1'),cancel_url:origin+(liveTest?'/api/booking/live-test?cancelled=1':'/pricing/?booking_cancel=1')}}};
+  const source=card?{card:{name:data.cardholderName.trim(),attributes:{verification:{method:'SCA_WHEN_REQUIRED'}}}}:{paypal:{experience_context:{landing_page:'LOGIN',shipping_preference:'NO_SHIPPING',user_action:'PAY_NOW',return_url:origin+(liveTest?'/api/booking/live-test?returned=1':'/pricing/?booking_return=1'),cancel_url:origin+(liveTest?'/api/booking/live-test?cancelled=1':'/pricing/?booking_cancel=1')}}};
   const order=await paypal(env,'/v2/checkout/orders',{method:'POST',requestID:id,body:{intent:'CAPTURE',purchase_units:[{reference_id:id,custom_id:id,description:liveTest?'Owner checkout test — USD 1 — not a retreat booking':`Men’s Rebirth — ${q.roomName} — 50% deposit — April 2027`,amount:{currency_code:'USD',value:(q.deposit/100).toFixed(2)}}],payment_source:source}});
   const approval=order.links?.find(l=>l.rel==='payer-action'||l.rel==='approve')?.href;
   if(!order.id||(!card&&(!approval||!/^https:\/\/(www\.)?(sandbox\.)?paypal\.com\//.test(approval))))throw Error('Checkout unavailable');
